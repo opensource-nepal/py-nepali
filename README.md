@@ -2,7 +2,16 @@ Nepali
 ======
 
   
-**Python package for processing every nepali stuffs**  
+Python package for processing every nepali stuffs
+
+Requirements
+------------
+	Python >= 3
+
+
+Instalation
+-----------
+	pip install nepali
 
 DateConverter
 -------------
