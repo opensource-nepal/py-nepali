@@ -8,15 +8,17 @@
 import time
 from datetime import datetime, timedelta
 
-class DateConverter:
+from .chars import NepaliChar
+
+class NepaliDate:
 	
 	def __init__(self):
 
-		self.englishMonths = [31, 28, 31, 30, 31, 30,31, 31, 30, 31, 30, 31]
-		self.englishLeapMonths = [31, 29, 31, 30, 31, 30,31, 31, 30, 31, 30, 31]
+		self.__enMonths = [31, 28, 31, 30, 31, 30,31, 31, 30, 31, 30, 31]
+		self.enLeapMonths = [31, 29, 31, 30, 31, 30,31, 31, 30, 31, 30, 31]
 		
-		# List of nepali months
-		self.nepaliMonths = [
+		# List of np months
+		self.__npMonths = [
 			[ 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31 ],	#2000
 			[ 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30 ],	#2001
 			[ 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30 ],
@@ -123,71 +125,76 @@ class DateConverter:
 
 	def setCurrentDate(self):
 		"""
-		Setting current english date
+		Setting current en date
 		"""
 		year = int(time.strftime("%Y"))
 		month = int(time.strftime("%m"))
 		date = int(time.strftime("%d"))
-		self.setEnglishDate(year, month, date)
+		self.setEnDate(year, month, date)
 
 	
-	#English to Nepali date conversion
+	#En to Np date conversion
 
-	def setEnglishDate(self,year, month, date):
-		if(not self.__isEnglishRange(year,month,date)):
+	def setEnDate(self,year, month, date):
+		"""
+		* Sets specific en dates to self object *
+		Refrence np 2000/1/1 with en date 1943/4/14
+		"""
+		if(not self.__isEnRange(year,month,date)):
 			raise Exception("Invalid date format.")
 
-		self.englishYear = year
-		self.englishMonth = month
-		self.englishDate = date
+		self.__enYear = year
+		self.__enMonth = month
+		self.__enDay = date
 
-		#Setting nepali reference to 2000/1/1 with english date 1943/4/14
-		self.nepaliYear = 2000
-		self.nepaliMonth = 1
-		self.nepaliDate = 1
+		# Setting np reference to 2000/1/1 with en date 1943/4/14
+		self.__npYear = 2000
+		self.__npMonth = 1
+		self.__npDay = 1
 
 		difference = self.enDateDifference(1943, 4, 14)
 
-		#Getting nepali year untill the difference remains less than 365
+		# Getting np year untill the difference remains less than 365
 		index = 0
-		while( difference >= self.__nepaliYearDays(index) ):
-			self.nepaliYear+=1
-			difference = difference - self.__nepaliYearDays(index)
+		while( difference >= self.____npYearDays(index) ):
+			self.__npYear+=1
+			difference = difference - self.____npYearDays(index)
 			index+=1
 
-		#Getting nepali month untill the difference remains less than 31
+		# Getting np month untill the difference remains less than 31
 		i = 0
-		while(difference >= self.nepaliMonths[index][i]):
-			difference = difference - self.nepaliMonths[index][i]
-			self.nepaliMonth+=1
+		while(difference >= self.__npMonths[index][i]):
+			difference = difference - self.__npMonths[index][i]
+			self.__npMonth+=1
 			i+=1
 
-		#Remaning days is the date
-		self.nepaliDate = self.nepaliDate + difference
+		# Remaning days is the date
+		self.__npDay = self.__npDay + difference
 		
 		self.weekDay()
 		
 
-	def toEnglishString(self, format='-'):
-		return str(self.englishYear)+format+str(self.englishMonth)+format+str(self.englishDate)
+	def toEnString(self, format='-'):
+		return str(self.__enYear)+format+str(self.__enMonth)+format+str(self.__enDay)
 		
 
 	def enDateDifference(self, year, month, date):
-		
-		#Getting difference from the current date with the date provided
-		difference = self.__countTotalEnglishDays(self.englishYear, self.englishMonth, self.englishDate) - self.__countTotalEnglishDays(year, month, date)
+		"""
+		returns difference of days from the self date with the date provided
+		"""
+		difference = self.__countTotalEnDays(self.__enYear, self.__enMonth, self.__enDay) - self.__countTotalEnDays(year, month, date)
 		if difference < 0: 
 			return -difference
 		else:
 			return difference
 	
 
-	def __countTotalEnglishDays(self, year, month, date):
+	def __countTotalEnDays(self, year, month, date):
 
 		totalDays = year * 365 + date
 				
 		for i in range(0,month-1):
-			totalDays = totalDays + self.englishMonths[i]
+			totalDays = totalDays + self.__enMonths[i]
 		
 		totalDays = totalDays + self.__countleap(year, month)
 		return totalDays
@@ -200,7 +207,7 @@ class DateConverter:
 		return (year//4-year//100+year//400)
 		
 
-	def __isEnglishRange(self, year, month, date):
+	def __isEnRange(self, year, month, date):
 		
 		if(year < 1944 or year > 2042):
 			return False
@@ -226,64 +233,67 @@ class DateConverter:
 
 
 
-	#Nepali to English date conversion
+	# Np to En date conversion
 
-	def setNepaliDate(self, year, month, date):
-
-		if(not self.__isNepaliRange(year,month,date)):
+	def setNpDate(self, year, month, date):
+		"""
+		* Sets specific np dates to self object *
+		Refrence en 1994/1/1 with en date 2000/9/17
+		"""
+		if(not self.__isNpRange(year,month,date)):
 			raise Exception("Invalid date format.")
 
-		self.nepaliYear = year
-		self.nepaliMonth = month
-		self.nepaliDate = date
+		self.__npYear = year
+		self.__npMonth = month
+		self.__npDay = date
 		
-		#Setting english reference to 1944/1/1 with nepali date 2000/9/17
-		self.englishYear = 1944
-		self.englishMonth = 1
-		self.englishDate = 1
+		# Setting en reference to 1944/1/1 with np date 2000/9/17
+		self.__enYear = 1944
+		self.__enMonth = 1
+		self.__enDay = 1
 		
 		difference = self.npDateDifference(2000, 9, 17)
 		
-		#Getting english year untill the difference remains less than 365
-		while( (difference >= 366 and self.__isLeapYear(self.englishYear)) or	(difference >= 365 and not(self.__isLeapYear(self.englishYear)) ) ):
-			if( self.__isLeapYear(self.englishYear) ):
+		# Getting en year untill the difference remains less than 365
+		while( (difference >= 366 and self.__isLeapYear(self.__enYear)) or	(difference >= 365 and not(self.__isLeapYear(self.__enYear)) ) ):
+			if( self.__isLeapYear(self.__enYear) ):
 				difference -= 366
 			else:
 				difference -= 365
-			self.englishYear += 1
+			self.__enYear += 1
 		
-		#Getting english month untill the difference remains less than 31
-		if(self.__isLeapYear(self.englishYear)):
-			monthDays = self.englishLeapMonths
+		# Getting en month untill the difference remains less than 31
+		if(self.__isLeapYear(self.__enYear)):
+			monthDays = self.enLeapMonths
 		else: 
-			monthDays = self.englishMonths
+			monthDays = self.__enMonths
 		i = 0
 		while( difference >= monthDays[i]):
-			self.englishMonth+=1
+			self.__enMonth+=1
 			difference = difference - monthDays[i]
 			i+=1
 		
-		#Remaning days is the date
-		self.englishDate = self.englishDate + difference
+		# Remaning days is the date
+		self.__enDay = self.__enDay + difference
 		
 		self.weekDay()
 
 
-	def toNepaliString(self, format="-"):
-		return str(self.nepaliYear)+format+str(self.nepaliMonth)+format+str(self.nepaliDate)
+	def toNpString(self, format="-"):
+		return str(self.__npYear)+format+str(self.__npMonth)+format+str(self.__npDay)
 
 	
 	def npDateDifference(self, year, month, date):
 
-		#Getting difference from the current date with the date provided
-		difference = self.__countTotalNepaliDays(self.nepaliYear, self.nepaliMonth, self.nepaliDate) - self.__countTotalNepaliDays(year, month, date)
+		# Getting difference from the current date with the date provided
+		difference = self.__countTotalNpDays(self.__npYear, self.__npMonth, self.__npDay) - self.__countTotalNpDays(year, month, date)
 		if(difference < 0):
 			return -difference
 		else:
 			return difference
 
 
-	def __countTotalNepaliDays(self, year, month, date):
+	def __countTotalNpDays(self, year, month, date):
 
 		total = 0
 		if(year < 2000):
@@ -293,67 +303,64 @@ class DateConverter:
 		
 		yearIndex = year - 2000
 		for i in range(0,month-1):
-			total = total + self.nepaliMonths[yearIndex][i]
+			total = total + self.__npMonths[yearIndex][i]
 		
 		for i in range(0,yearIndex):
-			total = total + self.__nepaliYearDays(i)
+			total = total + self.____npYearDays(i)
 		
 		return total
 
 
-	def __nepaliYearDays(self, index):
+	def ____npYearDays(self, index):
 		total = 0
 		
 		for i in range(0,12):
-			total += self.nepaliMonths[index][i]
+			total += self.__npMonths[index][i]
 		
 		return total
 		
 
-	def __isNepaliRange(self, year, month, date):
+	def __isNpRange(self, year, month, date):
 		if(year < 2000 or year > 2098):
 			return False
 		
 		if(month < 1 or month > 12):
 			return False
 		
-		if(date < 1 or date > self.nepaliMonths[year-2000][month-1]):
+		if(date < 1 or date > self.__npMonths[year-2000][month-1]):
 			return False
 		
 		return True
 
 
-	#Class Regular methods
+	# Class Regular methods
 
 	def weekDay(self):
-		#Reference date 1943/4/14 Wednesday 
+		# Reference date 1943/4/14 Wednesday 
 		difference = self.enDateDifference(1943, 4, 14)
-		self.day = ((3 + (difference%7) ) % 7 ) + 1
-		return self.day
+		self.__week_day = ((3 + (difference%7) ) % 7 ) + 1
+		return self.__week_day
 
 	def enYear(self):
-		return self.englishYear
+		return self.__enYear
 	
 	def enMonth(self):
-		return self.englishMonth
-
-	def enMonth(self):
-		return self.englishMonth
+		return self.__enMonth
 	
 	def enDay(self):
-		return self.englishDate
+		return self.__enDay
 	
 	def npYear(self): 
-		return self.nepaliYear
+		return self.__npYear
 	
 	def npMonth(self):
-		return self.nepaliMonth
+		return self.__npMonth
 	
 	def npDay(self):
-		return self.nepaliDate
+		return self.__npDay
 
 	def __str__(self):
-		return "English Date: "+self.toEnglishString()+"\nNepali Date: "+self.toNepaliString()+"\nDay: "+str(self.day)
+		return "En Date: "+self.toEnString()+"\nNp Date: "+self.toNpString()+"\nDay: "+str(self.__week_day)
 
 
 class HumanizeDate:
@@ -436,33 +443,10 @@ class HumanizeDate:
 	def get_datetime(self):
 		local_date_time = self.date
 		converter = DateConverter()
-		converter.setEnglishDate(local_date_time.year, local_date_time.month, local_date_time.day)
+		converter.setEnDate(local_date_time.year, local_date_time.month, local_date_time.day)
 
-		year = NepaliChar.npNumber(converter.npYear())
-		month = NepaliChar.npMonth(converter.npMonth())
-		date = NepaliChar.npNumber(converter.npDay())
-		day = NepaliChar.npDay(converter.weekDay())
+		year = NepaliChar.npNumber(converter.__npYear())
+		month = NepaliChar.__npMonth(converter.__npMonth())
+		date = NepaliChar.npNumber(converter.__npDay())
+		day = NepaliChar.__npDay(converter.weekDay())
 		return month+' '+date+', '+year
-
-
-class NepaliChar:
-
-	def npNumber(num):
-		nepaliNumbers = ['०','१','२','३','४','५','६','७','८','९'];
-		np_num = '';
-		en_num = str(num);
-		for e in en_num:
-			np_num = str(np_num)+str(nepaliNumbers[ int(e) ])
-		return np_num
-
-	def npDay(day):
-		days = ['आइतबार','सोमबार','मंगलबार','बुधबार','बिहिबार','शुक्रबार','शनिबार'];
-		return days[day-1];
-
-	def npHalfDay(day):
-		days = ['आइत','सोम','मंगल','बुध','बिहि','शुक्र','शनि']
-		return days[day-1]
-
-	def npMonth(month):
-		months = ['बैशाख','जेठ','असार','श्रावण','भदौ','आश्विन','कार्तिक','मंसिर','पुष','माघ','फाल्गुन','चैत्र']
-		return months[month-1]

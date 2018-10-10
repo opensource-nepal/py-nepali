@@ -9,54 +9,54 @@ Requirements
 	Python >= 3
 
 
-Instalation
+Installation
 -----------
 	pip install nepali
 
-DateConverter
+NepaliDate
 -------------
 
-**Converts English date to nepali date and nepali date to english date**
+**Represents nepali date, converts English date to nepali date and nepali date to english date**
 ```python
-from nepali.converter import DateConverter  
-converter = DateConverter()
+from nepali.dates import NepaliDate  
+np_date = NepaliDate()
 ```
 
 **Set Current date**  
 ```python
-converter.setCurrentDate()
+np_date.setCurrentDate()
 ```
 
 **Set English date**  
 ```python
-converter.setEnglishDate(2018, 8, 18)
+np_date.setEnDate(2018, 8, 18)
 ```
 
 **Set Nepali date**  
 ```python
-converter.setNepaliDate(2075, 6, 22)
+np_date.setNpDate(2075, 6, 22)
 ```
 
 **Nepali date details**  
 ```python
-converter.toNepaliString() # returns nepali date string  
-converter.npYear()  
-converter.npMonth()  
-converter.npDay()  
-converter.weekDay()
+np_date.toNpString() # returns nepali date string  
+np_date.npYear()  
+np_date.npMonth()  
+np_date.npDay()  
+np_date.weekDay()
 ```
 
 **English date details**  
 ```python
-converter.toEnglishString() # returns english date string  
-converter.enYear()  
-converter.enMonth()  
-converter.enDay()  
-converter.weekDay()
+np_date.toEnString() # returns english date string  
+np_date.enYear()  
+np_date.enMonth()  
+np_date.enDay()  
+np_date.weekDay()
 ```
 
 **Difference Days count**  
 ```python
-converter.npDateDifference(2070, 10, 8) # returns no of days difference for nepali date.  
-converter.enDateDifference(2017, 10, 8) # returns no of days difference for english date.
+np_date.npDateDifference(2070, 10, 8) # returns no of days difference for nepali date.  
+np_date.enDateDifference(2017, 10, 8) # returns no of days difference for english date.
 ```
