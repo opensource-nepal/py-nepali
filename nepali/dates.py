@@ -6,7 +6,7 @@
 #
 
 import time
-from datetime import datetime, timedelta
+import datetime
 
 from .chars import NepaliChar
 
@@ -19,8 +19,8 @@ class NepaliDate:
 		
 		# List of np months
 		self.__npMonths = [
-			[ 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31 ],	#2000
-			[ 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30 ],	#2001
+			[ 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31 ],	# 2000 BS - 1944 AD
+			[ 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30 ],	# 2001 BS
 			[ 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30 ],
 			[ 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31 ],
 			[ 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31 ],
@@ -90,9 +90,9 @@ class NepaliDate:
 			[ 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30 ],
 			[ 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31 ],
 			[ 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30 ],
-			[ 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30 ],	#2071
-			[ 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30 ],	#2072
-			[ 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31 ],	#2073
+			[ 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30 ],	# 2071 BS
+			[ 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30 ],	# 2072 BS
+			[ 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31 ],	# 2073 BS
 			[ 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30 ],
 			[ 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30 ],
 			[ 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30 ],
@@ -109,7 +109,7 @@ class NepaliDate:
 			[ 31, 31, 32, 31, 31, 31, 30, 30, 29, 30, 30, 30 ],
 			[ 30, 31, 32, 32, 30, 31, 30, 30, 29, 30, 30, 30 ],
 			[ 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30 ],
-			[ 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30 ],	#2090
+			[ 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30 ],	# 2090 BS
 			[ 31, 31, 32, 31, 31, 31, 30, 30, 29, 30, 30, 30 ],
 			[ 30, 31, 32, 32, 31, 30, 30, 30, 29, 30, 30, 30 ],
 			[ 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30 ],
@@ -118,7 +118,7 @@ class NepaliDate:
 			[ 30, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30 ],
 			[ 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30 ],
 			[ 31, 31, 32, 31, 31, 31, 29, 30, 29, 30, 29, 31 ],
-			[ 31, 31, 32, 31, 31, 31, 30, 29, 29, 30, 30, 30 ]	 #2099
+			[ 31, 31, 32, 31, 31, 31, 30, 29, 29, 30, 30, 30 ]	 # 2099 BS - 2042 AD
 		]
 		self.setCurrentDate()
 
@@ -156,9 +156,9 @@ class NepaliDate:
 
 		# Getting np year untill the difference remains less than 365
 		index = 0
-		while( difference >= self.____npYearDays(index) ):
+		while( difference >= self.__npYearDays(index) ):
 			self.__npYear+=1
-			difference = difference - self.____npYearDays(index)
+			difference = difference - self.__npYearDays(index)
 			index+=1
 
 		# Getting np month untill the difference remains less than 31
@@ -306,12 +306,17 @@ class NepaliDate:
 			total = total + self.__npMonths[yearIndex][i]
 		
 		for i in range(0,yearIndex):
-			total = total + self.____npYearDays(i)
+			total = total + self.__npYearDays(i)
 		
 		return total
 
 
-	def ____npYearDays(self, index):
+	def __npYearDays(self, index):
+		"""
+		count total days of specific year ( from index)
+		input: index (year)
+		return total (days)
+		"""
 		total = 0
 		
 		for i in range(0,12):
@@ -359,11 +364,35 @@ class NepaliDate:
 	def npDay(self):
 		return self.__npDay
 
+	def to_date(self):
+		return datetime.date(self.__enYear, self.__enMonth, self.__enDay)
+
+
 	def __str__(self):
 		return "En Date: "+self.toEnString()+"\nNp Date: "+self.toNpString()+"\nDay: "+str(self.__week_day)
 
 
+
+class NepaliDateTime:
+	"""
+	Nepali date time
+	"""
+	def __init__(self, year, month, day, hours=0, minutes=0, seconds=0, miliseconds=0):
+		self.__npDate = NepaliDate()
+		self.__npDate.setNpDate(year, month, day)
+		self.__time = datetime.time(hours, minutes, seconds, miliseconds) 
+
+	def to_datetime(self):
+		local_datetime = datetime.datetime.combine(self.__npDate.to_date(), self.__time)
+		return local_datetime - datetime.timedelta(hours=5, minutes=45)	# returing UTC datetime
+
+
+
 class HumanizeDate:
+	"""
+	HumanizeDate converts NepaliDateTime to nepali human readable form
+	"""
+
 	__past_text = "अघि"
 	__future_text = "पछि"
 	__now_text = "भर्खरै"
@@ -377,9 +406,9 @@ class HumanizeDate:
 	def	__init__(self, *args, **kwargs):
 		if not kwargs.get('date'):
 			raise Exception('Date is required.') 
-		self.date = kwargs['date'] + timedelta(hours=5, minutes=45)
+		self.date = kwargs['date'] + datetime.timedelta(hours=5, minutes=45)
 		self.threshold = kwargs.get('threshold')
-		current_date_time = datetime.now()
+		current_date_time = datetime.datetime.now()
 		current_date_time = current_date_time.replace(tzinfo=None)
 		date = self.date.replace(tzinfo=None)
 		self.seconds = int((current_date_time-date).total_seconds())
@@ -387,14 +416,14 @@ class HumanizeDate:
 		if(self.seconds < 0):
 			self.interval_tense = self.__future_text
 
-	def get_str(self):
+	def to_str(self):
 		seconds = self.seconds
 		if( seconds < 0):
 			seconds = 0 - seconds
 
 		if not self.threshold == None:
 			if( seconds >= self.threshold):
-				return self.get_datetime().strip()
+				return self.get_datetime.datetime().strip()
 		
 		return self.get_humanize().strip()
 
