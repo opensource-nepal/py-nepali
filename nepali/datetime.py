@@ -8,7 +8,7 @@
 import time
 import datetime
 
-from .chars import NepaliChar
+from .char import NepaliChar
 
 class NepaliDate:
 	
@@ -367,28 +367,61 @@ class NepaliDate:
 	def to_date(self):
 		return datetime.date(self.__enYear, self.__enMonth, self.__enDay)
 
-
 	def __str__(self):
-		return "En Date: "+self.toEnString()+"\nNp Date: "+self.toNpString()+"\nDay: "+str(self.__week_day)
+		return "En Date: "+self.toEnString()+"\nNp Date: "+self.toNpString()+"\nWeek Day: "+str(self.__week_day)
 
+	def __repr__(self):
+		return str(self)
+
+	def to_date(self):
+		return datetime.date(self.enYear(), self.enMonth(), self.enDay())
+
+	def from_date(date_obj):
+		np_date = NepaliDate()
+		np_date.setEnDate(date_obj.year, date_obj.month, date_obj.day)
+		return np_date
+
+	def today():
+		return NepaliDate()
 
 
 class NepaliDateTime:
 	"""
-	Nepali date time
+	Nepali datetime
 	"""
-	def __init__(self, year, month, day, hours=0, minutes=0, seconds=0, miliseconds=0):
+
+	def __init__(self, year, month, day, hours=0, minute=0, second=0, milisecond=0):
 		self.__npDate = NepaliDate()
 		self.__npDate.setNpDate(year, month, day)
-		self.__time = datetime.time(hours, minutes, seconds, miliseconds) 
+		self.__time = datetime.time(hours, minute, second, milisecond) 
 
 	def to_datetime(self):
-		local_datetime = datetime.datetime.combine(self.__npDate.to_date(), self.__time)
-		return local_datetime - datetime.timedelta(hours=5, minutes=45)	# returing UTC datetime
+		return datetime.datetime.combine(self.__npDate.to_date(), self.__time)
+
+	def date(self):
+		return self.__npDate
+
+	def time(self):
+		return self.__time
+
+	def __str__(self):
+		return str(self.to_datetime())
+
+	def __repr__(self):
+		return str(self)
+
+	def from_datetime(dt, utc=False):
+		if utc:
+			dt = dt + datetime.timedelta(hours=5, minutes=45)	# +5:45 datetime
+		nd = NepaliDate.from_date(dt.date())
+		return NepaliDateTime(nd.npYear(), nd.npMonth(), nd.npDay(), dt.hour, dt.minute, dt.second)
+
+	def now():
+		return NepaliDateTime.from_datetime(datetime.datetime.utcnow(), True)
 
 
 
-class HumanizeDate:
+class HumanizeDateTime:
 	"""
 	HumanizeDate converts NepaliDateTime to nepali human readable form
 	"""
@@ -403,32 +436,43 @@ class HumanizeDate:
 	__minute_text = "मिनेट"
 	__second_text = "सेकेन्ड"
 
-	def	__init__(self, *args, **kwargs):
-		if not kwargs.get('date'):
-			raise Exception('Date is required.') 
-		self.date = kwargs['date'] + datetime.timedelta(hours=5, minutes=45)
+	def	__init__(self, datetime_obj, *args, **kwargs):
+		if type(datetime_obj).__name__ == 'NepaliDateTime':
+			self.datetime_obj = datetime_obj.to_datetime()
+		else:
+			self.datetime_obj = datetime_obj
 		self.threshold = kwargs.get('threshold')
+		self.seconds = None
+
+
+	def __calc_seconds(self):
 		current_date_time = datetime.datetime.now()
 		current_date_time = current_date_time.replace(tzinfo=None)
-		date = self.date.replace(tzinfo=None)
+		date = self.datetime_obj.replace(tzinfo=None)
 		self.seconds = int((current_date_time-date).total_seconds())
 		self.interval_tense = self.__past_text
 		if(self.seconds < 0):
 			self.interval_tense = self.__future_text
 
 	def to_str(self):
+		self.__calc_seconds()	# refreshing seconds
 		seconds = self.seconds
 		if( seconds < 0):
 			seconds = 0 - seconds
 
 		if not self.threshold == None:
 			if( seconds >= self.threshold):
-				return self.get_datetime.datetime().strip()
+				return self.get_datetime().strip()
 		
 		return self.get_humanize().strip()
 
 
 	def get_humanize(self):
+		"""
+		returns humanize datetime
+		"""
+		self.__calc_seconds()	# refreshing seconds
+
 		interval_value = 0
 		interval_text = ""
 		if( self.seconds == 0 ):
@@ -465,17 +509,25 @@ class HumanizeDate:
 			interval_value = self.seconds//946080000
 			interval_text = self.__year_text
 
-		interval_value = NepaliChar.npNumber(interval_value)
+		interval_value = NepaliChar.number(interval_value)
 		return str(interval_value)+' '+str(interval_text)+' '+self.interval_tense
 
 
 	def get_datetime(self):
-		local_date_time = self.date
-		converter = DateConverter()
-		converter.setEnDate(local_date_time.year, local_date_time.month, local_date_time.day)
+		"""
+		returns date in nepali characters
+		"""
+		nd = NepaliDate.from_date(self.datetime_obj.date())
 
-		year = NepaliChar.npNumber(converter.__npYear())
-		month = NepaliChar.__npMonth(converter.__npMonth())
-		date = NepaliChar.npNumber(converter.__npDay())
-		day = NepaliChar.__npDay(converter.weekDay())
-		return month+' '+date+', '+year
+		# dates in nepali characters 
+		year = NepaliChar.number(nd.npYear())
+		month = NepaliChar.month(nd.npMonth())
+		day = NepaliChar.number(nd.npDay())
+		
+		return month+' '+day+', '+year
+
+	def __str__(self):
+		return self.to_str()
+
+	def __repr__(self):
+		return str(self)

@@ -1,6 +1,6 @@
 class NepaliChar:
 
-	def npNumber(num):
+	def number(num):
 		nepaliNumbers = ['०','१','२','३','४','५','६','७','८','९'];
 		np_num = '';
 		en_num = str(num);
@@ -8,14 +8,14 @@ class NepaliChar:
 			np_num = str(np_num)+str(nepaliNumbers[ int(e) ])
 		return np_num
 
-	def npDay(day):
+	def day(day):
 		days = ['आइतबार','सोमबार','मंगलबार','बुधबार','बिहिबार','शुक्रबार','शनिबार'];
 		return days[day-1];
 
-	def npHalfDay(day):
+	def half_day(day):
 		days = ['आइत','सोम','मंगल','बुध','बिहि','शुक्र','शनि']
 		return days[day-1]
 
-	def npMonth(month):
+	def month(month):
 		months = ['बैशाख','जेठ','असार','श्रावण','भदौ','आश्विन','कार्तिक','मंसिर','पुष','माघ','फाल्गुन','चैत्र']
 		return months[month-1]

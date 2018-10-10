@@ -16,10 +16,27 @@ Installation
 NepaliDate
 -------------
 
-**Represents nepali date, converts English date to nepali date and nepali date to english date**
+Represents nepali date, converts English date to nepali date and nepali date to english date
+
 ```python
-from nepali.dates import NepaliDate  
+from nepali.datetime import NepaliDate  
+```
+
+**Creating new object**
+```python
+# object with current date
 np_date = NepaliDate()
+
+# object with today's date
+np_date = NepaliDate.today()
+```
+
+**Object from python's datetime.date**
+```python
+import datetime
+
+date = datetime.date.today()
+np_date = NepaliDate.from_date(date)
 ```
 
 **Set Current date**  
@@ -59,4 +76,83 @@ np_date.weekDay()
 ```python
 np_date.npDateDifference(2070, 10, 8) # returns no of days difference for nepali date.  
 np_date.enDateDifference(2017, 10, 8) # returns no of days difference for english date.
+```
+
+**Get python's datetime.date**
+```python
+np_date.to_date()
+```
+
+
+NepaliDateTime
+-------------
+
+Represents nepali date time
+
+```python
+from nepali.datetime import NepaliDateTime  
+```
+
+**Creating new object**
+```python
+# object with specific datetime
+np_datetime = NepaliDateTime(year, month, day[, hour[, minute[, second]]]) # arguments must be nepali
+
+# object with current datetime
+np_datetime = NepaliDateTime.now()
+```
+
+**Object from python's datetime.datetime**
+```python
+import datetime
+
+dt = datetime.datetime.now()
+np_datetime = NepaliDateTime.from_datetime(dt)
+```
+
+**Get NepaliDate object**
+```python
+np_datetime.date()
+```
+
+**Get python's datetime.time object**
+```python
+np_datetime.time()
+```
+
+**Get python's datetime.datetime object**
+```python
+np_datetime.to_datetime()
+```
+
+
+HumanizeDateTime
+-------------
+
+HumanizeDate converts NepaliDateTime to nepali human readable form
+
+```python
+from nepali.datetime import HumanizeDateTime  
+```
+
+**Creating new object**
+```python
+# object from nepali datetime
+ndt = NepaliDateTime.now()
+humanize = HumanizeDate(ndt)
+
+# object from python datetime
+dt = datetime.datetime.now()
+humanize = HumanizeDate(dt)
+```
+
+**Get string**
+```python
+humanize.to_str()
+```
+
+**Humanize with threshold**
+returns date in nepali characters if more than threshold(in seconds) else returns humanize form
+```python
+humanize = HumanizeDate(ndt, threshold=60) # 60 seconds
 ```
