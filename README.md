@@ -139,11 +139,11 @@ from nepali.datetime import HumanizeDateTime
 ```python
 # object from nepali datetime
 ndt = NepaliDateTime.now()
-humanize = HumanizeDate(ndt)
+humanize = HumanizeDateTime(ndt)
 
 # object from python datetime
 dt = datetime.datetime.now()
-humanize = HumanizeDate(dt)
+humanize = HumanizeDateTime(dt)
 ```
 
 **Get string**
@@ -154,5 +154,5 @@ humanize.to_str()
 **Humanize with threshold**
 returns date in nepali characters if more than threshold(in seconds) else returns humanize form
 ```python
-humanize = HumanizeDate(ndt, threshold=60) # 60 seconds
+humanize = HumanizeDateTime(ndt, threshold=60) # 60 seconds
 ```

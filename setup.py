@@ -20,7 +20,7 @@ setuptools.setup(
 	version="0.0.3",
 	author="Ajesh Sen Thapa",
 	author_email="aj3sshh@gmail.com",
-	description="Nepali date converting and displaying.",
+	description="Python package for nepali processes ",
 	long_description=long_description,
 	long_description_content_type="text/markdown",
 	url="https://github.com/aj3sh/nepali",
