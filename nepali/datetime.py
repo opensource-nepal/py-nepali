@@ -8,11 +8,12 @@
 import time
 import datetime
 
-from .char import NepaliChar
+from .char import NepaliChar, EnglishChar
+
 
 class NepaliDate:
 	
-	def __init__(self):
+	def __init__(self, npYear=0, npMonth=0, npDay=0):
 
 		self.__enMonths = [31, 28, 31, 30, 31, 30,31, 31, 30, 31, 30, 31]
 		self.enLeapMonths = [31, 29, 31, 30, 31, 30,31, 31, 30, 31, 30, 31]
@@ -120,8 +121,17 @@ class NepaliDate:
 			[ 31, 31, 32, 31, 31, 31, 29, 30, 29, 30, 29, 31 ],
 			[ 31, 31, 32, 31, 31, 31, 30, 29, 29, 30, 30, 30 ]	 # 2099 BS - 2042 AD
 		]
-		self.setCurrentDate()
 
+		if npYear == 0 or npMonth == 0 or npDay == 0:
+			self.setCurrentDate()
+		else:
+			self.setNpDate(npYear, npMonth, npDay)
+
+	def __str__(self):
+		return self.toNpString()
+
+	def __repr__(self):
+		return "<NepaliDate> "+str(self)
 
 	def setCurrentDate(self):
 		"""
@@ -280,7 +290,7 @@ class NepaliDate:
 
 
 	def toNpString(self, format="-"):
-		return str(self.__npYear)+format+str(self.__npMonth)+format+str(self.__npDay)
+		return str(self.npYear())+format+str(self.npMonthStr())+format+str(self.npDayStr())
 
 	
 	def npDateDifference(self, year, month, date):
@@ -364,25 +374,66 @@ class NepaliDate:
 	def npDay(self):
 		return self.__npDay
 
+	def npMonthStr(self):
+		npMonth = str(self.npMonth())
+		if len(npMonth) < 2:
+			npMonth = '0'+npMonth
+		return npMonth
+
+	def npDayStr(self):
+		npDay = str(self.npDay())
+		if len(npDay) < 2:
+			npDay = '0'+npDay
+		return npDay
+
 	def to_date(self):
 		return datetime.date(self.__enYear, self.__enMonth, self.__enDay)
-
-	def __str__(self):
-		return "En Date: "+self.toEnString()+"\nNp Date: "+self.toNpString()+"\nWeek Day: "+str(self.__week_day)
-
-	def __repr__(self):
-		return str(self)
 
 	def to_date(self):
 		return datetime.date(self.enYear(), self.enMonth(), self.enDay())
 
 	def from_date(date_obj):
-		np_date = NepaliDate()
-		np_date.setEnDate(date_obj.year, date_obj.month, date_obj.day)
-		return np_date
+		npDate = NepaliDate()
+		npDate.setEnDate(date_obj.year, date_obj.month, date_obj.day)
+		return npDate
 
 	def today():
 		return NepaliDate()
+
+
+	# property
+
+	@property
+	def year(self):
+		return self.__npYear
+
+	@property
+	def month(self):
+		return self.__npMonth
+
+	@property
+	def day(self):
+		return self.__npDay
+
+	@property
+	def week_day(self):
+		return self.weekDay()
+	
+
+
+class NepaliTime(datetime.time):
+
+	def __repr__(self):
+		return "<NepaliTime> "+str(self)
+
+
+	# static methods
+
+	def now(**kwargs):
+		dt = datetime.datetime.utcnow() + datetime.timedelta(hours=5, minutes=45)
+		if kwargs.get('microsecond'):
+			return NepaliTime(dt.time().hour, dt.time().minute, dt.time().second, dt.time().microsecond)
+		return NepaliTime(dt.time().hour, dt.time().minute, dt.time().second)
 
 
 class NepaliDateTime:
@@ -390,25 +441,169 @@ class NepaliDateTime:
 	Nepali datetime
 	"""
 
-	def __init__(self, year, month, day, hours=0, minute=0, second=0, milisecond=0):
-		self.__npDate = NepaliDate()
-		self.__npDate.setNpDate(year, month, day)
-		self.__time = datetime.time(hours, minute, second, milisecond) 
+	def __init__(self, year, month, day, hour=0, minute=0, second=0, microsecond=0):
+		self.__npDate = NepaliDate(year, month, day)
+		self.__npTime = NepaliTime(hour, minute, second, microsecond) 
+
+	def __str__(self):
+		return str(self.__npDate)+' '+str(self.__npTime)
+
+	def __repr__(self):
+		return "<NepaliDateTime> "+str(self)
+
+	# operator overloadings
+
+	# addition
+	def __add__(self, other):
+		if type(other) == datetime.timedelta:
+			"""
+			timedelta object
+			"""
+			return NepaliDateTime.from_datetime(self.to_datetime() + other)
+			pass
+
+		return None
+
+	# substraction
+	def __sub__(self, other):
+		if type(other) == self.__class__:
+			"""
+			NepaliDateTime object
+			"""
+			return self.to_datetime() - other.to_datetime()
+			pass
+		elif type(other) == datetime.datetime:
+			return self.to_datetime() - other
+			pass
+		elif type(other) == datetime.timedelta:
+			"""
+			timedelta object
+			"""
+			return NepaliDateTime.from_datetime(self.to_datetime() - other)
+			pass
+
+		return None
+
+	# less than
+	def __lt__(self, other):
+		if type(other) == self.__class__:
+			"""
+			NepaliDateTime object
+			"""
+			return self.to_datetime() < other.to_datetime()
+			pass
+		elif type(other) == datetime.datetime:
+			"""
+			datetime object
+			"""
+			return self.to_datetime() < other
+			pass
+
+		return None
+
+	# less than euqal
+	def __le__(self, other):
+		if type(other) == self.__class__:
+			"""
+			NepaliDateTime object
+			"""
+			return self.to_datetime() <= other.to_datetime()
+			pass
+		elif type(other) == datetime.datetime:
+			"""
+			datetime object
+			"""
+			return self.to_datetime() <= other
+			pass
+
+		return None
+
+	# equal
+	def __eq__(self, other):
+		if type(other) == self.__class__:
+			"""
+			NepaliDateTime object
+			"""
+			return self.to_datetime() == other.to_datetime()
+			pass
+		elif type(other) == datetime.datetime:
+			"""
+			datetime object
+			"""
+			return self.to_datetime() == other
+			pass
+			
+		return None
+
+	# not equal
+	def __ne__(self, other):
+		if type(other) == self.__class__:
+			"""
+			NepaliDateTime object
+			"""
+			return self.to_datetime() != other.to_datetime()
+			pass
+		elif type(other) == datetime.datetime:
+			"""
+			datetime object
+			"""
+			return self.to_datetime() != other
+			pass
+			
+		return None
+	
+	# greater than
+	def __gt__(self, other):
+		if type(other) == self.__class__:
+			"""
+			NepaliDateTime object
+			"""
+			return self.to_datetime() > other.to_datetime()
+			pass
+		elif type(other) == datetime.datetime:
+			"""
+			datetime object
+			"""
+			return self.to_datetime() > other
+			pass
+			
+		return None
+	
+	# greater than equal
+	def __ge__(self, other):
+		if type(other) == self.__class__:
+			"""
+			NepaliDateTime object
+			"""
+			return self.to_datetime() >= other.to_datetime()
+			pass
+		elif type(other) == datetime.datetime:
+			"""
+			datetime object
+			"""
+			return self.to_datetime() >= other
+			pass
+			
+		return None 
 
 	def to_datetime(self):
-		return datetime.datetime.combine(self.__npDate.to_date(), self.__time)
+		return datetime.datetime.combine(self.__npDate.to_date(), self.__npTime)
 
 	def date(self):
 		return self.__npDate
 
 	def time(self):
-		return self.__time
+		return self.__npTime
 
-	def __str__(self):
-		return str(self.to_datetime())
+	def strftime(self, format):
+		formater = NepaliDateTimeFormater(self)
+		return formater.get_str(format)
 
-	def __repr__(self):
-		return str(self)
+	def strftime_en(self, format):
+		formater = NepaliDateTimeFormater(self, True)
+		return formater.get_str(format)
+
+	# static methods
 
 	def from_datetime(dt, utc=False):
 		if utc:
@@ -419,6 +614,36 @@ class NepaliDateTime:
 	def now():
 		return NepaliDateTime.from_datetime(datetime.datetime.utcnow(), True)
 
+
+	# property
+
+	@property
+	def year(self):
+		return self.__npDate.year
+
+	@property
+	def month(self):
+		return self.__npDate.month
+
+	@property
+	def day(self):
+		return self.__npDate.day
+
+	@property
+	def week_day(self):
+		return self.__npDate.weekDay()
+
+	@property
+	def hour(self):
+		return self.__npTime.hour
+
+	@property
+	def minute(self):
+		return self.__npTime.minute
+
+	@property
+	def second(self):
+		return self.__npTime.second
 
 
 class HumanizeDateTime:
@@ -531,3 +756,203 @@ class HumanizeDateTime:
 
 	def __repr__(self):
 		return str(self)
+
+
+class NepaliDateTimeFormater:
+
+	format_map = {
+		'a': 'weekdayHalf',
+		'A': 'weekdayFull',
+		'w': 'weekdayNumber',
+		'd': 'day',
+		'b': 'monthFull',
+		'B': 'monthFull',
+		'm': 'monthNumber',
+		'y': 'yearHalf',
+		'Y': 'yearFull',
+		'H': 'hour24',
+		'I': 'hour12',
+		'p': 'ampm',
+		'M': 'minute',
+		'S': 'second'
+	}
+
+	def __init__(self, npDateTime, english=False):
+		self.npDateTime = npDateTime
+		self.english = english
+
+	def __str__(self):
+		return str(self.npDateTime)
+
+	def get_str(self, format):
+		i, n = 0, len(format)
+		time_str = []
+		try:
+			while i < n:
+				ch = format[i]
+				i += 1
+				if ch == '%':
+					if i < n:
+						ch = format[i]
+						if ch == '%':
+							time_str.append('%')
+						else:
+							time_str.append(getattr(self, self.format_map.get(ch)))
+						i += 1
+				else:
+					time_str.append(ch)
+		except Exception:
+			raise Exception('Invalid datetime format')
+		time_str = ''.join(time_str)
+
+		return time_str
+
+	@property
+	def weekdayHalf(self):
+		"""
+		%a
+		"""
+		if self.english:
+			return EnglishChar.half_day(self.npDateTime.week_day)
+		return NepaliChar.half_day(self.npDateTime.week_day)
+
+	@property
+	def weekdayFull(self):
+		"""
+		%A
+		"""
+		if self.english:
+			return EnglishChar.day(self.npDateTime.week_day)
+		return NepaliChar.day(self.npDateTime.week_day)
+
+	@property
+	def weekdayNumber(self):
+		"""
+		%w
+		"""
+		if self.english:
+			return str(self.npDateTime.week_day-1)
+		return NepaliChar.number(self.npDateTime.week_day-1)
+
+	@property
+	def day(self):
+		"""
+		%d
+		"""
+		day = str(self.npDateTime.day)
+		if len(day) < 2:
+			day = '0'+day
+
+		if self.english:
+			return str(day)
+		return NepaliChar.number(day)
+
+	@property
+	def monthFull(self):
+		"""
+		%B or %b
+		"""
+		if self.english:
+			return EnglishChar.month(self.npDateTime.month)
+		return NepaliChar.month(self.npDateTime.month)
+
+	@property
+	def monthNumber(self):
+		"""
+		%m
+		"""
+		month = str(self.npDateTime.month)
+		if len(month) < 2:
+			month = '0'+month
+		if self.english:
+			return str(month)
+		return NepaliChar.number(month)
+
+	@property
+	def yearHalf(self):
+		"""
+		%y
+		"""
+		if self.english:
+			return str(self.npDateTime.year)[2:]
+		return NepaliChar.number(str(self.npDateTime.year)[2:])
+
+	@property
+	def yearFull(self):
+		"""
+		%Y
+		"""
+		if self.english:
+			return str(self.npDateTime.year)
+		return NepaliChar.number(self.npDateTime.year)
+	
+	@property
+	def hour24(self):
+		"""
+		%H
+		"""
+		if self.english:
+			return str(self.npDateTime.hour)
+		return NepaliChar.number(self.npDateTime.hour)
+	
+	@property
+	def hour12(self):
+		"""
+		%I
+		"""
+		hour = self.npDateTime.hour
+		if hour > 12:
+			hour = hour - 12
+		if hour == 0:
+			hour = 12
+		hour = str(hour)
+		if len(hour) < 2:
+			hour = '0'+hour
+
+		if self.english:
+			return str(hour)
+		return NepaliChar.number(hour)
+	
+	@property
+	def ampm(self):
+		"""
+		%p
+		"""
+		if self.english:
+			ampm = 'AM'
+			if self.npDateTime.hour > 12:
+				ampm = 'PM'
+			return str(ampm)
+
+		ampm = ''
+		if self.npDateTime.hour < 12:
+			ampm = 'शुभप्रभात'
+		elif self.npDateTime.hour >= 12 and self.npDateTime.hour < 18:
+			ampm = 'मध्यान्ह'
+		else:
+			ampm = 'अपरान्ह'
+		return str(ampm)
+	
+	@property
+	def minute(self):
+		"""
+		%M
+		"""
+		minute = str(self.npDateTime.minute)
+		if len(minute) < 2:
+			minute = '0'+minute
+		if self.english:
+			return str(minute)
+		return NepaliChar.number(minute)
+	
+	@property
+	def second(self):
+		"""
+		%S
+		"""
+		second = str(self.npDateTime.second)
+		if len(second) < 2:
+			second = '0'+second
+		if self.english:
+			return str(second)
+		return NepaliChar.number(second)
