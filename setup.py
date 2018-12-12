@@ -17,7 +17,7 @@ if sys.argv[-1] == 'publish':
 
 setuptools.setup(
 	name="nepali",
-	version="0.0.3",
+	version="0.0.4",
 	author="Ajesh Sen Thapa",
 	author_email="aj3sshh@gmail.com",
 	description="Python package for nepali processes ",
