@@ -198,5 +198,5 @@ Add `'nepali'` to your `INSTALLED_APPS` setting.
 IN your Template
 ```
 {% load nepalidatetime %}
-{{ datetimeobj|nepalidate|"%Y-%m-%d" }}
+{{ datetimeobj|nepalidate:"%Y-%m-%d" }}
 ```
