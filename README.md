@@ -13,6 +13,12 @@ Installation
 -----------
 	pip install nepali
 
+
+Features
+--------
+1. English to Nepali, Nepali to English date conversions
+2. Nepali Characters
+
 NepaliDate
 -------------
 
@@ -176,4 +182,21 @@ humanize.to_str()
 # custom format after threshold
 humanize = HumanizeDateTime(ndt, threshold=60, format='%Y-%m-%d') # 60 seconds
 humanize.to_str()
+```
+
+For Django Template
+-------------------
+
+Add `'nepali'` to your `INSTALLED_APPS` setting.
+
+	INSTALLED_APPS = [
+		...
+		'nepali',
+		...
+	]
+
+IN your Template
+```
+{% load nepalidatetime %}
+{{ datetimeobj|nepalidate|"%Y-%m-%d" }}
 ```
