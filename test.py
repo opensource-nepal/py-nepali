@@ -55,3 +55,20 @@ print(ndt1 != dt1)
 npDateTime = NepaliDateTime.now()
 print(npDateTime.strftime('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
 print(npDateTime.strftime_en('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
+
+
+# Humanize datetime
+humanize = HumanizeDateTime(datetime.datetime.now())
+print(humanize.to_str())
+
+ndt = NepaliDateTime(2075, 8, 2)
+humanize = HumanizeDateTime(ndt)
+print(humanize.to_str())
+
+ndt = NepaliDateTime(2075, 8, 2)
+humanize = HumanizeDateTime(ndt, threshold=0)
+print(humanize.to_str())
+
+ndt = NepaliDateTime(2075, 8, 2)
+humanize = HumanizeDateTime(ndt, threshold=0, format='%a %A %w %d %b %B %m %y %Y')
+print(humanize.to_str())

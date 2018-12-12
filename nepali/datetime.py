@@ -662,11 +662,12 @@ class HumanizeDateTime:
 	__second_text = "सेकेन्ड"
 
 	def	__init__(self, datetime_obj, *args, **kwargs):
-		if type(datetime_obj).__name__ == 'NepaliDateTime':
+		if type(datetime_obj) == NepaliDateTime:
 			self.datetime_obj = datetime_obj.to_datetime()
 		else:
 			self.datetime_obj = datetime_obj
 		self.threshold = kwargs.get('threshold')
+		self.format = kwargs.get('format')
 		self.seconds = None
 
 
@@ -742,14 +743,10 @@ class HumanizeDateTime:
 		"""
 		returns date in nepali characters
 		"""
-		nd = NepaliDate.from_date(self.datetime_obj.date())
-
-		# dates in nepali characters 
-		year = NepaliChar.number(nd.npYear())
-		month = NepaliChar.month(nd.npMonth())
-		day = NepaliChar.number(nd.npDay())
-		
-		return month+' '+day+', '+year
+		if not self.format:
+			self.format = '%B %d, %Y'
+		ndt = NepaliDateTime.from_datetime(self.datetime_obj)
+		return ndt.strftime(self.format)
 
 	def __str__(self):
 		return self.to_str()
