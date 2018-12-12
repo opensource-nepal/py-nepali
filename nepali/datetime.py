@@ -6,7 +6,7 @@
 #
 
 import time
-import datetime
+import datetime as pythonDateTime
 
 from .char import NepaliChar, EnglishChar
 
@@ -387,10 +387,10 @@ class NepaliDate:
 		return npDay
 
 	def to_date(self):
-		return datetime.date(self.__enYear, self.__enMonth, self.__enDay)
+		return pythonDateTime.date(self.__enYear, self.__enMonth, self.__enDay)
 
 	def to_date(self):
-		return datetime.date(self.enYear(), self.enMonth(), self.enDay())
+		return pythonDateTime.date(self.enYear(), self.enMonth(), self.enDay())
 
 	def from_date(date_obj):
 		npDate = NepaliDate()
@@ -421,7 +421,7 @@ class NepaliDate:
 	
 
 
-class NepaliTime(datetime.time):
+class NepaliTime(pythonDateTime.time):
 
 	def __repr__(self):
 		return "<NepaliTime> "+str(self)
@@ -430,7 +430,7 @@ class NepaliTime(datetime.time):
 	# static methods
 
 	def now(**kwargs):
-		dt = datetime.datetime.utcnow() + datetime.timedelta(hours=5, minutes=45)
+		dt = pythonDateTime.datetime.utcnow() + pythonDateTime.timedelta(hours=5, minutes=45)
 		if kwargs.get('microsecond'):
 			return NepaliTime(dt.time().hour, dt.time().minute, dt.time().second, dt.time().microsecond)
 		return NepaliTime(dt.time().hour, dt.time().minute, dt.time().second)
@@ -438,7 +438,7 @@ class NepaliTime(datetime.time):
 
 class NepaliDateTime:
 	"""
-	Nepali datetime
+	Nepali pythonDateTime
 	"""
 
 	def __init__(self, year, month, day, hour=0, minute=0, second=0, microsecond=0):
@@ -455,11 +455,11 @@ class NepaliDateTime:
 
 	# addition
 	def __add__(self, other):
-		if type(other) == datetime.timedelta:
+		if type(other) == pythonDateTime.timedelta:
 			"""
 			timedelta object
 			"""
-			return NepaliDateTime.from_datetime(self.to_datetime() + other)
+			return NepaliDateTime.from_pythonDateTime(self.to_pythonDateTime() + other)
 			pass
 
 		return None
@@ -470,16 +470,16 @@ class NepaliDateTime:
 			"""
 			NepaliDateTime object
 			"""
-			return self.to_datetime() - other.to_datetime()
+			return self.to_pythonDateTime() - other.to_pythonDateTime()
 			pass
-		elif type(other) == datetime.datetime:
-			return self.to_datetime() - other
+		elif type(other) == pythonDateTime.datetime:
+			return self.to_pythonDateTime() - other
 			pass
-		elif type(other) == datetime.timedelta:
+		elif type(other) == pythonDateTime.timedelta:
 			"""
 			timedelta object
 			"""
-			return NepaliDateTime.from_datetime(self.to_datetime() - other)
+			return NepaliDateTime.from_pythonDateTime(self.to_pythonDateTime() - other)
 			pass
 
 		return None
@@ -490,13 +490,13 @@ class NepaliDateTime:
 			"""
 			NepaliDateTime object
 			"""
-			return self.to_datetime() < other.to_datetime()
+			return self.to_pythonDateTime() < other.to_pythonDateTime()
 			pass
-		elif type(other) == datetime.datetime:
+		elif type(other) == pythonDateTime.datetime:
 			"""
-			datetime object
+			pythonDateTime object
 			"""
-			return self.to_datetime() < other
+			return self.to_pythonDateTime() < other
 			pass
 
 		return None
@@ -507,13 +507,13 @@ class NepaliDateTime:
 			"""
 			NepaliDateTime object
 			"""
-			return self.to_datetime() <= other.to_datetime()
+			return self.to_pythonDateTime() <= other.to_pythonDateTime()
 			pass
-		elif type(other) == datetime.datetime:
+		elif type(other) == pythonDateTime.datetime:
 			"""
-			datetime object
+			pythonDateTime object
 			"""
-			return self.to_datetime() <= other
+			return self.to_pythonDateTime() <= other
 			pass
 
 		return None
@@ -524,13 +524,13 @@ class NepaliDateTime:
 			"""
 			NepaliDateTime object
 			"""
-			return self.to_datetime() == other.to_datetime()
+			return self.to_pythonDateTime() == other.to_pythonDateTime()
 			pass
-		elif type(other) == datetime.datetime:
+		elif type(other) == pythonDateTime.datetime:
 			"""
-			datetime object
+			pythonDateTime object
 			"""
-			return self.to_datetime() == other
+			return self.to_pythonDateTime() == other
 			pass
 			
 		return None
@@ -541,13 +541,13 @@ class NepaliDateTime:
 			"""
 			NepaliDateTime object
 			"""
-			return self.to_datetime() != other.to_datetime()
+			return self.to_pythonDateTime() != other.to_pythonDateTime()
 			pass
-		elif type(other) == datetime.datetime:
+		elif type(other) == pythonDateTime.datetime:
 			"""
-			datetime object
+			pythonDateTime object
 			"""
-			return self.to_datetime() != other
+			return self.to_pythonDateTime() != other
 			pass
 			
 		return None
@@ -558,13 +558,13 @@ class NepaliDateTime:
 			"""
 			NepaliDateTime object
 			"""
-			return self.to_datetime() > other.to_datetime()
+			return self.to_pythonDateTime() > other.to_pythonDateTime()
 			pass
-		elif type(other) == datetime.datetime:
+		elif type(other) == pythonDateTime.datetime:
 			"""
-			datetime object
+			pythonDateTime object
 			"""
-			return self.to_datetime() > other
+			return self.to_pythonDateTime() > other
 			pass
 			
 		return None
@@ -575,19 +575,19 @@ class NepaliDateTime:
 			"""
 			NepaliDateTime object
 			"""
-			return self.to_datetime() >= other.to_datetime()
+			return self.to_pythonDateTime() >= other.to_pythonDateTime()
 			pass
-		elif type(other) == datetime.datetime:
+		elif type(other) == pythonDateTime.datetime:
 			"""
-			datetime object
+			pythonDateTime object
 			"""
-			return self.to_datetime() >= other
+			return self.to_pythonDateTime() >= other
 			pass
 			
 		return None 
 
-	def to_datetime(self):
-		return datetime.datetime.combine(self.__npDate.to_date(), self.__npTime)
+	def to_pythonDateTime(self):
+		return pythonDateTime.datetime.combine(self.__npDate.to_date(), self.__npTime)
 
 	def date(self):
 		return self.__npDate
@@ -605,14 +605,14 @@ class NepaliDateTime:
 
 	# static methods
 
-	def from_datetime(dt, utc=False):
+	def from_pythonDateTime(dt, utc=False):
 		if utc:
-			dt = dt + datetime.timedelta(hours=5, minutes=45)	# +5:45 datetime
+			dt = dt + pythonDateTime.timedelta(hours=5, minutes=45)	# +5:45 pythonDateTime
 		nd = NepaliDate.from_date(dt.date())
 		return NepaliDateTime(nd.npYear(), nd.npMonth(), nd.npDay(), dt.hour, dt.minute, dt.second)
 
 	def now():
-		return NepaliDateTime.from_datetime(datetime.datetime.utcnow(), True)
+		return NepaliDateTime.from_pythonDateTime(pythonDateTime.datetime.utcnow(), True)
 
 
 	# property
@@ -661,20 +661,20 @@ class HumanizeDateTime:
 	__minute_text = "मिनेट"
 	__second_text = "सेकेन्ड"
 
-	def	__init__(self, datetime_obj, *args, **kwargs):
-		if type(datetime_obj) == NepaliDateTime:
-			self.datetime_obj = datetime_obj.to_datetime()
+	def	__init__(self, pythonDateTime_obj, *args, **kwargs):
+		if type(pythonDateTime_obj) == NepaliDateTime:
+			self.pythonDateTime_obj = pythonDateTime_obj.to_pythonDateTime()
 		else:
-			self.datetime_obj = datetime_obj
+			self.pythonDateTime_obj = pythonDateTime_obj
 		self.threshold = kwargs.get('threshold')
 		self.format = kwargs.get('format')
 		self.seconds = None
 
 
 	def __calc_seconds(self):
-		current_date_time = datetime.datetime.now()
+		current_date_time = pythonDateTime.datetime.now()
 		current_date_time = current_date_time.replace(tzinfo=None)
-		date = self.datetime_obj.replace(tzinfo=None)
+		date = self.pythonDateTime_obj.replace(tzinfo=None)
 		self.seconds = int((current_date_time-date).total_seconds())
 		self.interval_tense = self.__past_text
 		if(self.seconds < 0):
@@ -688,14 +688,14 @@ class HumanizeDateTime:
 
 		if not self.threshold == None:
 			if( seconds >= self.threshold):
-				return self.get_datetime().strip()
+				return self.get_pythonDateTime().strip()
 		
 		return self.get_humanize().strip()
 
 
 	def get_humanize(self):
 		"""
-		returns humanize datetime
+		returns humanize pythonDateTime
 		"""
 		self.__calc_seconds()	# refreshing seconds
 
@@ -739,13 +739,13 @@ class HumanizeDateTime:
 		return str(interval_value)+' '+str(interval_text)+' '+self.interval_tense
 
 
-	def get_datetime(self):
+	def get_pythonDateTime(self):
 		"""
 		returns date in nepali characters
 		"""
 		if not self.format:
 			self.format = '%B %d, %Y'
-		ndt = NepaliDateTime.from_datetime(self.datetime_obj)
+		ndt = NepaliDateTime.from_pythonDateTime(self.pythonDateTime_obj)
 		return ndt.strftime(self.format)
 
 	def __str__(self):
@@ -799,7 +799,7 @@ class NepaliDateTimeFormater:
 				else:
 					time_str.append(ch)
 		except Exception:
-			raise Exception('Invalid datetime format')
+			raise Exception('Invalid pythonDateTime format')
 		time_str = ''.join(time_str)
 
 		return time_str
