@@ -124,7 +124,21 @@ np_datetime.time()
 ```python
 np_datetime.to_datetime()
 ```
+**Date String Format**
+```python
+npDateTime = NepaliDateTime.now()
+print(npDateTime.strftime('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
+print(npDateTime.strftime_en('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
+```
+`बुध बुधबार ३ २६ मंसिर मंसिर ०८ ७५ २०७५ ११ ११ शुभप्रभात ०६ १३
+Wed Wednesday 3 26 Mangsir Mangsir 08 75 2075 11 11 AM 06 13`
 
+**timedelta operations**
+```python
+ndt = NepaliDateTime.now()
+print(ndt + datetime.timedelta(hours=5))
+print(ndt - datetime.timedelta(hours=5))
+```
 
 HumanizeDateTime
 -------------
@@ -155,4 +169,9 @@ humanize.to_str()
 returns date in nepali characters if more than threshold(in seconds) else returns humanize form
 ```python
 humanize = HumanizeDateTime(ndt, threshold=60) # 60 seconds
+humanize.to_str()
+
+# custom format after threshold
+humanize = HumanizeDateTime(ndt, threshold=60, format='%Y-%m-%d') # 60 seconds
+humanize.to_str()
 ```
