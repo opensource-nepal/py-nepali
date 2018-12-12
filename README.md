@@ -130,8 +130,10 @@ npDateTime = NepaliDateTime.now()
 print(npDateTime.strftime('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
 print(npDateTime.strftime_en('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
 ```
-`बुध बुधबार ३ २६ मंसिर मंसिर ०८ ७५ २०७५ ११ ११ शुभप्रभात ०६ १३
-Wed Wednesday 3 26 Mangsir Mangsir 08 75 2075 11 11 AM 06 13`
+```
+बुध बुधबार ३ २६ मंसिर मंसिर ०८ ७५ २०७५ ११ ११ शुभप्रभात ०६ १३
+Wed Wednesday 3 26 Mangsir Mangsir 08 75 2075 11 11 AM 06 13
+```
 
 **timedelta operations**
 ```python
