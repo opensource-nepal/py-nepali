@@ -17,6 +17,10 @@ print(repr(npTime))
 npDateTime = NepaliDateTime.now()
 print(repr(npDateTime))
 
+dt = datetime.datetime.now()
+npDateTime = NepaliDateTime.from_datetime(dt)
+print(repr(npDateTime))
+
 npDateTime = NepaliDateTime(2075, 8, 20)
 print(repr(npDateTime))
 
