@@ -25,6 +25,9 @@ setuptools.setup(
 	long_description_content_type="text/markdown",
 	url="https://github.com/aj3sh/nepali",
 	packages=setuptools.find_packages(),
+	install_requires=[
+		'pytz==2018.9'
+	],
 	classifiers=[
 
 		'Programming Language :: Python :: 3',

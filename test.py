@@ -1,6 +1,14 @@
 import datetime
 from nepali.datetime import *
 
+ndt = NepaliDateTime.from_datetime(datetime.datetime.now())
+print(ndt)
+dt = datetime.datetime.now(NepaliTimeZone())
+print(dt.tzinfo)
+print(NepaliDateTime.from_datetime(dt))
+
+exit()
+
 # NepaliDate
 npDate = NepaliDate.today()
 print(repr(npDate))

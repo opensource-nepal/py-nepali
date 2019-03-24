@@ -9,7 +9,8 @@ import time
 import datetime as pythonDateTime
 
 from .char import NepaliChar, EnglishChar
-
+from .timezone import NepaliTimeZone
+from .utils import to_local
 
 class NepaliDate:
 	
@@ -587,7 +588,7 @@ class NepaliDateTime:
 		return None 
 
 	def to_datetime(self):
-		return pythonDateTime.datetime.combine(self.__npDate.to_date(), self.__npTime)
+		return to_local(pythonDateTime.datetime.combine(self.__npDate.to_date(), self.__npTime))
 
 	def date(self):
 		return self.__npDate
@@ -607,12 +608,14 @@ class NepaliDateTime:
 
 	def from_datetime(dt, utc=False):
 		if utc:
-			dt = dt + pythonDateTime.timedelta(hours=5, minutes=45)	# +5:45 pythonDateTime
+			dt = to_utc(dt) + pythonDateTime.timedelta(hours=5, minutes=45)	# +5:45 pythonDateTime
+		else:
+			dt = to_local(dt)
 		nd = NepaliDate.from_date(dt.date())
 		return NepaliDateTime(nd.npYear(), nd.npMonth(), nd.npDay(), dt.hour, dt.minute, dt.second)
 
 	def now():
-		return NepaliDateTime.from_datetime(pythonDateTime.datetime.utcnow(), True)
+		return NepaliDateTime.from_datetime(pythonDateTime.datetime.utcnow(), utc=True)
 
 
 	# property
