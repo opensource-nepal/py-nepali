@@ -1,13 +1,13 @@
 import pytz
 
-from .timezone import NepaliTimeZone
+from .timezone import NepaliTimeZone, get_timezone
 
 def to_utc(datetime_obj):
-	if datetime_obj.tzinfo:
-		return datetime_obj.astimezone(pytz.timezone('UTC'))
-	return datetime_obj.replace(tzinfo=pytz.timezone('UTC'))
+    if not datetime_obj.tzinfo:
+        datetime_obj = datetime_obj.replace(tzinfo=get_timezone())
+    return datetime_obj.astimezone(pytz.timezone('UTC'))
 
 def to_local(datetime_obj):
-	if datetime_obj.tzinfo:
-		return datetime_obj.astimezone(NepaliTimeZone())
-	return datetime_obj.replace(tzinfo=NepaliTimeZone())
+    if not datetime_obj.tzinfo:
+        datetime_obj = datetime_obj.replace(tzinfo=get_timezone())
+    return datetime_obj.astimezone(NepaliTimeZone())
