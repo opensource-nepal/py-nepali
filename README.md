@@ -188,15 +188,32 @@ For Django Template
 -------------------
 
 Add `'nepali'` to your `INSTALLED_APPS` setting.
-
-	INSTALLED_APPS = [
-		...
-		'nepali',
-		...
-	]
+```python
+INSTALLED_APPS = [
+	...
+	'nepali',
+	...
+]
+```
 
 IN your Template
-```
+
+```python
 {% load nepalidatetime %}
+```
+
+```python
+{% nepalinow %}
+```
+
+```python
+{% nepalinow '%Y-%m-%d' %}
+```
+
+```python
 {{ datetimeobj|nepalidate:"%Y-%m-%d" }}
+```
+
+```python
+{{ datetimeobj|nepalihumanize }}
 ```

@@ -12,6 +12,7 @@ from .char import NepaliChar, EnglishChar
 from .timezone import NepaliTimeZone, now, utc_now
 from .utils import to_local, to_utc
 
+
 class NepaliDate:
 	
 	def __init__(self, npYear=0, npMonth=0, npDay=0):
@@ -19,7 +20,7 @@ class NepaliDate:
 		self.__enMonths = [31, 28, 31, 30, 31, 30,31, 31, 30, 31, 30, 31]
 		self.enLeapMonths = [31, 29, 31, 30, 31, 30,31, 31, 30, 31, 30, 31]
 		
-		# List of np months
+		# List of nepali months
 		self.__npMonths = [
 			[ 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31 ],	# 2000 BS - 1944 AD
 			[ 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30 ],	# 2001 BS
@@ -136,7 +137,7 @@ class NepaliDate:
 
 	def setCurrentDate(self):
 		"""
-		Setting current en date
+		Setting current date
 		"""
 		year = int(time.strftime("%Y"))
 		month = int(time.strftime("%m"))
@@ -152,7 +153,7 @@ class NepaliDate:
 		Refrence np 2000/1/1 with en date 1943/4/14
 		"""
 		if(not self.__isEnRange(year,month,date)):
-			raise Exception("Invalid date format.")
+			raise Exception("Date out of range")
 
 		self.__enYear = year
 		self.__enMonth = month
@@ -201,6 +202,7 @@ class NepaliDate:
 	
 
 	def __countTotalEnDays(self, year, month, date):
+		""" counts english date in days with 0000-01-01 """
 
 		totalDays = year * 365 + date
 				
@@ -212,6 +214,7 @@ class NepaliDate:
 
 
 	def __countleap(self, year, month):
+		""" counts total leap years from year/month to 0000/01 """
 		if (month <= 2):
 			year-=1
 		
@@ -219,7 +222,7 @@ class NepaliDate:
 		
 
 	def __isEnRange(self, year, month, date):
-		
+		""" checks if english date in within range 1944 - 2042 """ 
 		if(year < 1944 or year > 2042):
 			return False
 		
@@ -233,7 +236,7 @@ class NepaliDate:
 	
 
 	def __isLeapYear(self, year):
-
+		""" independent method to check leap year """
 		if(year%4 == 0):
 			if(year%100 == 0):
 				return (year%400 == 0)
@@ -244,7 +247,7 @@ class NepaliDate:
 
 
 
-	# Np to En date conversion
+	# Nepali to English date conversion
 
 	def setNpDate(self, year, month, date):
 		"""
@@ -252,7 +255,7 @@ class NepaliDate:
 		Refrence en 1994/1/1 with en date 2000/9/17
 		"""
 		if(not self.__isNpRange(year,month,date)):
-			raise Exception("Invalid date format.")
+			raise Exception("Date out of range")
 
 		self.__npYear = year
 		self.__npMonth = month
@@ -295,8 +298,9 @@ class NepaliDate:
 
 	
 	def npDateDifference(self, year, month, date):
-
-		# Getting difference from the current date with the date provided
+		""" 
+		Getting difference from the current date with the date provided 
+		"""
 		difference = self.__countTotalNpDays(self.__npYear, self.__npMonth, self.__npDay) - self.__countTotalNpDays(year, month, date)
 		if(difference < 0):
 			return -difference
@@ -305,6 +309,7 @@ class NepaliDate:
 
 
 	def __countTotalNpDays(self, year, month, date):
+		""" counts nepali date in days with 2000-01-01 (nepali date) """
 
 		total = 0
 		if(year < 2000):
@@ -327,6 +332,10 @@ class NepaliDate:
 		count total days of specific year ( from index)
 		input: index (year)
 		return total (days)
+
+		eg, for 2075 => 2075-2000 = 75 
+		__npYearDays(75) => 365 days
+
 		"""
 		total = 0
 		
@@ -337,6 +346,7 @@ class NepaliDate:
 		
 
 	def __isNpRange(self, year, month, date):
+		""" checks if nepali date is in range 2000-2098 """
 		if(year < 2000 or year > 2098):
 			return False
 		
@@ -420,7 +430,6 @@ class NepaliDate:
 		return self.weekDay()
 	
 
-
 class NepaliTime(pythonDateTime.time):
 
 	def __repr__(self):
@@ -452,10 +461,12 @@ class NepaliDateTime:
 	def __repr__(self):
 		return "<NepaliDateTime> "+str(self)
 
+
 	# operator overloadings
 
-	# addition
 	def __add__(self, other):
+		""" addition """
+
 		if type(other) == pythonDateTime.timedelta:
 			"""
 			timedelta object
@@ -465,8 +476,9 @@ class NepaliDateTime:
 
 		return None
 
-	# substraction
 	def __sub__(self, other):
+		""" substraction """
+
 		if type(other) == self.__class__:
 			"""
 			NepaliDateTime object
@@ -485,8 +497,9 @@ class NepaliDateTime:
 
 		return None
 
-	# less than
 	def __lt__(self, other):
+		""" less than """
+
 		if type(other) == self.__class__:
 			"""
 			NepaliDateTime object
@@ -502,8 +515,9 @@ class NepaliDateTime:
 
 		return None
 
-	# less than euqal
 	def __le__(self, other):
+		""" less than euqal """
+
 		if type(other) == self.__class__:
 			"""
 			NepaliDateTime object
@@ -519,8 +533,9 @@ class NepaliDateTime:
 
 		return None
 
-	# equal
 	def __eq__(self, other):
+		""" equal """
+		
 		if type(other) == self.__class__:
 			"""
 			NepaliDateTime object
@@ -536,8 +551,10 @@ class NepaliDateTime:
 			
 		return None
 
-	# not equal
+
 	def __ne__(self, other):
+		""" not equal """
+
 		if type(other) == self.__class__:
 			"""
 			NepaliDateTime object
@@ -553,8 +570,9 @@ class NepaliDateTime:
 			
 		return None
 	
-	# greater than
 	def __gt__(self, other):
+		""" greater than """
+
 		if type(other) == self.__class__:
 			"""
 			NepaliDateTime object
@@ -570,8 +588,9 @@ class NepaliDateTime:
 			
 		return None
 	
-	# greater than equal
 	def __ge__(self, other):
+		""" greater than equal """
+
 		if type(other) == self.__class__:
 			"""
 			NepaliDateTime object
@@ -609,10 +628,6 @@ class NepaliDateTime:
 	@staticmethod
 	def from_datetime(dt):
 		dt = to_local(dt)
-		# if utc:
-		# 	dt = to_utc(dt) + pythonDateTime.timedelta(hours=5, minutes=45)	# +5:45 pythonDateTime
-		# else:
-		# 	dt = to_local(dt)
 		nd = NepaliDate.from_date(dt.date())
 		return NepaliDateTime(nd.npYear(), nd.npMonth(), nd.npDay(), dt.hour, dt.minute, dt.second)
 
@@ -668,16 +683,26 @@ class HumanizeDateTime:
 	__second_text = "सेकेन्ड"
 
 	def	__init__(self, datetime_obj, *args, **kwargs):
+		""" 
+		initializes humanize class
+		datetime_obj: python datetime object to be humanized
+		threshold (kwargs): threshold to be humanize
+		format (kwargs): format to display behind threshold
+		"""
 		if type(datetime_obj) == NepaliDateTime:
 			self.datetime_obj = datetime_obj.to_datetime()
 		else:
 			self.datetime_obj = to_local(datetime_obj)
 		self.threshold = kwargs.get('threshold')
 		self.format = kwargs.get('format')
+
+		# seconds afer from now to datetime_obj
 		self.seconds = None
 
 
 	def __calc_seconds(self):
+		""" calculates total seconds from now """
+
 		current_date_time = pythonDateTime.datetime.now()
 		current_date_time = current_date_time.replace(tzinfo=None)
 		date = self.datetime_obj.replace(tzinfo=None)
@@ -687,6 +712,8 @@ class HumanizeDateTime:
 			self.interval_tense = self.__future_text
 
 	def to_str(self):
+		""" returns humanize string """
+
 		self.__calc_seconds()	# refreshing seconds
 		seconds = self.seconds
 		if( seconds < 0):
@@ -762,7 +789,11 @@ class HumanizeDateTime:
 
 
 class NepaliDateTimeFormater:
+	""" 
+	NepaliDateTimeFormater: formats nepali datetime to string ( using strftime )
+	"""
 
+	# format according to python's datetime with class method
 	format_map = {
 		'a': 'weekdayHalf',
 		'A': 'weekdayFull',
@@ -788,6 +819,7 @@ class NepaliDateTimeFormater:
 		return str(self.npDateTime)
 
 	def get_str(self, format):
+		""" generates formated string """
 		i, n = 0, len(format)
 		time_str = []
 		try:
@@ -959,3 +991,15 @@ class NepaliDateTimeFormater:
 		if self.english:
 			return str(second)
 		return NepaliChar.number(second)
+
+
+def nepalihumanize(datetime_obj, threshold=None, format=None):
+	""" returns to humanize nepalidatetime """
+	humanize = HumanizeDateTime(datetime_obj, threshold=threshold, format=format)
+	humanize_str = humanize.to_str()
+	return humanize_str
+
+
+nepalidate = NepaliDate
+nepalitime = NepaliTime
+nepalidatetime = NepaliDateTime
