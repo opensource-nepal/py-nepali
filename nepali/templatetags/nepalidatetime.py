@@ -24,4 +24,4 @@ def nepalihumanize(datetime_obj, threshold=None, format=None):
 	# if str(datetime_obj.tzinfo) == 'UTC':
 	# 	return NepaliDateTime.from_datetime(datetime_obj, True).strftime(format)
 	humanize = HumanizeDateTime(datetime_obj, threshold=threshold, format=format)
-	return humanize.to_str()	
+	return humanize.to_str()
