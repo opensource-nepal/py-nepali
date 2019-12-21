@@ -1,3 +1,12 @@
+"""
+setup file for nepali package
+
+- Publish version
+$ python setup.py publish
+
+"""
+
+
 import os
 import sys
 import setuptools
@@ -18,7 +27,7 @@ if sys.argv[-1] == 'publish':
 
 setuptools.setup(
 	name="nepali",
-	version="0.2.0",
+	version="0.3.0",
 	author="Ajesh Sen Thapa",
 	author_email="aj3sshh@gmail.com",
 	description="Python package for nepali processes",

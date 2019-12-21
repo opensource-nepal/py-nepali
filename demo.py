@@ -59,9 +59,8 @@ print(24, ndt1 != dt1)
 
 # NepaliDateTime strftime()
 npDateTime = NepaliDateTime.now()
-print(25, npDateTime.strftime('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
-print(26, npDateTime.strftime_en('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
-
+print(25, npDateTime.strftime('%a %A %w %d %-d %b %B %m %y %Y %H %I %p %M %S'))
+print(26, npDateTime.strftime_en('%a %A %w %d %-d %b %B %m %y %Y %H %I %p %M %S'))
 
 # Humanize datetime
 humanize = HumanizeDateTime(datetime.datetime.now())
@@ -75,6 +74,10 @@ ndt = NepaliDateTime(2075, 8, 2)
 humanize = HumanizeDateTime(ndt, threshold=0)
 print(29, humanize.to_str())
 
-ndt = NepaliDateTime(2075, 8, 2)
+ndt = NepaliDateTime(2075, 8, 5, 6, 8, 9)
 humanize = HumanizeDateTime(ndt, threshold=0, format='%a %A %w %d %b %B %m %y %Y')
 print(30, humanize.to_str())
+
+# non zero padding
+print(31, ndt.strftime('%d %-d, %m %-m, %H %-H, %I %-I, %S %-S'))
+print(31, ndt.strftime_en('%d %-d, %m %-m, %H %-H, %I %-I, %S %-S'))
