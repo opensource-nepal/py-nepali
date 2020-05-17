@@ -130,7 +130,7 @@ np_datetime.time()
 ```python
 np_datetime.to_datetime()
 ```
-**Date String Format**
+**Date String Format**\
 _Equivalent to python's datetime strftime format_
 ```python
 npDateTime = NepaliDateTime.now()
@@ -174,7 +174,7 @@ humanize = HumanizeDateTime(dt)
 humanize.to_str()
 ```
 
-**Humanize with threshold**
+**Humanize with threshold**\
 returns date in nepali characters if more than threshold(in seconds) else returns humanize form
 ```python
 humanize = HumanizeDateTime(ndt, threshold=60) # 60 seconds

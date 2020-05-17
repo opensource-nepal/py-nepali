@@ -16,7 +16,7 @@ with open("README.md", "r") as fh:
 
 
 if sys.argv[-1] == 'publish':
-	if os.system("pip freeze | grep twine"):
+	if os.system("pip3 freeze | grep twine"):
 		print("twine not installed.\nUse `pip install twine`.\nExiting.")
 		sys.exit()
 	os.system("rm -rf dist")
