@@ -4,28 +4,28 @@ class NepaliChar:
 
 	@staticmethod
 	def number(num):
-		return NepaliNumber.nepali(num)
+		return NepaliNumber.convert(num)
 
 	@staticmethod
 	def day(day):
-		days = ['आइतबार','सोमबार','मंगलबार','बुधबार','बिहिबार','शुक्रबार','शनिबार'];
+		days = ['आइतबार','सोमबार','मंगलबार','बुधबार','बिहीबार','शुक्रबार','शनिबार']
 		return days[day-1]
 
 	@staticmethod
 	def half_day(day):
-		days = ['आइत','सोम','मंगल','बुध','बिहि','शुक्र','शनि']
+		days = ['आइत','सोम','मंगल','बुध','बिही','शुक्र','शनि']
 		return days[day-1]
 
 	@staticmethod
 	def month(month):
-		months = ['बैशाख','जेठ','असार','श्रावण','भदौ','आश्विन','कार्तिक','मंसिर','पुष','माघ','फाल्गुन','चैत्र']
+		months = ['बैशाख','जेठ','असार','साउन','भदौ','असोज','कात्तिक','मंसिर','पुस','माघ','फागुन','चैत']
 		return months[month-1]
 
 class EnglishChar:
 
 	@staticmethod
 	def day(day):
-		days = ['Sunday','Monday','Tuesday','Wednesday','Thrusday','Friday','Saturday'];
+		days = ['Sunday','Monday','Tuesday','Wednesday','Thrusday','Friday','Saturday']
 		return days[day-1]
 
 	@staticmethod

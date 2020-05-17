@@ -63,19 +63,19 @@ np_date.setNpDate(2075, 6, 22)
 **Nepali date details**  
 ```python
 np_date.toNpString() # returns nepali date string  
-np_date.npYear()  
-np_date.npMonth()  
-np_date.npDay()  
-np_date.weekDay()
+np_date.year  
+np_date.month  
+np_date.day  
+np_date.week_day
 ```
 
 **English date details**  
 ```python
 np_date.toEnString() # returns english date string  
-np_date.enYear()  
-np_date.enMonth()  
-np_date.enDay()  
-np_date.weekDay()
+np_date.year_en  
+np_date.month_en  
+np_date.day_en  
+np_date.week_day
 ```
 
 **Difference Days count**  
@@ -131,6 +131,7 @@ np_datetime.time()
 np_datetime.to_datetime()
 ```
 **Date String Format**
+_Equivalent to python's datetime strftime format_
 ```python
 npDateTime = NepaliDateTime.now()
 print(npDateTime.strftime('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))

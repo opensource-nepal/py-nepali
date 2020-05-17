@@ -401,10 +401,10 @@ class NepaliDate(AbstractNepaliDate):
 		return "<NepaliDate> "+str(self)
 	
 	def to_datetime(self):
-		return to_local(pythonDateTime.datetime(self.__enYear, self.__enMonth, self.__enDay))
+		return to_local(pythonDateTime.datetime(self.year_en, self.month_en, self.day_en))
 
 	def to_date(self):
-		self.to_datetime().date()
+		return self.to_datetime().date()
 
 	def to_nepali_datetime(self):
 		return NepaliDateTime.from_nepali_date(self)
@@ -442,6 +442,7 @@ class NepaliDate(AbstractNepaliDate):
 
 	# property
 
+	# nepali date properties
 	@property
 	def year(self):
 		return self.npYear()
@@ -453,6 +454,19 @@ class NepaliDate(AbstractNepaliDate):
 	@property
 	def day(self):
 		return self.npDay()
+
+	# english date propertties
+	@property
+	def year_en(self):
+		return self.enYear()
+
+	@property
+	def month_en(self):
+		return self.enMonth()
+
+	@property
+	def day_en(self):
+		return self.enDay()
 
 	@property
 	def week_day(self):
