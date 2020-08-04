@@ -440,6 +440,10 @@ class NepaliDate(AbstractNepaliDate):
 		npDate.setEnDate(date_object.year, date_object.month, date_object.day)
 		return npDate
 
+	@staticmethod
+	def from_nepalidatetime(datetime_object):
+		return datetime_object.date()
+
 	# property
 
 	# nepali date properties
@@ -743,8 +747,15 @@ class HumanizeDateTime:
 		"""
 		if type(datetime_obj) == NepaliDateTime:
 			self.datetime_obj = datetime_obj.to_datetime()
-		else:
+		elif type(datetime_obj) == NepaliDate:
+			self.datetime_obj = NepaliDateTime.from_nepali_date(datetime_obj).to_datetime()
+		elif type(datetime_obj) == pythonDateTime.date:
+			self.datetime_obj = NepaliDateTime.from_date(datetime_obj).to_datetime()
+		elif type(datetime_obj) == pythonDateTime.datetime:
 			self.datetime_obj = to_local(datetime_obj)
+		else:
+			raise InvalidNepaliDateTimeObjectException('Argument must be instance of NepaliDate or NepaliDateTime or datetime.datetime or datetime.date') 
+
 		self.threshold = kwargs.get('threshold')
 		self.format = kwargs.get('format')
 
@@ -755,9 +766,8 @@ class HumanizeDateTime:
 	def __calc_seconds(self):
 		""" calculates total seconds from now """
 
-		current_date_time = pythonDateTime.datetime.now()
-		current_date_time = current_date_time.replace(tzinfo=None)
-		date = self.datetime_obj.replace(tzinfo=None)
+		current_date_time = now()
+		date = self.datetime_obj
 		self.seconds = int((current_date_time-date).total_seconds())
 		self.interval_tense = self.__past_text
 		if(self.seconds < 0):

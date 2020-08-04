@@ -16,8 +16,10 @@ Installation
 
 Features
 --------
-1. English to Nepali, Nepali to English date conversions
-2. Nepali Characters
+1. English to Nepali, Nepali to English date conversions with Nepali Timezone
+2. Nepali Characters (Months, Days, etc)
+3. Number to nepali numbers and nepali numbers to english.
+
 
 NepaliDate
 -------------
@@ -31,7 +33,7 @@ from nepali.datetime import NepaliDate
 **Creating new object**
 ```python
 # object with current date
-np_date = NepaliDate()
+np_date = NepaliDate(year, month, day)
 
 # object with today's date
 np_date = NepaliDate.today()
@@ -45,48 +47,14 @@ date = datetime.date.today()
 np_date = NepaliDate.from_date(date)
 ```
 
-**Set Current date**  
-```python
-np_date.setCurrentDate()
-```
-
-**Set English date**  
-```python
-np_date.setEnDate(2018, 8, 18)
-```
-
-**Set Nepali date**  
-```python
-np_date.setNpDate(2075, 6, 22)
-```
-
-**Nepali date details**  
-```python
-np_date.toNpString() # returns nepali date string  
-np_date.year  
-np_date.month  
-np_date.day  
-np_date.week_day
-```
-
-**English date details**  
-```python
-np_date.toEnString() # returns english date string  
-np_date.year_en  
-np_date.month_en  
-np_date.day_en  
-np_date.week_day
-```
-
-**Difference Days count**  
-```python
-np_date.npDateDifference(2070, 10, 8) # returns no of days difference for nepali date.  
-np_date.enDateDifference(2017, 10, 8) # returns no of days difference for english date.
-```
-
-**Get python's datetime.date**
+**Get python's datetime.date object**
 ```python
 np_date.to_date()
+```
+
+**Get python's datetime.datetime object**
+```python
+np_date.to_datetime()
 ```
 
 
@@ -130,6 +98,7 @@ np_datetime.time()
 ```python
 np_datetime.to_datetime()
 ```
+
 **Date String Format**\
 _Equivalent to python's datetime strftime format_
 ```python
