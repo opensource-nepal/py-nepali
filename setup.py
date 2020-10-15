@@ -36,7 +36,7 @@ setuptools.setup(
 	url="https://github.com/aj3sh/nepali",
 	packages=setuptools.find_packages(),
 	install_requires=[
-		'pytz==2018.9'
+		'pytz'
 	],
 	classifiers=[
 
