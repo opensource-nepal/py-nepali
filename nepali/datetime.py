@@ -444,6 +444,25 @@ class NepaliDate(AbstractNepaliDate):
 	def from_nepalidatetime(datetime_object):
 		return datetime_object.date()
 
+	# operators overloading
+	def __eq__(self, other):
+		""" equal """
+		
+		if type(other) == self.__class__:
+			"""
+			NepaliDate object
+			"""
+			return self.to_date() == other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			"""
+			pythonDate object
+			"""
+			return self.to_date() == to_local(other)
+
+			
+		return False
+
 	# property
 
 	# nepali date properties
