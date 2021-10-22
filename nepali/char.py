@@ -25,7 +25,7 @@ class EnglishChar:
 
 	@staticmethod
 	def day(day):
-		days = ['Sunday','Monday','Tuesday','Wednesday','Thrusday','Friday','Saturday']
+		days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 		return days[day-1]
 
 	@staticmethod
