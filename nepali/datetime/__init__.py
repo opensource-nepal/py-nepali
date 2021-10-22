@@ -8,10 +8,10 @@
 import time
 import datetime as pythonDateTime
 
-from .char import NepaliChar, EnglishChar
-from .timezone import NepaliTimeZone, now, utc_now
-from .utils import to_local, to_utc
-from .exceptions import InvalidDateFormatException, InvalidNepaliDateTimeObjectException
+from nepali.char import NepaliChar, EnglishChar
+from nepali.timezone import NepaliTimeZone, now, utc_now
+from nepali.utils import to_local
+from nepali.exceptions import InvalidDateFormatException, InvalidNepaliDateTimeObjectException
 
 class AbstractNepaliDate:
 	
@@ -417,8 +417,25 @@ class NepaliDate(AbstractNepaliDate):
 		formater = NepaliDateTimeFormater(self, True)
 		return formater.get_str(format)
 
-	# operator overloadings # for future
-	# pass
+	
+	# operators overloading
+
+	def __eq__(self, other):
+		""" equal """
+		
+		if type(other) == self.__class__:
+			"""
+			NepaliDate object
+			"""
+			return self.to_date() == other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			"""
+			pythonDate object
+			"""
+			return self.to_date() == to_local(other)
+			
+		return False
 
 	# static methods
 	
@@ -443,25 +460,6 @@ class NepaliDate(AbstractNepaliDate):
 	@staticmethod
 	def from_nepalidatetime(datetime_object):
 		return datetime_object.date()
-
-	# operators overloading
-	def __eq__(self, other):
-		""" equal """
-		
-		if type(other) == self.__class__:
-			"""
-			NepaliDate object
-			"""
-			return self.to_date() == other.to_date()
-
-		elif type(other) == pythonDateTime.date:
-			"""
-			pythonDate object
-			"""
-			return self.to_date() == to_local(other)
-
-			
-		return False
 
 	# property
 
@@ -613,7 +611,6 @@ class NepaliDateTime:
 			"""
 			return self.to_datetime() == to_local(other)
 
-			
 		return None
 
 
