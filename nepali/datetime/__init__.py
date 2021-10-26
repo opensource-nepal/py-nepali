@@ -945,7 +945,7 @@ class NepaliDateTimeFormater:
 		except InvalidDateFormatException as e:
 			raise e
 		except Exception:
-			raise Exception('Unbale to convert NepaliDateTime to str')
+			raise Exception('Unable to convert NepaliDateTime to str')
 		time_str = ''.join(time_str)
 
 		return time_str

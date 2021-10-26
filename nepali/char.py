@@ -22,6 +22,7 @@ class NepaliChar:
 		return months[month-1]
 
 class EnglishChar:
+	months = ['Baishakh','Jestha','Ashad','Sharwan','Bhadra','Ashwin','Kartik','Mangsir','Poush','Magh','Falgun','Chaitra']
 
 	@staticmethod
 	def day(day):
@@ -35,5 +36,4 @@ class EnglishChar:
 
 	@staticmethod
 	def month(month):
-		months = ['Baishakh','Jestha','Ashad','Sharwan','Bhadra','Ashwin','Kartik','Mangsir','Poush','Magh','Falgun','Chaitra']
-		return months[month-1]
+		return self.months[month-1]
