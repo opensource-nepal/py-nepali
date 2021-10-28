@@ -35,6 +35,7 @@ setuptools.setup(
 	long_description_content_type="text/markdown",
 	url="https://github.com/aj3sh/nepali",
 	packages=setuptools.find_packages(),
+	test_suite='nepali.tests',
 	install_requires=[
 		'pytz'
 	],
