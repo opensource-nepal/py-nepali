@@ -5,6 +5,7 @@ from .timezone import NepaliTimeZone, get_timezone
 from .exceptions import InvalidNepaliDateTimeObjectException
 
 def to_utc(datetime_obj):
+	# TODO: rename to to_utc_timezone
 	if type(datetime_obj) != datetime.datetime:
 		# None datetime object
 		return datetime_obj
@@ -14,6 +15,7 @@ def to_utc(datetime_obj):
 	return datetime_obj.astimezone(pytz.timezone('UTC'))
 
 def to_local(datetime_obj):
+	# TODO: rename to to_nepali_timezone
 	if type(datetime_obj) != datetime.datetime:
 		return datetime_obj
 
@@ -23,6 +25,7 @@ def to_local(datetime_obj):
 
 def to_nepali_datetime(datetime_object):
 	""" converts nepalidate, datetime.datetime, datetime.date to nepalidatetime """
+	# TODO: rename to to_nepalidatetime
 	from .datetime import NepaliDate, NepaliDateTime
 
 	if type(datetime_object) == NepaliDateTime:
@@ -37,3 +40,7 @@ def to_nepali_datetime(datetime_object):
 		return None
 
 	raise InvalidNepaliDateTimeObjectException('Argument must be instance of NepaliDate or NepaliDateTime or datetime.datetime or datetime.date') 
+
+# TODO:
+# def to_nepalidate(datetime_object):
+#	pass

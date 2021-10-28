@@ -10,7 +10,7 @@ import datetime as pythonDateTime
 import warnings
 
 from nepali.char import NepaliChar, EnglishChar
-from nepali.timezone import NepaliTimeZone, now, utc_now
+from nepali.timezone import now, utc_now
 from nepali.utils import to_local
 from nepali.exceptions import InvalidDateFormatException, InvalidNepaliDateTimeObjectException
 
@@ -124,7 +124,7 @@ class _abstract_nepalidate:
 	]
 
 	def __init__(self, npYear=0, npMonth=0, npDay=0):
-
+		# TODO: remove default value to 0
 		if npYear == 0 or npMonth == 0 or npDay == 0:
 			self.setCurrentDate()
 		else:
@@ -408,6 +408,7 @@ class nepalidate(_abstract_nepalidate):
 		return self.to_datetime().date()
 
 	def to_nepali_datetime(self):
+		# TODO: rename to to_nepalidatetime
 		return nepalidatetime.from_nepali_date(self)
 
 	def strftime(self, format):
@@ -420,7 +421,7 @@ class nepalidate(_abstract_nepalidate):
 
 	
 	# operators overloading
-
+	# TODO: add more operators overloading
 	def __eq__(self, other):
 		""" equal """
 		
@@ -477,7 +478,8 @@ class nepalidate(_abstract_nepalidate):
 	def day(self):
 		return self.npDay()
 
-	# english date propertties
+	# english date properties
+	# TODO: remove multiple calls
 	@property
 	def year_en(self):
 		return self.enYear()
@@ -742,6 +744,7 @@ class nepalidatetime:
 
 class HumanizeDateTime:
 	"""
+	TODO: add to new file
 	HumanizeDate converts NepaliDateTime to nepali human readable form
 	"""
 
@@ -868,7 +871,8 @@ class HumanizeDateTime:
 
 
 class NepaliDateTimeFormater:
-	""" 
+	"""
+	TODO add to new file
 	NepaliDateTimeFormater: formats nepali datetime to string ( using strftime )
 	"""
 
