@@ -1182,16 +1182,16 @@ def nepalihumanize(datetime_obj, threshold=None, format=None):
 
 class NepaliDate(nepalidate):
 	def __init__(self, *args, **kwargs):
-		print("NepaliDate id depreciated and no longer be available in version >= 1.0.0, use nepalidate instead.")
+		print("NepaliDate is depreciated and no longer be available in version >= 1.0.0, use nepalidate instead.")
 		super().__init__(*args, **kwargs)
 
 class NepaliTime(nepalidate):
 	def __init__(self, *args, **kwargs):
-		print("NepaliTime id depreciated and no longer be available in version >= 1.0.0, use nepalitime instead.")
+		print("NepaliTime is depreciated and no longer be available in version >= 1.0.0, use nepalitime instead.")
 		super().__init__(*args, **kwargs)
 
 class NepaliDateTime(nepalidate):
 	def __init__(self, *args, **kwargs):
-		print("NepaliDateTime id depreciated and no longer be available in version >= 1.0.0, use nepalidatetime instead.")
+		print("NepaliDateTime is depreciated and no longer be available in version >= 1.0.0, use nepalidatetime instead.")
 		super().__init__(*args, **kwargs)
 
