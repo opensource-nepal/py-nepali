@@ -7,6 +7,7 @@
 
 import time
 import datetime as pythonDateTime
+import warnings
 
 from nepali.char import NepaliChar, EnglishChar
 from nepali.timezone import NepaliTimeZone, now, utc_now
@@ -1182,16 +1183,25 @@ def nepalihumanize(datetime_obj, threshold=None, format=None):
 
 class NepaliDate(nepalidate):
 	def __init__(self, *args, **kwargs):
-		print("NepaliDate is depreciated and no longer be available in version >= 1.0.0, use nepalidate instead.")
+		warnings.warn(
+			message="NepaliDate is depreciated and no longer be available in version >= 1.0.0, use nepalidate instead.", 
+			category=DeprecationWarning
+		)
 		super().__init__(*args, **kwargs)
 
 class NepaliTime(nepalidate):
 	def __init__(self, *args, **kwargs):
-		print("NepaliTime is depreciated and no longer be available in version >= 1.0.0, use nepalitime instead.")
+		warnings.warn(
+			message="NepaliTime is depreciated and no longer be available in version >= 1.0.0, use nepalitime instead.", 
+			category=DeprecationWarning
+		)
 		super().__init__(*args, **kwargs)
 
 class NepaliDateTime(nepalidate):
 	def __init__(self, *args, **kwargs):
-		print("NepaliDateTime is depreciated and no longer be available in version >= 1.0.0, use nepalidatetime instead.")
+		warnings.warn(
+			message="NepaliDateTime is depreciated and no longer be available in version >= 1.0.0, use nepalidatetime instead.", 
+			category=DeprecationWarning
+		)
 		super().__init__(*args, **kwargs)
 

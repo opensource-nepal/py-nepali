@@ -1,6 +1,6 @@
 import unittest
 
-from nepali.datetime import nepalidate
+from nepali.datetime import NepaliDate, nepalidate
 
 
 class TestNepaliDateTime(unittest.TestCase):
