@@ -23,7 +23,9 @@ class NepaliChar:
 
 class EnglishChar:
 	months = ['Baishakh','Jestha','Ashad','Sharwan','Bhadra','Ashwin','Kartik','Mangsir','Poush','Magh','Falgun','Chaitra']
-
+	days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+	days_half = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+	
 	@staticmethod
 	def day(day):
 		days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
