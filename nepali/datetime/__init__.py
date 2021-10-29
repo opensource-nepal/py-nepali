@@ -516,7 +516,7 @@ class nepalidatetime:
 
 	def __init__(self, year, month, day, hour=0, minute=0, second=0, microsecond=0):
 		self.__npDate = nepalidate(year, month, day)
-		self.__npTime = nepalidate(hour, minute, second, microsecond) 
+		self.__npTime = nepalitime(hour, minute, second, microsecond) 
 
 	def __str__(self):
 		return str(self.__npDate)+' '+str(self.__npTime)
