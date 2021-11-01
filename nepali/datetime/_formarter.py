@@ -38,7 +38,7 @@ class NepaliDateTimeFormater:
 		if type(datetime_object) == nepalidatetime:
 			self.npDateTime = datetime_object
 		elif type(datetime_object) == nepalidate:
-			self.npDateTime = datetime_object.to_nepali_datetime()
+			self.npDateTime = datetime_object.to_nepalidatetime()
 		elif type(datetime_object) == pythonDateTime.date:
 			self.npDateTime = nepalidatetime.from_date(datetime_object)
 		elif type(datetime_object) == pythonDateTime.datetime:

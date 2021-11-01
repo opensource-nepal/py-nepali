@@ -105,8 +105,7 @@ class nepalidate(formater_class_mixin):
 
 	@staticmethod
 	def from_date(date_object):
-		npDate = nepalidate()
-		npDate.set_english_date(date_object.year, date_object.month, date_object.day)
+		npDate = nepalidate(*NepaliDateConverter.english_to_nepali(date_object.year, date_object.month, date_object.day))
 		return npDate
 
 	@staticmethod
@@ -161,7 +160,7 @@ class nepalidatetime(formater_class_mixin):
 
 	def __init__(self, year, month, day, hour=0, minute=0, second=0, microsecond=0):
 		self.__npDate = nepalidate(year, month, day)
-		self.__npTime = nepalidate(hour, minute, second, microsecond) 
+		self.__npTime = nepalitime(hour, minute, second, microsecond) 
 
 	def __str__(self):
 		return str(self.__npDate)+' '+str(self.__npTime)
