@@ -2,8 +2,12 @@
 validates parsing
 '''
 import re
-from nepali.char import EnglishChar
+from datetime import date
 
+from nepali.char import EnglishChar, nepali_to_english_text
+
+
+__nepali_time_re__CACHE = None
 
 class NepaliTimeRE(dict):
     
@@ -84,13 +88,22 @@ class NepaliTimeRE(dict):
     def compile(self, format):
         """Return a compiled re object for the format string."""
         return re.compile(self.pattern(format), re.IGNORECASE)
-        
 
-def _extract(datetime_str, format):
+def get_nepali_time_re_object():
+    global __nepali_time_re__CACHE
+    if __nepali_time_re__CACHE == None:
+        __nepali_time_re__CACHE = NepaliTimeRE()
+    return __nepali_time_re__CACHE
+
+def _convert_datetime_str_to_english(datetime_str):
+    pass
+
+def extract(datetime_str, format):
     '''
-    Extracts year, month, day, hour, minute from the given format.
+    Extracts year, month, day, hour, minute, etc from the given format.
     
     eg.
+    USAGE: extract("2078-01-12", format="%Y-%m-%d")
     INPUT:
     datetime_str="2078-01-12" 
     format="%Y-%m-%d"
@@ -102,9 +115,17 @@ def _extract(datetime_str, format):
         "d": 12,
     }
     '''
-    pass
 
-def _transform(data):
+    # converting datetime_str to english if any exists
+    datetime_str = nepali_to_english_text(datetime_str)
+
+    re_compiled_format = get_nepali_time_re_object().compile(format=format)
+    match = re_compiled_format.match(datetime_str)
+    if match == None:
+        return {}
+    return match.groupdict()
+
+def transform(data):
     '''
     transforms different format data to uniform data
 
@@ -124,7 +145,7 @@ def _transform(data):
     }
     '''
 
-def _validate(datetime_str, format):
+def validate(datetime_str, format):
     '''
     validates datetime_str with the format
     Perform step by step test for fast performance. The steps are:

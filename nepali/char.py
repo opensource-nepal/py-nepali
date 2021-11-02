@@ -1,5 +1,49 @@
 from .number import NepaliNumber
 
+
+MONTHS_MAP = {
+	'बैशाख': 'Baishakh',
+	'जेठ': 'Jestha',
+	'असार': 'Ashad',
+	'साउन': 'Sharwan',
+	'भदौ': 'Bhadra',
+	'असोज': 'Ashwin',
+	'कात्तिक': 'Kartik',
+	'मंसिर': 'Mangsir',
+	'पुस': 'Poush',
+	'माघ': 'Magh',
+	'फागुन': 'Falgun',
+	'चैत': 'Chaitra',
+}
+
+DAYS_MAP = {
+	'आइतबार': 'Sunday',
+	'सोमबार': 'Monday',
+	'मंगलबार': 'Tuesday',
+	'बुधबार': 'Wednesday',
+	'बिहीबार': 'Thursday',
+	'शुक्रबार': 'Friday',
+	'शनिबार': 'Saturday',
+}
+
+HALF_DAYS_MAP = {
+	'आइत': 'Sun',
+	'सोम': 'Mon',
+	'मंगल': 'Tue',
+	'बुध': 'Wed',
+	'बिही': 'Thu',
+	'शुक्र': 'Fri',
+	'शनि': 'Sat',
+}
+
+AM_PM_MAP = {
+	'शुभप्रभात' : 'AM',
+	'मध्यान्ह': 'PM',
+	'अपरान्ह': 'PM',
+}
+
+
+
 class NepaliChar:
 
 	@staticmethod
@@ -37,3 +81,26 @@ class EnglishChar:
 	@staticmethod
 	def month(month):
 		return EnglishChar.months[month-1]
+
+
+def nepali_to_english_text(text):
+	# TODO: optimization
+
+	from .number import NepaliNumber
+
+	# replacing months
+	for k,v in MONTHS_MAP.items():
+		text = text.replace(k, v)
+	
+	# replacing days
+	for k,v in DAYS_MAP.items():
+		text = text.replace(k, v)
+	
+	# replacing half days
+	for k,v in HALF_DAYS_MAP.items():
+		text = text.replace(k, v)
+
+	for k,v in AM_PM_MAP.items():
+		text = text.replace(k, v)
+
+	return NepaliNumber.revert(text)
