@@ -147,10 +147,8 @@ class nepalitime(pythonDateTime.time):
 	
 	@staticmethod
 	def now(*args, **kwargs):
-		dt = now()
-		if kwargs.get('microsecond'):
-			return nepalitime(dt.time().hour, dt.time().minute, dt.time().second, dt.time().microsecond)
-		return nepalitime(dt.time().hour, dt.time().minute, dt.time().second)
+		dt_now = pythonDateTime.datetime.now()
+		return nepalitime(dt_now.hour, dt_now.minute, dt_now.second, dt_now.microsecond)
 
 
 class nepalidatetime(formater_class_mixin):
@@ -316,6 +314,9 @@ class nepalidatetime(formater_class_mixin):
 	def to_datetime(self):
 		return to_nepali_timezone(pythonDateTime.datetime.combine(self.__npDate.to_date(), self.__npTime))
 
+	def to_date(self):
+		return self.to_datetime().date()
+
 	def date(self):
 		return self.__npDate
 
@@ -339,7 +340,7 @@ class nepalidatetime(formater_class_mixin):
 	def from_datetime(dt):
 		dt = to_nepali_timezone(dt)
 		nd = nepalidate.from_date(dt.date())
-		return nepalidatetime(nd.npYear(), nd.npMonth(), nd.npDay(), dt.hour, dt.minute, dt.second)
+		return nepalidatetime(nd.year, nd.month, nd.day, dt.hour, dt.minute, dt.second, dt.microsecond)
 
 	@staticmethod
 	def from_date(date_object):
@@ -370,7 +371,7 @@ class nepalidatetime(formater_class_mixin):
 
 	@property
 	def week_day(self):
-		return self.__npDate.weekDay()
+		return self.__npDate.weekday()
 
 	@property
 	def hour(self):
