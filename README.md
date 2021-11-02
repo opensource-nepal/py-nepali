@@ -21,22 +21,22 @@ Features
 3. Number to nepali numbers and nepali numbers to english.
 
 
-NepaliDate
+nepalidate
 -------------
 
 Represents nepali date, converts English date to nepali date and nepali date to english date
 
 ```python
-from nepali.datetime import NepaliDate  
+from nepali.datetime import nepalidate  
 ```
 
 **Creating new object**
 ```python
 # object with current date
-np_date = NepaliDate(year, month, day)
+np_date = nepalidate(year, month, day)
 
 # object with today's date
-np_date = NepaliDate.today()
+np_date = nepalidate.today()
 ```
 
 **Object from python's datetime.date**
@@ -44,7 +44,7 @@ np_date = NepaliDate.today()
 import datetime
 
 date = datetime.date.today()
-np_date = NepaliDate.from_date(date)
+np_date = nepalidate.from_date(date)
 ```
 
 **Get python's datetime.date object**
@@ -58,22 +58,22 @@ np_date.to_datetime()
 ```
 
 
-NepaliDateTime
+nepalidatetime
 -------------
 
 Represents nepali date time
 
 ```python
-from nepali.datetime import NepaliDateTime  
+from nepali.datetime import nepalidatetime  
 ```
 
 **Creating new object**
 ```python
 # object with specific datetime
-np_datetime = NepaliDateTime(year, month, day[, hour[, minute[, second]]]) # arguments must be nepali
+np_datetime = nepalidatetime(year, month, day[, hour[, minute[, second]]]) # arguments must be nepali
 
 # object with current datetime
-np_datetime = NepaliDateTime.now()
+np_datetime = nepalidatetime.now()
 ```
 
 **Object from python's datetime.datetime**
@@ -81,10 +81,10 @@ np_datetime = NepaliDateTime.now()
 import datetime
 
 dt = datetime.datetime.now()
-np_datetime = NepaliDateTime.from_datetime(dt)
+np_datetime = nepalidatetime.from_datetime(dt)
 ```
 
-**Get NepaliDate object**
+**Get nepalidate object**
 ```python
 np_datetime.date()
 ```
@@ -102,7 +102,7 @@ np_datetime.to_datetime()
 **Date String Format**\
 _Equivalent to python's datetime strftime format_
 ```python
-npDateTime = NepaliDateTime.now()
+npDateTime = nepalidatetime.now()
 print(npDateTime.strftime('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
 print(npDateTime.strftime_en('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
 ```
@@ -113,45 +113,39 @@ Wed Wednesday 3 26 Mangsir Mangsir 08 75 2075 11 11 AM 06 13
 
 **timedelta operations**
 ```python
-ndt = NepaliDateTime.now()
+ndt = nepalidatetime.now()
 print(ndt + datetime.timedelta(hours=5))
 print(ndt - datetime.timedelta(hours=5))
 ```
 
-HumanizeDateTime
+nepalihumanize
 -------------
 
-HumanizeDate converts NepaliDateTime to nepali human readable form
+nepalihumanize converts nepalidatetime to nepali human readable form
 
 ```python
-from nepali.datetime import HumanizeDateTime  
+from nepali.datetime import nepalihumanize  
 ```
 
 **Creating new object**
 ```python
 # object from nepali datetime
-ndt = NepaliDateTime.now()
-humanize = HumanizeDateTime(ndt)
+ndt = nepalidatetime.now()
+humanize_str = nepalihumanize(ndt)
 
 # object from python datetime
 dt = datetime.datetime.now()
-humanize = HumanizeDateTime(dt)
+humanize_str = nepalihumanize(dt)
 ```
 
-**Get string**
-```python
-humanize.to_str()
-```
 
 **Humanize with threshold**\
 returns date in nepali characters if more than threshold(in seconds) else returns humanize form
 ```python
-humanize = HumanizeDateTime(ndt, threshold=60) # 60 seconds
-humanize.to_str()
+humanize_str = nepalihumanize(ndt, threshold=60) # 60 seconds
 
 # custom format after threshold
-humanize = HumanizeDateTime(ndt, threshold=60, format='%Y-%m-%d') # 60 seconds
-humanize.to_str()
+humanize_str = nepalihumanize(ndt, threshold=60, format='%Y-%m-%d') # 60 seconds
 ```
 
 For Django Template
@@ -182,6 +176,7 @@ IN your Template
 
 ```python
 {{ datetimeobj|nepalidate:"%Y-%m-%d" }}
+{{ datetimeobj|nepalidate_en:"%Y-%m-%d" }}
 ```
 
 ```python

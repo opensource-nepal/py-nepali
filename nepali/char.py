@@ -28,14 +28,12 @@ class EnglishChar:
 	
 	@staticmethod
 	def day(day):
-		days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
-		return days[day-1]
+		return EnglishChar.days[day-1]
 
 	@staticmethod
 	def half_day(day):
-		days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
-		return days[day-1]
+		return EnglishChar.days_half[day-1]
 
 	@staticmethod
 	def month(month):
-		return self.months[month-1]
+		return EnglishChar.months[month-1]
