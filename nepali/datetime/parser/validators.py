@@ -5,6 +5,7 @@ import re
 from datetime import date
 
 from nepali.char import EnglishChar, nepali_to_english_text
+from nepali.datetime import nepalidatetime
 
 
 __nepali_time_re__CACHE = None
@@ -77,13 +78,18 @@ class NepaliTimeRE(dict):
         while '%' in format:
             directive_index = format.index('%')+1
             index_increment = 1
+            
             if format[directive_index] == '-':
                 index_increment = 2
+            
+            if format[directive_index: directive_index+index_increment] not in self:
+                return None
+
             processed_format = "%s%s%s" % (processed_format,
                                             format[:directive_index-1],
                                             self[format[directive_index: directive_index+index_increment]])
             format = format[directive_index+index_increment:]
-        return "%s%s" % (processed_format, format)
+        return "^%s%s$" % (processed_format, format)
 
     def compile(self, format):
         """Return a compiled re object for the format string."""
@@ -95,8 +101,6 @@ def get_nepali_time_re_object():
         __nepali_time_re__CACHE = NepaliTimeRE()
     return __nepali_time_re__CACHE
 
-def _convert_datetime_str_to_english(datetime_str):
-    pass
 
 def extract(datetime_str, format):
     '''
@@ -125,25 +129,99 @@ def extract(datetime_str, format):
         return {}
     return match.groupdict()
 
-def transform(data):
+def transform(data: dict):
     '''
     transforms different format data to uniform data
 
     eg.
     INPUT:
     data = {
-        "%Y": 2078,
-        "%b": "मंसिर",
-        "%d": 12,
+        "Y": 2078,
+        "b": "Mangsir",
+        "d": 12,
+        ...
     }
 
     OUTPUT:
     {
         "year": 2078,
         "month": 8,
-        "day": 12
+        "day": 12,
+        ...
     }
     '''
+
+    year = None
+    month = day = 1
+    hour = minute = second = fraction = 0
+    weekday = None
+
+    for date_key in data.keys():
+        if date_key == 'y':
+            year = int(data['y'])
+            year += 2000
+        elif date_key == 'Y':
+            year = int(data['Y'])
+        elif date_key == 'm':
+            month = int(data['m'])
+        elif date_key == 'B':
+            # TODO: change indexing process
+            month = EnglishChar.months.index(data['B'].lower().capitalize()) + 1
+        elif date_key == 'b':
+            # TODO: change indexing process
+            month = EnglishChar.months.index(data['b'].lower().capitalize()) + 1
+        elif date_key == 'd':
+            day = int(data['d'])
+        elif date_key == 'H':
+            hour = int(data['H'])
+        elif date_key == 'I':
+            hour = int(data['I'])
+            ampm = data.get('p', '').lower()
+            # If there was no AM/PM indicator, we'll treat this like AM
+            if ampm in ('', 'am'):
+                # We're in AM so the hour is correct unless we're
+                # looking at 12 midnight.
+                # 12 midnight == 12 AM == hour 0
+                if hour == 12:
+                    hour = 0
+            elif ampm == 'pm':
+                # We're in PM so we need to add 12 to the hour unless
+                # we're looking at 12 noon.
+                # 12 noon == 12 PM == hour 12
+                if hour != 12:
+                    hour += 12
+        elif date_key == 'M':
+            minute = int(data['M'])
+        elif date_key == 'S':
+            second = int(data['S'])
+        elif date_key == 'f':
+            s = data['f']
+            # Pad to always return microseconds.
+            s += "0" * (6 - len(s))
+            fraction = int(s)
+        elif date_key == 'A':
+            # TODO: change indexing process
+            weekday = EnglishChar.days.index(data['A'].lower().capitalize()) + 1
+        elif date_key == 'a':
+            # TODO: change indexing process
+            weekday = EnglishChar.days_half.index(data['a'].lower().capitalize()) + 1
+        elif date_key == 'w':
+            weekday = int(data['w'])
+            if weekday == 0:
+                weekday = 6
+            else:
+                weekday -= 1
+    return {
+        'year': year,
+        'month': month,
+        'day': day,
+        'hour': hour,
+        'minute': minute,
+        'second': second,
+        'microsecond': fraction,
+        'weekday': weekday,
+    }
+
 
 def validate(datetime_str, format):
     '''
@@ -154,3 +232,31 @@ def validate(datetime_str, format):
     returns False if validation failed
     returns nepalidatetime object if validation success.
     '''
+    
+    # 1. validate if format is correct.
+    if get_nepali_time_re_object().pattern(format=format) == None:
+        # regex pattern generation failed
+        return None
+    
+    # 2. validate if parse result if not empty
+    parsed_result = extract(datetime_str, format)
+    if parsed_result.get('Y') == None and parsed_result.get('y') == None:
+        # compilation failed or year included 
+        return None
+
+    # 3. validate if transformation
+    transformed_data = transform(parsed_result)
+    if transformed_data.get('year') == None:
+        # could not transform data, not getting year
+        return None
+
+    # 4. create the datetime object
+    return nepalidatetime(
+        year=transformed_data['year'], 
+        month=transformed_data['month'], 
+        day=transformed_data['day'], 
+        hour=transformed_data['hour'],
+        minute=transformed_data['minute'],
+        second=transformed_data['second'],
+        microsecond=transformed_data['microsecond'],
+    )

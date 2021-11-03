@@ -10,3 +10,9 @@ class InvalidDateTimeFormatException(Exception):
 
 class InvalidNepaliDateTimeObjectException(Exception):
     pass
+
+class FormatNotMatchException(Exception):
+    '''
+    raised while parsing nepalidatetime format
+    '''
+    pass

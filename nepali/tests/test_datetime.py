@@ -51,6 +51,12 @@ class TestNepaliDateTime(unittest.TestCase):
         self.assertEqual(nepalidate_obj.strftime_en('%Y-%m-%d'), '2051-04-28')
         self.assertEqual(nepalidate_obj.strftime_en('%a %A %w %d %b %B %m %y %Y'), 'Wed Wednesday 3 28 Sharwan Sharwan 04 51 2051')
 
+    def test_nepalidate_strptime(self):
+        nepalidatetime_obj = nepalidate.strptime('2078-01-12', format='%Y-%m-%d')
+        self.assertEqual(nepalidatetime_obj.year, 2078)
+        self.assertEqual(nepalidatetime_obj.month, 1)
+        self.assertEqual(nepalidatetime_obj.day, 12)
+
     #
     # nepalitime
     
@@ -79,6 +85,14 @@ class TestNepaliDateTime(unittest.TestCase):
         self.assertEqual(nepalidatetime_obj.strftime('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'), 'बुध बुधबार ३ २८ साउन साउन ०४ ५१ २०५१ ०५ ०५ शुभप्रभात २८ २३')
         self.assertEqual(nepalidatetime_obj.strftime_en('%Y-%m-%d %H:%M:%S'), '2051-04-28 05:28:23')
         self.assertEqual(nepalidatetime_obj.strftime_en('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'), 'Wed Wednesday 3 28 Sharwan Sharwan 04 51 2051 05 05 AM 28 23')
+
+    def test_nepalidatetime_strptime(self):
+        nepalidatetime_obj = nepalidatetime.strptime('2078-01-12 13:12', format='%Y-%m-%d %H:%M')
+        self.assertEqual(nepalidatetime_obj.year, 2078)
+        self.assertEqual(nepalidatetime_obj.month, 1)
+        self.assertEqual(nepalidatetime_obj.day, 12)
+        self.assertEqual(nepalidatetime_obj.hour, 13)
+        self.assertEqual(nepalidatetime_obj.minute, 12)
 
     def test_nepalidatetime_timedelta(self):
         nepalidatetime_obj1 = nepalidatetime(year=2051, month=4, day=28, hour=5, minute=28, second=23)

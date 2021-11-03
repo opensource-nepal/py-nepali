@@ -16,9 +16,10 @@ Installation
 
 Features
 --------
-1. English to Nepali, Nepali to English date conversions with Nepali Timezone
-2. Nepali Characters (Months, Days, etc)
-3. Number to nepali numbers and nepali numbers to english.
+1. Nepali datetime support
+2. Parse nepali datetime
+3. Nepali Characters (Months, Days, etc)
+4. Number to nepali numbers and nepali numbers to english.
 
 
 nepalidate
@@ -37,6 +38,9 @@ np_date = nepalidate(year, month, day)
 
 # object with today's date
 np_date = nepalidate.today()
+
+# parse date
+np_date = nepalidate.strptime('2078-01-12', format='%Y-%m-%d')
 ```
 
 **Object from python's datetime.date**
@@ -74,6 +78,9 @@ np_datetime = nepalidatetime(year, month, day[, hour[, minute[, second]]]) # arg
 
 # object with current datetime
 np_datetime = nepalidatetime.now()
+
+# parse datetime
+np_datetime = nepalidatetime.strptime('2078-01-12 13:12', format='%Y-%m-%d %H:%M')
 ```
 
 **Object from python's datetime.datetime**
@@ -116,6 +123,17 @@ Wed Wednesday 3 26 Mangsir Mangsir 08 75 2075 11 11 AM 06 13
 ndt = nepalidatetime.now()
 print(ndt + datetime.timedelta(hours=5))
 print(ndt - datetime.timedelta(hours=5))
+```
+
+parse
+---
+Parses datetime from a string.
+
+_parse uses very high cost method, so avoid this as much as you can._
+
+```python
+from nepali.datetime import parser as nepalidatetime_parser
+ndt = nepalidatetime_parser.parse('29 Jestha, 2078, 1:30 PM')
 ```
 
 nepalihumanize

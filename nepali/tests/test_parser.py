@@ -3,8 +3,8 @@ import unittest
 from nepali.char import nepali_to_english_text
 from nepali.datetime import nepalidatetime
 from nepali.datetime import parser as nepalidatetime_parser
-from nepali.datetime.parser.validators import NepaliTimeRE, extract
-from nepali.exceptions import InvalidDateTimeFormatException
+from nepali.datetime.parser.validators import NepaliTimeRE, extract, transform, validate
+from nepali.exceptions import FormatNotMatchException, InvalidDateTimeFormatException
 
 
 class TestNepaliDateTimeParserValidators(unittest.TestCase):
@@ -20,11 +20,11 @@ class TestNepaliDateTimeParserValidators(unittest.TestCase):
 
     def test_format_to_regex(self):
         format_to_regex = self.nepali_time_re.pattern('%Y $ \d %-d *')
-        self.assertEqual(format_to_regex, r'(?P<Y>\d\d\d\d)\s+\$\s+\\d\s+(?P<d>3[0-1]|[1-2]\d|0[1-9]|[1-9]| [1-9])\s+\*')
+        self.assertEqual(format_to_regex, r'^(?P<Y>\d\d\d\d)\s+\$\s+\\d\s+(?P<d>3[0-1]|[1-2]\d|0[1-9]|[1-9]| [1-9])\s+\*$')
 
     def test_all_format_to_regex(self):
         format_to_regex = self.nepali_time_re.pattern('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S')
-        expected_output = r'(?P<a>Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s+(?P<A>Wednesday|Thursday|Saturday|Tuesday|Sunday|Monday|Friday)\s+(?P<w>[0-6])\s+(?P<d>3[0-1]|[1-2]\d|0[1-9]|[1-9]| [1-9])\s+(?P<b>Baishakh|Sharwan|Mangsir|Chaitra|Jestha|Bhadra|Ashwin|Kartik|Falgun|Ashad|Poush|Magh)\s+(?P<B>Baishakh|Sharwan|Mangsir|Chaitra|Jestha|Bhadra|Ashwin|Kartik|Falgun|Ashad|Poush|Magh)\s+(?P<m>1[0-2]|0[1-9]|[1-9])\s+(?P<y>\d\d)\s+(?P<Y>\d\d\d\d)\s+(?P<H>2[0-3]|[0-1]\d|\d)\s+(?P<I>1[0-2]|0[1-9]|[1-9])\s+(?P<p>AM|PM)\s+(?P<M>[0-5]\d|\d)\s+(?P<S>6[0-1]|[0-5]\d|\d)'
+        expected_output = r'^(?P<a>Sun|Mon|Tue|Wed|Thu|Fri|Sat)\s+(?P<A>Wednesday|Thursday|Saturday|Tuesday|Sunday|Monday|Friday)\s+(?P<w>[0-6])\s+(?P<d>3[0-1]|[1-2]\d|0[1-9]|[1-9]| [1-9])\s+(?P<b>Baishakh|Sharwan|Mangsir|Chaitra|Jestha|Bhadra|Ashwin|Kartik|Falgun|Ashad|Poush|Magh)\s+(?P<B>Baishakh|Sharwan|Mangsir|Chaitra|Jestha|Bhadra|Ashwin|Kartik|Falgun|Ashad|Poush|Magh)\s+(?P<m>1[0-2]|0[1-9]|[1-9])\s+(?P<y>\d\d)\s+(?P<Y>\d\d\d\d)\s+(?P<H>2[0-3]|[0-1]\d|\d)\s+(?P<I>1[0-2]|0[1-9]|[1-9])\s+(?P<p>AM|PM)\s+(?P<M>[0-5]\d|\d)\s+(?P<S>6[0-1]|[0-5]\d|\d)$'
         self.assertEqual(format_to_regex, expected_output)
 
     # test extract
@@ -75,18 +75,83 @@ class TestNepaliDateTimeParserValidators(unittest.TestCase):
         self.assertEqual(extracted_data.get('M'), '28')
         self.assertEqual(extracted_data.get('S'), '23')
 
-    
+
+    # test transform
+    def test_transform(self):
+        data = transform({
+            'Y': '2078',
+            'b': 'MAngsir',
+            'd': '12',
+            'p': 'pm',
+            'I': '05',
+            'M': '25',
+            'S': '31',
+            'f': '455',
+            'a': 'Wed',
+        })
+        self.assertEqual(data.get('year'), 2078)
+        self.assertEqual(data.get('month'), 8)
+        self.assertEqual(data.get('day'), 12)
+        self.assertEqual(data.get('hour'), 17)
+        self.assertEqual(data.get('minute'), 25)
+        self.assertEqual(data.get('second'), 31)
+        self.assertEqual(data.get('microsecond'), 455000)
+        self.assertEqual(data.get('weekday'), 4)
+
+    #
+    # test validate
+
+    def test_validate(self):
+        nepalidatetime_obj = validate('2078-01-12', format='%Y-%m-%d')
+        self.assertEqual(nepalidatetime_obj.year, 2078)
+        self.assertEqual(nepalidatetime_obj.month, 1)
+        self.assertEqual(nepalidatetime_obj.day, 12)
+
+    def test_test_validate(self):
+        nepalidatetime_obj = validate('29 Jestha, 2078, 1:30 PM', format='%d %B, %Y, %I:%M %p')
+        self.assertEqual(nepalidatetime_obj.year, 2078)
+        self.assertEqual(nepalidatetime_obj.month, 2)
+        self.assertEqual(nepalidatetime_obj.day, 29)
+        self.assertEqual(nepalidatetime_obj.hour, 13)
+        self.assertEqual(nepalidatetime_obj.minute, 30)
+        self.assertEqual(nepalidatetime_obj.second, 0)
+
+    def test_validate_with_invalid_data(self):
+        self.assertEqual(validate('2078-01-12', format='%k-%m-%d'), None)
+        self.assertEqual(validate('2078-01-12', format='%m-%M-%Y'), None)
+
 
 class TestNepaliDateTimeParser(unittest.TestCase):
     '''
     Tests nepali datetime parser.
     '''
 
+    # test strptime
+    def test_strptime(self):
+        nepalidatetime_obj = nepalidatetime_parser.strptime('2078-01-12', format='%Y-%m-%d')
+        self.assertEqual(nepalidatetime_obj.year, 2078)
+        self.assertEqual(nepalidatetime_obj.month, 1)
+        self.assertEqual(nepalidatetime_obj.day, 12)
+
+    def test_strptime_fail(self):
+        with self.assertRaises(FormatNotMatchException):
+            nepalidatetime_parser.strptime('2078-01-12', format='%Y %d')
+
+    # test parser
+
     def test_normal_string_parse(self):
         parsed_datetime = nepalidatetime_parser.parse('2071-01-24')
         test_datetime = nepalidatetime(2071, 1, 24)
         self.assertEqual(parsed_datetime, test_datetime)
 
+    def test_complex_string_parse(self):
+        nepalidatetime_obj = nepalidatetime_parser.parse('29 Jestha, 2078, 1:30 PM')
+        self.assertEqual(nepalidatetime_obj.year, 2078)
+        self.assertEqual(nepalidatetime_obj.month, 2)
+        self.assertEqual(nepalidatetime_obj.day, 29)
+        self.assertEqual(nepalidatetime_obj.hour, 13)
+        self.assertEqual(nepalidatetime_obj.minute, 30)
+
     def test_parse_failed(self):
         with self.assertRaises(InvalidDateTimeFormatException):
-            parsed_datetime = nepalidatetime_parser.parse('')
+            nepalidatetime_parser.parse('')

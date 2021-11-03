@@ -26,6 +26,13 @@ class formater_class_mixin:
 			cls.__formater_class__Cache = NepaliDateTimeFormater
 		return cls.__formater_class__Cache
 
+	@classmethod
+	def get_strptime_method(cls):
+		if not hasattr(cls, '_strptime_method_CACHE'):
+			from .parser import strptime
+			cls._strptime_method_CACHE = strptime
+		return cls._strptime_method_CACHE
+
 class nepalidate(formater_class_mixin):
 	def __init__(self, year, month, day) -> None:
 		self.__year = year
@@ -37,7 +44,7 @@ class nepalidate(formater_class_mixin):
 		self.__python_date = pythonDateTime.date(year_en, month_en, day_en)
 
 	def __str__(self):
-		return self.toNpString()
+		return self.strftime_en('%Y-%m-%d')
 
 	def __repr__(self):
 		return "<nepalidate> "+str(self)
@@ -89,7 +96,11 @@ class nepalidate(formater_class_mixin):
 		return False
 
 	# static methods
-	
+	@classmethod
+	def strptime(cls, datetime_str, format):
+		nepalidatetime_strptime = cls.get_strptime_method()
+		return nepalidatetime_strptime(datetime_str, format=format).date()
+
 	@staticmethod
 	def now(*args, **kwargs):
 		return nepalidate.today()
@@ -253,7 +264,7 @@ class nepalidatetime(formater_class_mixin):
 			"""
 			return self.to_datetime() == to_nepali_timezone(other)
 
-		return None
+		return False
 
 
 	def __ne__(self, other):
@@ -270,9 +281,8 @@ class nepalidatetime(formater_class_mixin):
 			pythonDateTime object
 			"""
 			return self.to_datetime() != to_nepali_timezone(other)
-
-			
-		return None
+		
+		return True
 	
 	def __gt__(self, other):
 		""" greater than """
@@ -335,6 +345,11 @@ class nepalidatetime(formater_class_mixin):
 		return formater.get_str(format)
 
 	# static methods
+
+	@classmethod
+	def strptime(cls, datetime_str, format):
+		nepalidatetime_strptime = cls.get_strptime_method()
+		return nepalidatetime_strptime(datetime_str, format=format)
 
 	@staticmethod
 	def from_datetime(dt):

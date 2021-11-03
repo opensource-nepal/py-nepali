@@ -1,5 +1,6 @@
-from ._parser import parse
+from ._parser import strptime, parse
 
 __all__ = [
+	'strptime',
 	'parse',
 ]
