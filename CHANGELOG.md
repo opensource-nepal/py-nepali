@@ -5,6 +5,7 @@
 - CHANGELOG.md added.
 - NepaliDate, NepaliTime, NepaliDateTime depreciation.
 - Changed datetime directory
-- Added Basic date parser
+- Added strptime
+- Added parser
 - Added Simple test case
 - Fixed Typo on Thursday
