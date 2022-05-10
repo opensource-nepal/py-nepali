@@ -1,3 +1,5 @@
 nepali.egg-info/
 __pycache__/
 .eggs
+build
+dist
