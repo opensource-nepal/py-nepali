@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v0.5.1 - (May 12, 2022)
+- Bug fix on nepalihumanize
+
 ## v0.5.1 - (May 10, 2022)
 - Bug fix on NepaliDate, NepaliTime, and NepaliDateTime import
 

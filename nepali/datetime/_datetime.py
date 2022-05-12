@@ -9,7 +9,7 @@ import time
 import datetime as pythonDateTime
 import warnings
 
-from nepali.timezone import now, utc_now
+from nepali.timezone import utc_now
 from nepali.utils import to_nepali_timezone
 
 from ._converter import NepaliDateConverter
