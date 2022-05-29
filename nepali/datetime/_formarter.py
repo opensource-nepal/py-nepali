@@ -100,8 +100,8 @@ class NepaliDateTimeFormater:
 		%a
 		"""
 		if self.english:
-			return EnglishChar.half_day(self.npDateTime.week_day)
-		return NepaliChar.half_day(self.npDateTime.week_day)
+			return EnglishChar.half_day(self.npDateTime.weekday() + 1)
+		return NepaliChar.half_day(self.npDateTime.weekday() + 1)
 
 	@property
 	def weekdayFull(self):
@@ -109,8 +109,8 @@ class NepaliDateTimeFormater:
 		%A
 		"""
 		if self.english:
-			return EnglishChar.day(self.npDateTime.week_day)
-		return NepaliChar.day(self.npDateTime.week_day)
+			return EnglishChar.day(self.npDateTime.weekday() + 1)
+		return NepaliChar.day(self.npDateTime.weekday() + 1)
 
 	@property
 	def weekdayNumber(self):
@@ -118,8 +118,8 @@ class NepaliDateTimeFormater:
 		%w
 		"""
 		if self.english:
-			return str(self.npDateTime.week_day-1)
-		return NepaliChar.number(self.npDateTime.week_day-1)
+			return str(self.npDateTime.weekday())
+		return NepaliChar.number(self.npDateTime.weekday())
 
 	@property
 	def day(self):

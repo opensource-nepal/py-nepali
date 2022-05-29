@@ -32,7 +32,7 @@ class TestNepaliDateTime(unittest.TestCase):
         self.assertEqual(nepalidate_obj.year, 2051)
         self.assertEqual(nepalidate_obj.month, 4)
         self.assertEqual(nepalidate_obj.day, 28)
-        self.assertEqual(nepalidate_obj.weekday(), 4)
+        self.assertEqual(nepalidate_obj.weekday(), 5)
 
     def test_nepalidate_from_date(self):
         python_date_obj = datetime.date(year=1994, month=8, day=12)
@@ -47,9 +47,9 @@ class TestNepaliDateTime(unittest.TestCase):
     def test_nepalidate_strftime(self):
         nepalidate_obj = nepalidate(year=2051, month=4, day=28)
         self.assertEqual(nepalidate_obj.strftime('%Y-%m-%d'), '२०५१-०४-२८')
-        self.assertEqual(nepalidate_obj.strftime('%a %A %w %d %b %B %m %y %Y'), 'बुध बुधबार ३ २८ साउन साउन ०४ ५१ २०५१')
+        self.assertEqual(nepalidate_obj.strftime('%a %A %w %d %b %B %m %y %Y'), 'शुक्र शुक्रबार ५ २८ साउन साउन ०४ ५१ २०५१')
         self.assertEqual(nepalidate_obj.strftime_en('%Y-%m-%d'), '2051-04-28')
-        self.assertEqual(nepalidate_obj.strftime_en('%a %A %w %d %b %B %m %y %Y'), 'Wed Wednesday 3 28 Sharwan Sharwan 04 51 2051')
+        self.assertEqual(nepalidate_obj.strftime_en('%a %A %w %d %b %B %m %y %Y'), 'Fri Friday 5 28 Sharwan Sharwan 04 51 2051')
 
     def test_nepalidate_strptime(self):
         nepalidatetime_obj = nepalidate.strptime('2078-01-12', format='%Y-%m-%d')
@@ -82,9 +82,9 @@ class TestNepaliDateTime(unittest.TestCase):
     def test_nepalidatetime_strftime(self):
         nepalidatetime_obj = nepalidatetime(year=2051, month=4, day=28, hour=5, minute=28, second=23)
         self.assertEqual(nepalidatetime_obj.strftime('%Y-%m-%d %H:%M:%S'), '२०५१-०४-२८ ०५:२८:२३')
-        self.assertEqual(nepalidatetime_obj.strftime('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'), 'बुध बुधबार ३ २८ साउन साउन ०४ ५१ २०५१ ०५ ०५ शुभप्रभात २८ २३')
+        self.assertEqual(nepalidatetime_obj.strftime('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'), 'शुक्र शुक्रबार ५ २८ साउन साउन ०४ ५१ २०५१ ०५ ०५ शुभप्रभात २८ २३')
         self.assertEqual(nepalidatetime_obj.strftime_en('%Y-%m-%d %H:%M:%S'), '2051-04-28 05:28:23')
-        self.assertEqual(nepalidatetime_obj.strftime_en('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'), 'Wed Wednesday 3 28 Sharwan Sharwan 04 51 2051 05 05 AM 28 23')
+        self.assertEqual(nepalidatetime_obj.strftime_en('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'), 'Fri Friday 5 28 Sharwan Sharwan 04 51 2051 05 05 AM 28 23')
 
     def test_nepalidatetime_strptime(self):
         nepalidatetime_obj = nepalidatetime.strptime('2078-01-12 13:12', format='%Y-%m-%d %H:%M')

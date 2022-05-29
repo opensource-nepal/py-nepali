@@ -126,6 +126,10 @@ class nepalidate(formater_class_mixin):
 	# property
 
 	def weekday(self):
+		'''
+		Sunday => 0, Saturday => 6
+		'''
+		return (self.__python_date.weekday() + 1) % 7
 		return self.__python_date.weekday()
 
 	# nepali date properties
@@ -144,7 +148,7 @@ class nepalidate(formater_class_mixin):
 	@property
 	def week_day(self):
 		warnings.warn(
-			message="nepalidate.week_day field is depreciated and no longer be available in version >= 1.0.0, use nepalidate.weekday method instead.", 
+			message="nepalidate.week_day field is depreciated and no longer be available in version >= 1.0.0, use nepalidate.weekday() method instead.", 
 			category=DeprecationWarning
 		)
 		return self.weekday()
@@ -384,8 +388,18 @@ class nepalidatetime(formater_class_mixin):
 	def day(self):
 		return self.__npDate.day
 
+	def weekday(self):
+		'''
+		Sunday => 0, Saturday => 6
+		'''
+		return self.__npDate.weekday()
+
 	@property
 	def week_day(self):
+		warnings.warn(
+			message="nepalidate.week_day field is depreciated and no longer be available in version >= 1.0.0, use nepalidatetime.weekday() method instead.", 
+			category=DeprecationWarning
+		)
 		return self.__npDate.weekday()
 
 	@property
