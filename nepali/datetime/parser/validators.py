@@ -19,8 +19,8 @@ class NepaliTimeRE(dict):
         base = super()
         base.__init__({
             # The " [1-9]" part of the regex is to make %c from ANSI C work
-            'd': r"(?P<d>3[0-1]|[1-2]\d|0[1-9]|[1-9]| [1-9])",
-            '-d': r"(?P<d>3[0-1]|[1-2]\d|0[1-9]|[1-9]| [1-9])", # same as "d"
+            'd': r"(?P<d>3[0-2]|[1-2]\d|0[1-9]|[1-9]| [1-9])",
+            '-d': r"(?P<d>3[0-2]|[1-2]\d|0[1-9]|[1-9]| [1-9])", # same as "d"
             'f': r"(?P<f>[0-9]{1,6})",
             'H': r"(?P<H>2[0-3]|[0-1]\d|\d)",
             '-H': r"(?P<H>2[0-3]|[0-1]\d|\d)",
