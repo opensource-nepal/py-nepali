@@ -1,8 +1,7 @@
 Nepali
 ======
 
-  
-Python package for processing every nepali stuffs
+Python package for converting nepali date time to python's datetime easily. Also supports parsing and timezone features.
 
 Requirements
 ------------
