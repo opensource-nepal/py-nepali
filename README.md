@@ -1,7 +1,24 @@
 Nepali
 ======
 
-Python package for converting nepali date time to python's datetime easily. Also supports parsing and timezone features.
+nepalidatetime compatible with python's datetime feature. Converting nepali date to english, parsing nepali datetime, nepali timezone, and timedelta support in nepali datetime
+
+Example
+------------
+```python
+import datetime
+from nepali.datetime import nepalidate, parser
+
+# parse
+nepali_datetime = parser.parse('2079-02-15')
+print(nepali_datetime) # 2079-02-15 00:00:00
+
+# convert
+date = datetime.date(2017, 3, 15)
+nepali_date = nepalidate.from_date(date)
+print(nepali_date) # 2073-12-02
+
+```
 
 Requirements
 ------------
@@ -113,8 +130,9 @@ print(npDateTime.strftime('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
 print(npDateTime.strftime_en('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
 ```
 ```
-बुध बुधबार ३ २६ मंसिर मंसिर ०८ ७५ २०७५ ११ ११ शुभप्रभात ०६ १३
-Wed Wednesday 3 26 Mangsir Mangsir 08 75 2075 11 11 AM 06 13
+OUTPUT: 
+बिही बिहीबार ४ २३ असार असार ०३ ७९ २०७९ १२ १२ मध्यान्ह ४० १९
+Thu Thursday 4 23 Ashad Ashad 03 79 2079 12 12 AM 40 19
 ```
 
 **timedelta operations**
@@ -128,7 +146,7 @@ parse
 ---
 Parses datetime from a string.
 
-_parse uses very high cost method, so avoid this as much as you can._
+_Note: `parse` uses very high cost method, so avoid this as much as you can. Use `strptime`_
 
 ```python
 from nepali.datetime import parser as nepalidatetime_parser
