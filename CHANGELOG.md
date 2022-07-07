@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## v0.5.5 - (June 29, 2022)
+## v0.5.6 - (July 7, 2022)
+- Test for automatic package publish
+- Updated `README.md`
+
+## v0.5.5 - (July 7, 2022)
 - Added github actions workflow
 - Updated package description and keywords
 - Removed `to_nepalidatetime` and added `NepaliTimezone` on `nepalidatetime.to_datetime`

@@ -4,6 +4,9 @@ setup file for nepali package
 - Publish version
 $ python setup.py publish
 
+- Alternative
+pip install build
+python -m build
 """
 
 
@@ -27,7 +30,7 @@ if sys.argv[-1] == 'publish':
 
 setuptools.setup(
 	name="nepali",
-	version="0.5.5",
+	version="0.5.6",
 	author="Ajesh Sen Thapa",
 	author_email="aj3sshh@gmail.com",
 	description="nepalidatetime compatible with python's datetime feature. Converting nepali date to english, parsing nepali datetime, nepali timezone, and timedelta support in nepali datetime",
