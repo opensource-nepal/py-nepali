@@ -1,17 +1,29 @@
 # CHANGELOG
 
+## v0.5.5 - (June 29, 2022)
+- Added github actions workflow
+- Updated package description and keywords
+- Removed `to_nepalidatetime` and added `NepaliTimezone` on `nepalidatetime.to_datetime`
+- Updated changelog format
+
+## v0.5.4 - (June 29, 2022)
+- Fixed bug fix while parsing 32 days
+
+## v0.5.3 - (May 29, 2022)
+- Fixed minor bug fix for `weekday`
+
 ## v0.5.1 - (May 12, 2022)
-- Bug fix on nepalihumanize
+- Bug fix on `nepalihumanize`
 
 ## v0.5.1 - (May 10, 2022)
-- Bug fix on NepaliDate, NepaliTime, and NepaliDateTime import
+- Bug fix on `NepaliDate`, `NepaliTime`, and `NepaliDateTime` import
 
 ## v0.5.0 - (Nov 30, 2021)
 - Fixed minor typo.
 - CHANGELOG.md added.
-- NepaliDate, NepaliTime, NepaliDateTime depreciation.
+- `NepaliDate`, `NepaliTime`, `NepaliDateTime` depreciation.
 - Changed datetime directory
-- Added strptime
+- Added `strptime`
 - Added parser
 - Added Simple test case
 - Fixed Typo on Thursday
