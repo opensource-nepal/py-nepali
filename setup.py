@@ -4,6 +4,9 @@ setup file for nepali package
 - Publish version
 $ python setup.py publish
 
+- Alternative
+pip install build
+python -m build
 """
 
 
