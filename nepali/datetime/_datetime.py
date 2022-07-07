@@ -9,7 +9,7 @@ import time
 import datetime as pythonDateTime
 import warnings
 
-from nepali.timezone import utc_now
+from nepali.timezone import NepaliTimeZone, utc_now
 from nepali.utils import to_nepali_timezone
 
 from ._converter import NepaliDateConverter
@@ -50,7 +50,7 @@ class nepalidate(formater_class_mixin):
 		return "<nepalidate> "+str(self)
 	
 	def to_datetime(self):
-		return to_nepali_timezone(pythonDateTime.datetime.combine(self.__python_date, pythonDateTime.time()))
+		return pythonDateTime.datetime.combine(self.__python_date, pythonDateTime.time(), tzinfo=NepaliTimeZone())
 
 	def to_date(self):
 		return self.__python_date
@@ -326,7 +326,7 @@ class nepalidatetime(formater_class_mixin):
 
 	# object transformation
 	def to_datetime(self):
-		return to_nepali_timezone(pythonDateTime.datetime.combine(self.__npDate.to_date(), self.__npTime))
+		return pythonDateTime.datetime.combine(self.__npDate.to_date(), self.__npTime, tzinfo=NepaliTimeZone())
 
 	def to_date(self):
 		return self.to_datetime().date()
