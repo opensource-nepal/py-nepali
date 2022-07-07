@@ -2,6 +2,7 @@ import datetime
 import unittest
 
 from nepali.datetime import nepalidate, nepalitime, nepalidatetime
+from nepali.timezone import NepaliTimeZone
 from nepali.utils import to_nepali_timezone
 
 class TestNepaliDateTime(unittest.TestCase):
@@ -75,9 +76,9 @@ class TestNepaliDateTime(unittest.TestCase):
         self.assertEqual(python_datetime_obj.date(), nepalidatetime_obj.to_date())
 
     def test_nepalidatetime_from_datetime(self):
-        python_datetime_obj = datetime.datetime(year=1994, month=8, day=12, hour=5, minute=28, second=23)
+        python_datetime_obj = datetime.datetime(year=1994, month=8, day=12, hour=5, minute=28, second=23, tzinfo=NepaliTimeZone())
         nepalidatetime_obj = nepalidatetime.from_datetime(python_datetime_obj)
-        self.assertEqual(to_nepali_timezone(python_datetime_obj), nepalidatetime_obj.to_datetime())
+        self.assertEqual(python_datetime_obj, nepalidatetime_obj.to_datetime(), msg="{} and {} are not equal.".format(python_datetime_obj, nepalidatetime_obj.to_datetime()))
 
     def test_nepalidatetime_strftime(self):
         nepalidatetime_obj = nepalidatetime(year=2051, month=4, day=28, hour=5, minute=28, second=23)
@@ -98,4 +99,4 @@ class TestNepaliDateTime(unittest.TestCase):
         nepalidatetime_obj1 = nepalidatetime(year=2051, month=4, day=28, hour=5, minute=28, second=23)
         nepalidatetime_obj2 = nepalidatetime(year=2051, month=4, day=29, hour=5, minute=28, second=23)
         nepalidatetime_obj1 = nepalidatetime_obj1 + datetime.timedelta(days=1)
-        self.assertEqual(nepalidatetime_obj1, nepalidatetime_obj2)
+        self.assertEqual(nepalidatetime_obj1, nepalidatetime_obj2, msg='{} and {} are not equal'.format(nepalidatetime_obj1, nepalidatetime_obj2))
