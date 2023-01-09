@@ -1,4 +1,4 @@
-Nepali Date Time
+nepali
 ======
 
 nepalidatetime compatible with python's datetime feature. Converting nepali date to english, parsing nepali datetime, nepali timezone, and timedelta support in nepali datetime
