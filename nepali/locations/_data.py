@@ -1,5 +1,3 @@
-from .models import Location, Province, District, Municipality
-
 _location_data = [{
     "name": "Sudurpaschim Province",
     "name_nepali": "सुदूरपश्चिम प्रदेश",
@@ -3349,4 +3347,3 @@ _location_data = [{
         }]
     }]
 }]
-

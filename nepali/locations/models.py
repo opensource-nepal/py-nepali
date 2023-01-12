@@ -1,10 +1,17 @@
 from enum import Enum
+from typing import List
 
 
 class Location:
     def __init__(self, name, name_nepali):
         self.__name = name
         self.__name_nepali = name_nepali
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return self.name
 
     @property
     def name(self):
@@ -19,20 +26,21 @@ class Province(Location):
     def __init__(self, name: str, name_nepali: str):
         super().__init__(name, name_nepali)
         self.__districts = []
-
-    def _set_districts(self, districts: list["District"]) -> None:
-        self.__districts = districts
+        self.__municipalities = []
 
     def _add_district(self, district: "District") -> None:
         self.__districts.append(district)
 
+    def _add_municipality(self, municipality: "Municipality") -> None:
+        self.__municipalities.append(municipality)
+
     @property
-    def districts(self) -> list["District"]:
+    def districts(self) -> List["District"]:
         return self.__districts
 
     @property
-    def municipalities(self) -> list["Municipality"]:
-        return []
+    def municipalities(self) -> List["Municipality"]:
+        return self.__municipalities
 
 
 class District(Location):
@@ -42,9 +50,6 @@ class District(Location):
         self.__municipalities = []
         self.__province._add_district(self)
 
-    def _set_municipalities(self, municipalities: list["Municipality"]) -> None:
-        self.__municipalities = municipalities
-
     def _add_municipality(self, district: "Municipality") -> None:
         self.__municipalities.append(district)
 
@@ -53,7 +58,7 @@ class District(Location):
         return self.__province
 
     @property
-    def municipalities(self) -> list["Municipality"]:
+    def municipalities(self) -> List["Municipality"]:
         return self.__municipalities
 
 
@@ -73,6 +78,7 @@ class Municipality(Location):
         self.__district = district
         self.__municipality_type = municipality_type
         self.__district._add_municipality(self)
+        self.__district.province._add_municipality(self)
 
     @property
     def province(self) -> Province:
