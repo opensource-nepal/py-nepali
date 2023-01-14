@@ -3,7 +3,7 @@ from typing import List
 
 
 class Location:
-    def __init__(self, name, name_nepali):
+    def __init__(self, name: str, name_nepali: str):
         self.__name = name
         self.__name_nepali = name_nepali
 
