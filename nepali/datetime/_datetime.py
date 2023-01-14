@@ -9,22 +9,22 @@ import time
 import datetime as pythonDateTime
 import warnings
 
+from nepali.date_converter import converter as nepali_date_converter
 from nepali.timezone import NepaliTimeZone, utc_now
 from nepali.utils import to_nepali_timezone
+# from ._converter import NepaliDateConverter
 
-from ._converter import NepaliDateConverter
 
-
-class formater_class_mixin:
-	def get_formater_class(self):
-		return self.__class__.get_formater_class()
+class formatter_class_mixin:
+	def get_formatter_class(self):
+		return self.__class__.init_formatter_class()
 
 	@classmethod
-	def get_formater_class(cls):
-		if not hasattr(cls, '__formater_class__Cache'):
-			from ._formarter import NepaliDateTimeFormater
-			cls.__formater_class__Cache = NepaliDateTimeFormater
-		return cls.__formater_class__Cache
+	def init_formatter_class(cls):
+		if not hasattr(cls, '__formatter_class__Cache'):
+			from ._formatter import NepaliDateTimeFormatter
+			cls.__formatter_class__Cache = NepaliDateTimeFormatter
+		return cls.__formatter_class__Cache
 
 	@classmethod
 	def get_strptime_method(cls):
@@ -33,14 +33,14 @@ class formater_class_mixin:
 			cls._strptime_method_CACHE = strptime
 		return cls._strptime_method_CACHE
 
-class nepalidate(formater_class_mixin):
+class nepalidate(formatter_class_mixin):
 	def __init__(self, year, month, day) -> None:
 		self.__year = year
 		self.__month = month
 		self.__day = day
 
 		# converting to english date
-		year_en, month_en, day_en = NepaliDateConverter.nepali_to_english(year, month, day)
+		year_en, month_en, day_en = nepali_date_converter.nepali_to_english(year, month, day)
 		self.__python_date = pythonDateTime.date(year_en, month_en, day_en)
 
 	def __str__(self):
@@ -66,14 +66,14 @@ class nepalidate(formater_class_mixin):
 		return self.to_nepalidatetime()
 
 	def strftime(self, format):
-		NepaliDateTimeFormater = self.get_formater_class()
-		formater = NepaliDateTimeFormater(self)
-		return formater.get_str(format)
+		NepaliDateTimeFormatter = self.get_formatter_class()
+		formatter = NepaliDateTimeFormatter(self)
+		return formatter.get_str(format)
 
 	def strftime_en(self, format):
-		NepaliDateTimeFormater = self.get_formater_class()
-		formater = NepaliDateTimeFormater(self, english=True)
-		return formater.get_str(format)
+		NepaliDateTimeFormatter = self.get_formatter_class()
+		formatter = NepaliDateTimeFormatter(self, english=True)
+		return formatter.get_str(format)
 
 	
 	# operators overloading
@@ -107,8 +107,7 @@ class nepalidate(formater_class_mixin):
 
 	@staticmethod
 	def today():
-		year, month, day = NepaliDateConverter.current_nepali_date()
-		return nepalidate(year, month, day)
+		return nepalidate.from_date(pythonDateTime.date.today())
 
 	@staticmethod
 	def from_datetime(datetime_object):
@@ -116,7 +115,7 @@ class nepalidate(formater_class_mixin):
 
 	@staticmethod
 	def from_date(date_object):
-		npDate = nepalidate(*NepaliDateConverter.english_to_nepali(date_object.year, date_object.month, date_object.day))
+		npDate = nepalidate(*nepali_date_converter.english_to_nepali(date_object.year, date_object.month, date_object.day))
 		return npDate
 
 	@staticmethod
@@ -166,7 +165,7 @@ class nepalitime(pythonDateTime.time):
 		return nepalitime(dt_now.hour, dt_now.minute, dt_now.second, dt_now.microsecond)
 
 
-class nepalidatetime(formater_class_mixin):
+class nepalidatetime(formatter_class_mixin):
 	"""
 	nepalidatetime
 	"""
@@ -339,14 +338,14 @@ class nepalidatetime(formater_class_mixin):
 
 	# string format
 	def strftime(self, format):
-		NepaliDateTimeFormater = self.get_formater_class()
-		formater = NepaliDateTimeFormater(self)
-		return formater.get_str(format)
+		NepaliDateTimeFormatter = self.get_formatter_class()
+		formatter = NepaliDateTimeFormatter(self)
+		return formatter.get_str(format)
 
 	def strftime_en(self, format):
-		NepaliDateTimeFormater = self.get_formater_class()
-		formater = NepaliDateTimeFormater(self, english=True)
-		return formater.get_str(format)
+		NepaliDateTimeFormatter = self.get_formatter_class()
+		formatter = NepaliDateTimeFormatter(self, english=True)
+		return formatter.get_str(format)
 
 	# static methods
 
