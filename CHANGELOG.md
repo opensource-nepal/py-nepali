@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.0.0 
+- Class representation (`__repr__`) added on NepaliTimeZone
+
 ## v0.5.6 - (July 7, 2022)
 - Test for automatic package publish
 - Updated `README.md`
