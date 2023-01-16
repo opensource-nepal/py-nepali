@@ -17,7 +17,7 @@ class NepaliDateConverter:
 
     EN_MONTHS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     EN_LEAP_YEAR_MONTHS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]  # Leap year months (Just 29 on Feb)
-    
+
     # Nepali months data
     # [
     #   ((LIST_OF_MONTHS), TOTAL_DAYS_IN_YEAR),
@@ -152,13 +152,6 @@ class NepaliDateConverter:
 
         return total_days
 
-    def _get_days_between_english_dates(self, year1, month1, day1, year2, month2, day2):
-        """returns difference days between to english dates"""
-        return abs(
-            self._get_total_days_from_english_date(year1, month1, day1)
-            - self._get_total_days_from_english_date(year2, month2, day2)
-        )
-
     # NEPALI DATE CONVERSION
 
     def check_nepali_date(self, year, month, day):
@@ -173,25 +166,18 @@ class NepaliDateConverter:
 
     def _get_total_days_from_nepali_date(self, year, month, day):
         """counts and returns total days from the nepali date 2000-01-01"""
-        total = day - 1  # taking ref with Date's day 1, so -1
+        total_days = day - 1  # taking ref with Date's day 1, so -1
 
         # adding days of months of 2000
         year_index = year - 2000
         for i in range(0, month-1):
-            total = total + self.NP_MONTHS_DATA[year_index][0][i]
+            total_days = total_days + self.NP_MONTHS_DATA[year_index][0][i]
 
         # adding days of year
         for i in range(0, year_index):
-            total = total + self.NP_MONTHS_DATA[i][1]
+            total_days = total_days + self.NP_MONTHS_DATA[i][1]
 
-        return total
-
-    def _get_days_between_nepali_dates(self, year1, month1, day1, year2, month2, day2):
-        """returns difference days between to english dates"""
-        return abs(
-            self._get_total_days_from_nepali_date(year1, month1, day1)
-            - self._get_total_days_from_nepali_date(year2, month2, day2)
-        )
+        return total_days
 
     def _is_leap_year(self, year):
         """checks if the english year is leap year or not"""
@@ -201,7 +187,7 @@ class NepaliDateConverter:
             return True
         return False
 
-    # public methods
+    # Public methods
 
     def english_to_nepali(self, year, month, day):
         """
@@ -221,21 +207,24 @@ class NepaliDateConverter:
 
         # DIFFERENCE
         # calculating difference days from 1943/04/14
-        difference = self._get_days_between_english_dates(year, month, day, 1943, 4, 14)
+        difference = abs(
+            self._get_total_days_from_english_date(year, month, day)
+            - self._get_total_days_from_english_date(1943, 4, 14)
+        )
 
         # YEAR
         # Incrementing year until the difference remains less than 365
         year_data_index = 0
-        while (difference >= self.NP_MONTHS_DATA[year_data_index][1]):
-            difference = difference - self.NP_MONTHS_DATA[year_data_index][1]
+        while difference >= self.NP_MONTHS_DATA[year_data_index][1]:
+            difference -= self.NP_MONTHS_DATA[year_data_index][1]
             np_year += 1
             year_data_index += 1
 
         # MONTH
         # Incrementing month until the difference remains less than next nepali month days (mostly 31)
         i = 0
-        while (difference >= self.NP_MONTHS_DATA[year_data_index][0][i]):
-            difference = difference - self.NP_MONTHS_DATA[year_data_index][0][i]
+        while difference >= self.NP_MONTHS_DATA[year_data_index][0][i]:
+            difference -= self.NP_MONTHS_DATA[year_data_index][0][i]
             np_month += 1
             i += 1
 
@@ -263,7 +252,10 @@ class NepaliDateConverter:
 
         # DIFFERENCE
         # calculating difference days from 2000/09/17
-        difference = self._get_days_between_nepali_dates(year, month, day, 2000, 9, 17)
+        difference = abs(
+            self._get_total_days_from_nepali_date(year, month, day)
+            - self._get_total_days_from_nepali_date(2000, 9, 17)
+        )
 
         # YEAR
         # Incrementing year until the difference remains less than 365 (or 365)
@@ -279,7 +271,7 @@ class NepaliDateConverter:
         month_days = self.EN_LEAP_YEAR_MONTHS if self._is_leap_year(en_year) else self.EN_MONTHS
         i = 0
         while (difference >= month_days[i]):
-            difference = difference - month_days[i]
+            difference -= month_days[i]
             en_month += 1
             i += 1
 
