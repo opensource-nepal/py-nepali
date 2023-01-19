@@ -17,36 +17,69 @@ class Operators(Enum):
         return self.value
 
 
+def is_mobile_number(number: str) -> bool:
+    """
+    Returns True is the input number is mobile number.
+
+    >>> is_mobile = is_mobile_number(number)
+    >>> if is_mobile:
+    >>>     ...
+    """
+    try:
+        return bool(_mobile_number_re.match(number))
+    except:
+        return False
+
+
+def is_landline_number(number: str) -> bool:
+    """
+    Returns True is the input number is mobile number.
+
+    >>> is_mobile = is_mobile_number(number)
+    >>> if is_mobile:
+    >>>     ...
+    """
+    try:
+        return bool(_landline_number_re.match(number))
+    except:
+        return False
+
+
+def is_valid(number: str) -> bool:
+    return is_mobile_number(number) or is_landline_number(number)
+
+
+def get_exact_number(number: str) -> str:
+    # replacing start 977
+    if number.startswith('977'):
+        number = number.replace('977', '')
+    # replacing +977 and all -
+    return number.replace('+977', '').replace('-', '')
+
+
 def parse(number: str):
+    """
+    TODO: To be implemented
+    """
     if not number and type(number) != str:
         return None
 
     number = number.replace('-', '')
 
     # checking if mobile number
-    match = _mobile_number_re.match(number)
-    if match:
+    if is_mobile_number(number):
         return _parse_mobile_number(number)
 
-    match = _landline_number_re.match(number)
-    if match:
+    if is_landline_number(number):
         return _parse_mobile_number(number)
 
     return None
 
-def get_exact_number(number: str) -> str:
-    # replacing start 977
-    if number.startswith('977'):
-        number.replace('977', '')
-
-    # replacing +977
-    number.replace('+977', '')
-
-    # replacing all -
-    number.replace('-', '')
-    return number
 
 def _parse_mobile_number(number: str) -> dict:
+    """
+    TODO: To be implemented
+    """
     number = get_exact_number(number)
     detail = {
         "type": "Mobile",
@@ -54,7 +87,11 @@ def _parse_mobile_number(number: str) -> dict:
     }
     return detail
 
+
 def _parse_landline_number(number) -> dict:
+    """
+    TODO: To be implemented
+    """
     number = get_exact_number(number)
     return {
         "type": "Landline",
