@@ -2,11 +2,11 @@ import re
 from enum import Enum
 
 
-_mobile_number_re = re.compile(r"^(?:\+977|977)?(?:-)?(?:98[0-7]|97[0-6]|[89][0-9]|[0][1789])[0-9]{8}$")
+_mobile_number_re = re.compile(r"^(?:\+977|977)?(?:-)?(?:98|97|96)[0-9]{8}$")
 _landline_number_re = re.compile(r"^(?:\+977|977)?(?:-)?(?:0)?(?:[01][1-9]|2[13-9]|[3-9][0-9])[0-9]{6,7}$")
 
 
-class Operators(Enum):
+class Operator(Enum):
     NEPAL_TELECOM = "Nepal Telecom"
     NCELL = "Ncell"
     SMART_CELL = "Smart Cell"
@@ -71,19 +71,61 @@ def parse(number: str):
         return _parse_mobile_number(number)
 
     if is_landline_number(number):
-        return _parse_mobile_number(number)
+        return _parse_landline_number(number)
+
+    return None
+
+
+def _get_operator(number: str) -> Operator:
+    """
+    Returns operator from the number.
+    Note: The number should be 10digit mobile number.
+    """
+    starting_number = number[:3]
+
+    # NTC
+    if starting_number in ["984", "985", "986", "974", "975"]:
+        return Operator.NEPAL_TELECOM
+
+    # NCELL
+    if starting_number in ["980", "981", "982"]:
+        return Operator.NCELL
+
+    # Smart Cell
+    if starting_number in ["961", "962", "988"]:
+        return Operator.SMART_CELL
+
+    # UTL
+    if starting_number == "972":
+        return Operator.UTL
+
+    # Hello Mobile
+    if starting_number == "963":
+        return Operator.HELLO_MOBILE
 
     return None
 
 
 def _parse_mobile_number(number: str) -> dict:
     """
-    TODO: To be implemented
+    Parse and returns mobile number details.
+    :return:
+    {
+        "type": "Mobile",
+        "number": "98XXXXXXXX",
+        "operator": <Operator>
+    }
     """
     number = get_exact_number(number)
+    operator = _get_operator(number)
+
+    if not operator:
+        return None
+
     detail = {
         "type": "Mobile",
         "number": number,
+        "operator": operator,
     }
     return detail
 
@@ -96,4 +138,5 @@ def _parse_landline_number(number) -> dict:
     return {
         "type": "Landline",
         "number": number,
+        "district": None,
     }
