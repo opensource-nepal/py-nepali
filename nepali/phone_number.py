@@ -59,7 +59,19 @@ def get_exact_number(number: str) -> str:
 
 def parse(number: str):
     """
-    TODO: To be implemented
+    Parse and returns the details of the phone number: `dict`.
+    The return data may vary between mobile and landline numbers.
+    If the number is invalid it returns `None`.
+
+    If you want to make sure you get a valid response, please use
+    `is_valid`, `is_mobile_number`, and `is_landline_number`.
+
+    :return:
+    {
+        "type": "Mobile" | "Landline",
+        "number": "XXXXXXX",
+        ...
+    }
     """
     if not number and type(number) != str:
         return None
@@ -76,10 +88,10 @@ def parse(number: str):
     return None
 
 
-def _get_operator(number: str) -> Operator:
+def _get_operator(number: str):
     """
     Returns operator from the number.
-    Note: The number should be 10digit mobile number.
+    NOTE: The number should be 10digit mobile number.
     """
     starting_number = number[:3]
 
@@ -106,7 +118,7 @@ def _get_operator(number: str) -> Operator:
     return None
 
 
-def _parse_mobile_number(number: str) -> dict:
+def _parse_mobile_number(number: str):
     """
     Parse and returns mobile number details.
     :return:
@@ -130,13 +142,38 @@ def _parse_mobile_number(number: str) -> dict:
     return detail
 
 
+def _get_area_code(number) -> str:
+    """
+    Returns area code of the number.
+    NOTE: The number should be landline number without +977/977.
+    """
+    code = number[:3]
+
+    # Kathmandu, Lalitpur, and Bhaktapur => 01
+    if number.startswith("01") and code not in ["010", "011", "019"]:
+        return "01"
+
+    return code
+
+
 def _parse_landline_number(number) -> dict:
     """
-    TODO: To be implemented
+    Parse and returns mobile number details.
+    :return:
+    {
+        "type": "Landline",
+        "number": "98XXXXXXXX",
+        "operator": <Operator>
+    }
     """
     number = get_exact_number(number)
+
+    # adding zero
+    if number[0] != "0":
+        number = f"0{number}"
+
     return {
         "type": "Landline",
         "number": number,
-        "district": None,
+        "area_code": _get_area_code(number),
     }
