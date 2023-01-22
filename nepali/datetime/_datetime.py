@@ -1,18 +1,8 @@
-#
-#
-#	Author : Ajesh Sen Thapa
-#	Website: www.ajesh.com.np
-#
-#
-
-import time
 import datetime as pythonDateTime
-import warnings
 
 from nepali.date_converter import converter as nepali_date_converter
 from nepali.timezone import NepaliTimeZone, utc_now
 from nepali.utils import to_nepali_timezone
-# from ._converter import NepaliDateConverter
 
 
 class formatter_class_mixin:
@@ -47,7 +37,7 @@ class nepalidate(formatter_class_mixin):
 		return self.strftime_en('%Y-%m-%d')
 
 	def __repr__(self):
-		return "<nepalidate> "+str(self)
+		return f"<nepalidate> {self}"
 	
 	def to_datetime(self):
 		return pythonDateTime.datetime.combine(self.__python_date, pythonDateTime.time(), tzinfo=NepaliTimeZone())
@@ -85,7 +75,7 @@ class nepalidate(formatter_class_mixin):
 			pythonDate object
 			"""
 			return self.to_date() == to_nepali_timezone(other)
-			
+
 		return False
 
 	# static methods
@@ -95,7 +85,7 @@ class nepalidate(formatter_class_mixin):
 		return nepalidatetime_strptime(datetime_str, format=format).date()
 
 	@staticmethod
-	def now(*args, **kwargs):
+	def now():
 		return nepalidate.today()
 
 	@staticmethod
@@ -122,7 +112,6 @@ class nepalidate(formatter_class_mixin):
 		Sunday => 0, Saturday => 6
 		'''
 		return (self.__python_date.weekday() + 1) % 7
-		return self.__python_date.weekday()
 
 	# nepali date properties
 	@property
@@ -141,12 +130,12 @@ class nepalidate(formatter_class_mixin):
 class nepalitime(pythonDateTime.time):
 
 	def __repr__(self):
-		return "<nepalitime> "+str(self)
+		return f"<nepalitime> {self}"
 
 	# static methods
 	
 	@staticmethod
-	def now(*args, **kwargs):
+	def now():
 		dt_now = pythonDateTime.datetime.now()
 		return nepalitime(dt_now.hour, dt_now.minute, dt_now.second, dt_now.microsecond)
 
@@ -157,17 +146,16 @@ class nepalidatetime(formatter_class_mixin):
 	"""
 
 	def __init__(self, year, month, day, hour=0, minute=0, second=0, microsecond=0):
-		self.__npDate = nepalidate(year, month, day)
-		self.__npTime = nepalitime(hour, minute, second, microsecond) 
+		self.__np_date = nepalidate(year, month, day)
+		self.__np_time = nepalitime(hour, minute, second, microsecond)
 
 	def __str__(self):
-		return str(self.__npDate)+' '+str(self.__npTime)
+		return f"{self.__np_date} {self.__np_time}"
 
 	def __repr__(self):
-		return "<nepalidatetime> "+str(self)
+		return f"<nepalidatetime> {self}"
 
-
-	# operator overloadings
+	# operator overloading
 
 	def __add__(self, other):
 		""" addition """
@@ -178,11 +166,10 @@ class nepalidatetime(formatter_class_mixin):
 			"""
 			return nepalidatetime.from_datetime(self.to_datetime() + other)
 
-
 		return None
 
 	def __sub__(self, other):
-		""" substraction """
+		""" subtraction """
 
 		if type(other) == self.__class__:
 			"""
@@ -217,8 +204,7 @@ class nepalidatetime(formatter_class_mixin):
 			"""
 			return self.to_datetime() < to_nepali_timezone(other)
 
-
-		return None
+		return NotImplemented
 
 	def __le__(self, other):
 		""" less than equal """
@@ -235,8 +221,7 @@ class nepalidatetime(formatter_class_mixin):
 			"""
 			return self.to_datetime() <= to_nepali_timezone(other)
 
-
-		return None
+		return NotImplemented
 
 	def __eq__(self, other):
 		""" equal """
@@ -253,8 +238,7 @@ class nepalidatetime(formatter_class_mixin):
 			"""
 			return self.to_datetime() == to_nepali_timezone(other)
 
-		return False
-
+		return NotImplemented
 
 	def __ne__(self, other):
 		""" not equal """
@@ -287,9 +271,8 @@ class nepalidatetime(formatter_class_mixin):
 			pythonDateTime object
 			"""
 			return self.to_datetime() > to_nepali_timezone(other)
-
 			
-		return None
+		return NotImplemented
 	
 	def __ge__(self, other):
 		""" greater than equal """
@@ -305,22 +288,21 @@ class nepalidatetime(formatter_class_mixin):
 			pythonDateTime object
 			"""
 			return self.to_datetime() >= to_nepali_timezone(other)
-
 			
-		return None 
+		return NotImplemented
 
 	# object transformation
 	def to_datetime(self):
-		return pythonDateTime.datetime.combine(self.__npDate.to_date(), self.__npTime, tzinfo=NepaliTimeZone())
+		return pythonDateTime.datetime.combine(self.__np_date.to_date(), self.__np_time, tzinfo=NepaliTimeZone())
 
 	def to_date(self):
 		return self.to_datetime().date()
 
 	def date(self):
-		return self.__npDate
+		return self.__np_date
 
 	def time(self):
-		return self.__npTime
+		return self.__np_time
 
 	# string format
 	def strftime(self, format):
@@ -363,30 +345,30 @@ class nepalidatetime(formatter_class_mixin):
 
 	@property
 	def year(self):
-		return self.__npDate.year
+		return self.__np_date.year
 
 	@property
 	def month(self):
-		return self.__npDate.month
+		return self.__np_date.month
 
 	@property
 	def day(self):
-		return self.__npDate.day
+		return self.__np_date.day
 
 	def weekday(self):
 		'''
 		Sunday => 0, Saturday => 6
 		'''
-		return self.__npDate.weekday()
+		return self.__np_date.weekday()
 
 	@property
 	def hour(self):
-		return self.__npTime.hour
+		return self.__np_time.hour
 
 	@property
 	def minute(self):
-		return self.__npTime.minute
+		return self.__np_time.minute
 
 	@property
 	def second(self):
-		return self.__npTime.second
+		return self.__np_time.second
