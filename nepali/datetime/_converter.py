@@ -116,7 +116,7 @@ class NepaliDateConverter:
 
 	def __init__(self):
 		warnings.warn(
-			message="This module is depreciated. Please use `converter` from `nepali.date_converter`",
+			message="This module is depreciated and will be removed on the future. Please use `converter` from `nepali.date_converter`",
 			category=DeprecationWarning
 		)
 

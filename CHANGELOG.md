@@ -5,6 +5,7 @@
 - Refactored converter
 - Added locations feature
 - Added Phone number parse feature
+- Removed depreciated class and method
 
 ## v0.5.6 - (July 7, 2022)
 - Test for automatic package publish

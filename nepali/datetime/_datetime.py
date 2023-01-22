@@ -58,13 +58,6 @@ class nepalidate(formatter_class_mixin):
 	def to_nepalidatetime(self):
 		return nepalidatetime.from_nepali_date(self)
 
-	def to_nepali_datetime(self):
-		warnings.warn(
-			message="nepalidate.to_nepali_datetime is depreciated and no longer be available in version >= 1.0.0, use nepalidate.to_nepalidatetime instead.", 
-			category=DeprecationWarning
-		)
-		return self.to_nepalidatetime()
-
 	def strftime(self, format):
 		NepaliDateTimeFormatter = self.get_formatter_class()
 		formatter = NepaliDateTimeFormatter(self)
@@ -144,13 +137,6 @@ class nepalidate(formatter_class_mixin):
 	def day(self):
 		return self.__day
 
-	@property
-	def week_day(self):
-		warnings.warn(
-			message="nepalidate.week_day field is depreciated and no longer be available in version >= 1.0.0, use nepalidate.weekday() method instead.", 
-			category=DeprecationWarning
-		)
-		return self.weekday()
 
 class nepalitime(pythonDateTime.time):
 
@@ -394,14 +380,6 @@ class nepalidatetime(formatter_class_mixin):
 		return self.__npDate.weekday()
 
 	@property
-	def week_day(self):
-		warnings.warn(
-			message="nepalidate.week_day field is depreciated and no longer be available in version >= 1.0.0, use nepalidatetime.weekday() method instead.", 
-			category=DeprecationWarning
-		)
-		return self.__npDate.weekday()
-
-	@property
 	def hour(self):
 		return self.__npTime.hour
 
@@ -412,29 +390,3 @@ class nepalidatetime(formatter_class_mixin):
 	@property
 	def second(self):
 		return self.__npTime.second
-
-
-class NepaliDate(nepalidate):
-	def __init__(self, *args, **kwargs):
-		warnings.warn(
-			message="NepaliDate is depreciated and no longer be available in version >= 1.0.0, use nepalidate instead.", 
-			category=DeprecationWarning
-		)
-		super().__init__(*args, **kwargs)
-
-class NepaliTime(nepalidate):
-	def __init__(self, *args, **kwargs):
-		warnings.warn(
-			message="NepaliTime is depreciated and no longer be available in version >= 1.0.0, use nepalitime instead.", 
-			category=DeprecationWarning
-		)
-		super().__init__(*args, **kwargs)
-
-class NepaliDateTime(nepalidate):
-	def __init__(self, *args, **kwargs):
-		warnings.warn(
-			message="NepaliDateTime is depreciated and no longer be available in version >= 1.0.0, use nepalidatetime instead.", 
-			category=DeprecationWarning
-		)
-		super().__init__(*args, **kwargs)
-
