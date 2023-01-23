@@ -57,26 +57,103 @@ class nepalidate(formatter_class_mixin):
 		NepaliDateTimeFormatter = self.get_formatter_class()
 		formatter = NepaliDateTimeFormatter(self, english=True)
 		return formatter.get_str(format)
-
 	
 	# operators overloading
-	# TODO: add more operators overloading
+
+	def __add__(self, other):
+		""" addition """
+		if type(other) == pythonDateTime.timedelta:
+			# timedelta object
+			return nepalidate.from_date(self.to_date() + other)
+		return NotImplemented
+
+	def __sub__(self, other):
+		""" subtraction """
+		if type(other) == self.__class__:
+			# nepalidate object
+			return self.to_date() - other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			# python date object
+			return self.to_date() - other
+
+		elif type(other) == pythonDateTime.timedelta:
+			# timedelta object
+			return nepalidate.from_date(self.to_date() - other)
+
+		return NotImplemented
+
+	def __lt__(self, other):
+		""" less than """
+		if type(other) == self.__class__:
+			# nepalidatetime object
+			return self.to_date() < other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			# python date object
+			return self.to_date() < other
+
+		return NotImplemented
+
+	def __le__(self, other):
+		""" less than equal """
+		if type(other) == self.__class__:
+			# nepalidate object
+			return self.to_date() <= other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			# python date object
+			return self.to_date() <= other
+
+		return NotImplemented
+
 	def __eq__(self, other):
 		""" equal """
-		
 		if type(other) == self.__class__:
-			"""
-			NepaliDate object
-			"""
+			# nepalidate object
 			return self.to_date() == other.to_date()
 
 		elif type(other) == pythonDateTime.date:
-			"""
-			pythonDate object
-			"""
-			return self.to_date() == to_nepali_timezone(other)
+			# python date object
+			return self.to_date() == other
 
 		return False
+
+	def __ne__(self, other):
+		""" not equal """
+		if type(other) == self.__class__:
+			# nepalidate object
+			return self.to_date() != other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			# python date object
+			return self.to_date() != other
+
+		return True
+
+	def __gt__(self, other):
+		""" greater than """
+		if type(other) == self.__class__:
+			# nepalidate object
+			return self.to_date() > other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			# python date object
+			return self.to_date() > other
+
+		return NotImplemented
+
+	def __ge__(self, other):
+		""" greater than equal """
+		if type(other) == self.__class__:
+			# nepalidate object
+			return self.to_date() >= other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			# python date object
+			return self.to_date() >= other
+
+		return NotImplemented
 
 	# static methods
 	@classmethod
@@ -159,139 +236,102 @@ class nepalidatetime(formatter_class_mixin):
 
 	def __add__(self, other):
 		""" addition """
-
 		if type(other) == pythonDateTime.timedelta:
-			"""
-			timedelta object
-			"""
+			# timedelta object
 			return nepalidatetime.from_datetime(self.to_datetime() + other)
 
-		return None
+		return NotImplemented
 
 	def __sub__(self, other):
 		""" subtraction """
-
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() - other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
+			# python datetime object
 			return self.to_datetime() - to_nepali_timezone(other)
 
 		elif type(other) == pythonDateTime.timedelta:
-			"""
-			timedelta object
-			"""
+			# timedelta object
 			return nepalidatetime.from_datetime(self.to_datetime() - other)
 
-
-		return None
+		return NotImplemented
 
 	def __lt__(self, other):
 		""" less than """
-
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() < other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
-			"""
-			pythonDateTime object
-			"""
+			# python datetime object
 			return self.to_datetime() < to_nepali_timezone(other)
 
 		return NotImplemented
 
 	def __le__(self, other):
 		""" less than equal """
-
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() <= other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
-			"""
-			pythonDateTime object
-			"""
+			# python datetime object
 			return self.to_datetime() <= to_nepali_timezone(other)
 
 		return NotImplemented
 
 	def __eq__(self, other):
 		""" equal """
-		
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() == other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
-			"""
-			pythonDateTime object
-			"""
+			# python datetime object
 			return self.to_datetime() == to_nepali_timezone(other)
 
-		return NotImplemented
+		return False
 
 	def __ne__(self, other):
 		""" not equal """
-
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() != other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
-			"""
-			pythonDateTime object
-			"""
+			# python datetime object
 			return self.to_datetime() != to_nepali_timezone(other)
-		
+
 		return True
-	
+
 	def __gt__(self, other):
 		""" greater than """
-
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() > other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
-			"""
-			pythonDateTime object
-			"""
+			# python datetime object
 			return self.to_datetime() > to_nepali_timezone(other)
-			
+
 		return NotImplemented
-	
+
 	def __ge__(self, other):
 		""" greater than equal """
-
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() >= other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
-			"""
-			pythonDateTime object
-			"""
+			# python datetime object
 			return self.to_datetime() >= to_nepali_timezone(other)
-			
+
 		return NotImplemented
 
 	# object transformation
+
 	def to_datetime(self):
 		return pythonDateTime.datetime.combine(self.__np_date.to_date(), self.__np_time, tzinfo=NepaliTimeZone())
 
