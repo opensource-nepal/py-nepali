@@ -16,6 +16,9 @@ class Operator(Enum):
     def __str__(self) -> str:
         return self.value
 
+    def __repr__(self) -> str:
+        return f"<Operator: {self.value}>"
+
 
 def is_mobile_number(number: str) -> bool:
     """
