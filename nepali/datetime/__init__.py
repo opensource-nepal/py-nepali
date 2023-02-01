@@ -1,5 +1,5 @@
-from ._datetime import nepalidate, nepalitime, nepalidatetime, NepaliDate, NepaliDateTime, NepaliTime
-from ._formarter import NepaliDateTimeFormater
+from ._datetime import nepalidate, nepalitime, nepalidatetime
+from ._formatter import NepaliDateTimeFormatter
 from ._humanize import HumanizeDateTime, nepalihumanize
 
 __all__ = [
@@ -7,11 +7,7 @@ __all__ = [
 	'nepalitime',
 	'nepalidatetime',
 
-	'NepaliDate',
-	'NepaliTime',
-	'NepaliDateTime',
-
 	'nepalihumanize',
-	'NepaliDateTimeFormater',
+	'NepaliDateTimeFormatter',
 	'HumanizeDateTime',
 ]

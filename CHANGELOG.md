@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v1.0.0 
+- Class representation (`__repr__`) added on NepaliTimeZone
+- Refactored converter
+- Added locations feature
+- Added Phone number parse feature
+- Removed depreciated class and method
+- Added operator overloading on nepalidate
+
 ## v0.5.6 - (July 7, 2022)
 - Test for automatic package publish
 - Updated `README.md`

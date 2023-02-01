@@ -13,6 +13,9 @@ class NepaliTimeZone(datetime.tzinfo):
     def __str__(self):
         return "Asia/Kathmandu"
 
+    def __repr__(self):
+        return "Asia/Kathmandu"
+
 def get_timezone():
     return datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
 

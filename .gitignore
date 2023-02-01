@@ -1,5 +1,6 @@
-nepali.egg-info/
+*.egg-info/
 __pycache__/
 .eggs
 build
 dist
+.vscode

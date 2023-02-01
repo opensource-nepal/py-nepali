@@ -1,9 +1,12 @@
+"""
+NOTE: To run only this test case use the below command
+python setup.py test -s nepali.tests.test_datetime
+"""
 import datetime
 import unittest
 
 from nepali.datetime import nepalidate, nepalitime, nepalidatetime
 from nepali.timezone import NepaliTimeZone
-from nepali.utils import to_nepali_timezone
 
 class TestNepaliDateTime(unittest.TestCase):
 
@@ -15,7 +18,7 @@ class TestNepaliDateTime(unittest.TestCase):
         now = nepalidate.now()
         self.assertEqual(today, now, msg='nepalidate today is not equals to now.')
 
-    def test_nepalidate_comparision(self):
+    def test_nepalidate_comparison(self):
         nepalidate_obj1 = nepalidate(year=2051, month=4, day=28)
 
         # test equal date
@@ -26,7 +29,76 @@ class TestNepaliDateTime(unittest.TestCase):
         nepalidate_obj3 = nepalidate(year=2051, month=4, day=29)
         self.assertNotEqual(nepalidate_obj1, nepalidate_obj3, 'Different nepali date are checked as equal.')
 
-        # TODO: check other comparisions (later)
+        #
+        # test addition
+
+        # test with timedelta
+        nt = nepalidate(year=2051, month=4, day=29)
+        nt = nt + datetime.timedelta(days=1)
+        self.assertEqual((nt.year, nt.month, nt.day), (2051, 4, 30))
+
+        # test without timedelta
+        with self.assertRaises(TypeError):
+            nt = nt + 1
+
+        #
+        # test subtraction
+
+        # test with nepali date
+        td = nepalidate(year=2051, month=4, day=30) - nepalidate(year=2051, month=4, day=29)
+        self.assertEqual(td.days, 1)
+
+        # test with python date
+        td = nepalidate(year=2051, month=4, day=30) - datetime.date(year=1994, month=8, day=13)
+        self.assertEqual(td.days, 1)
+
+        # test with timedelta
+        nt = nepalidate(year=2051, month=4, day=30) - datetime.timedelta(days=1)
+        self.assertEqual((nt.year, nt.month, nt.day), (2051, 4, 29))
+
+        # test without timedelta
+        with self.assertRaises(TypeError):
+            nt = nt - 1
+
+        #
+        # test less than
+        self.assertEqual(nepalidate(2051, 4, 29) < nepalidate(2051, 4, 30), True)
+        self.assertEqual(nepalidate(2051, 4, 29) < nepalidate(2051, 4, 29), False)
+        self.assertEqual(nepalidate(2051, 4, 29) < datetime.date(1994, 8, 14), True)
+        self.assertEqual(nepalidate(2051, 4, 29) < datetime.date(1994, 8, 13), False)
+        with self.assertRaises(TypeError):
+            nepalidate(2051, 4, 29) < 0
+
+        #
+        # test less than equal
+        self.assertEqual(nepalidate(2051, 4, 29) <= nepalidate(2051, 4, 30), True)
+        self.assertEqual(nepalidate(2051, 4, 29) <= nepalidate(2051, 4, 29), True)
+        self.assertEqual(nepalidate(2051, 4, 30) <= nepalidate(2051, 4, 29), False)
+        self.assertEqual(nepalidate(2051, 4, 29) <= datetime.date(1994, 8, 14), True)
+        self.assertEqual(nepalidate(2051, 4, 29) <= datetime.date(1994, 8, 13), True)
+        self.assertEqual(nepalidate(2051, 4, 30) <= datetime.date(1994, 8, 13), False)
+        with self.assertRaises(TypeError):
+            nepalidate(2051, 4, 29) <= 0
+
+        #
+        # test greater than
+        self.assertEqual(nepalidate(2051, 4, 30) > nepalidate(2051, 4, 29), True)
+        self.assertEqual(nepalidate(2051, 4, 30) > nepalidate(2051, 4, 30), False)
+        self.assertEqual(nepalidate(2051, 4, 30) > datetime.date(1994, 8, 14), False)
+        self.assertEqual(nepalidate(2051, 4, 30) > datetime.date(1994, 8, 13), True)
+        with self.assertRaises(TypeError):
+            nepalidate(2051, 4, 29) > 0
+
+        #
+        # test greater than equal
+        self.assertEqual(nepalidate(2051, 4, 30) >= nepalidate(2051, 4, 30), True)
+        self.assertEqual(nepalidate(2051, 4, 30) >= nepalidate(2051, 4, 29), True)
+        self.assertEqual(nepalidate(2051, 4, 29) >= nepalidate(2051, 4, 30), False)
+        self.assertEqual(nepalidate(2051, 4, 30) >= datetime.date(1994, 8, 14), True)
+        self.assertEqual(nepalidate(2051, 4, 30) >= datetime.date(1994, 8, 13), True)
+        self.assertEqual(nepalidate(2051, 4, 29) >= datetime.date(1994, 8, 14), False)
+        with self.assertRaises(TypeError):
+            nepalidate(2051, 4, 29) >= 0
 
     def test_nepalidate_year_month_day(self):
         nepalidate_obj = nepalidate(year=2051, month=4, day=28)

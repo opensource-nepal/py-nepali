@@ -5,9 +5,9 @@ from nepali.exceptions import InvalidDateFormatException, InvalidNepaliDateTimeO
 
 from ._datetime import nepalidate, nepalidatetime
 
-class NepaliDateTimeFormater:
+class NepaliDateTimeFormatter:
 	"""
-	NepaliDateTimeFormater: formats nepali datetime to string ( using strftime )
+	NepaliDateTimeFormatter: formats nepali datetime to string ( using strftime )
 	"""
 
 	# format according to python's datetime with class method

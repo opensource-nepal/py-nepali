@@ -1,4 +1,9 @@
+"""
+This module is deprecated. Please do not use it.
+"""
+
 import time
+import warnings
 
 class NepaliDateConverter:
 	
@@ -108,6 +113,12 @@ class NepaliDateConverter:
 		[ 31, 31, 32, 31, 31, 31, 29, 30, 29, 30, 29, 31 ],
 		[ 31, 31, 32, 31, 31, 31, 30, 29, 29, 30, 30, 30 ]	 # 2099 BS - 2042 AD
 	]
+
+	def __init__(self):
+		warnings.warn(
+			message="This module is depreciated and will be removed on the future. Please use `converter` from `nepali.date_converter`",
+			category=DeprecationWarning
+		)
 
 	def set_current_date(self):
 		year = int(time.strftime("%Y"))

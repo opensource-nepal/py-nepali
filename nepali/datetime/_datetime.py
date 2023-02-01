@@ -1,30 +1,20 @@
-#
-#
-#	Author : Ajesh Sen Thapa
-#	Website: www.ajesh.com.np
-#
-#
-
-import time
 import datetime as pythonDateTime
-import warnings
 
+from nepali.date_converter import converter as nepali_date_converter
 from nepali.timezone import NepaliTimeZone, utc_now
 from nepali.utils import to_nepali_timezone
 
-from ._converter import NepaliDateConverter
 
-
-class formater_class_mixin:
-	def get_formater_class(self):
-		return self.__class__.get_formater_class()
+class formatter_class_mixin:
+	def get_formatter_class(self):
+		return self.__class__.init_formatter_class()
 
 	@classmethod
-	def get_formater_class(cls):
-		if not hasattr(cls, '__formater_class__Cache'):
-			from ._formarter import NepaliDateTimeFormater
-			cls.__formater_class__Cache = NepaliDateTimeFormater
-		return cls.__formater_class__Cache
+	def init_formatter_class(cls):
+		if not hasattr(cls, '__formatter_class__Cache'):
+			from ._formatter import NepaliDateTimeFormatter
+			cls.__formatter_class__Cache = NepaliDateTimeFormatter
+		return cls.__formatter_class__Cache
 
 	@classmethod
 	def get_strptime_method(cls):
@@ -33,21 +23,21 @@ class formater_class_mixin:
 			cls._strptime_method_CACHE = strptime
 		return cls._strptime_method_CACHE
 
-class nepalidate(formater_class_mixin):
+class nepalidate(formatter_class_mixin):
 	def __init__(self, year, month, day) -> None:
 		self.__year = year
 		self.__month = month
 		self.__day = day
 
 		# converting to english date
-		year_en, month_en, day_en = NepaliDateConverter.nepali_to_english(year, month, day)
+		year_en, month_en, day_en = nepali_date_converter.nepali_to_english(year, month, day)
 		self.__python_date = pythonDateTime.date(year_en, month_en, day_en)
 
 	def __str__(self):
 		return self.strftime_en('%Y-%m-%d')
 
 	def __repr__(self):
-		return "<nepalidate> "+str(self)
+		return f"<nepalidate> {self}"
 	
 	def to_datetime(self):
 		return pythonDateTime.datetime.combine(self.__python_date, pythonDateTime.time(), tzinfo=NepaliTimeZone())
@@ -58,42 +48,112 @@ class nepalidate(formater_class_mixin):
 	def to_nepalidatetime(self):
 		return nepalidatetime.from_nepali_date(self)
 
-	def to_nepali_datetime(self):
-		warnings.warn(
-			message="nepalidate.to_nepali_datetime is depreciated and no longer be available in version >= 1.0.0, use nepalidate.to_nepalidatetime instead.", 
-			category=DeprecationWarning
-		)
-		return self.to_nepalidatetime()
-
 	def strftime(self, format):
-		NepaliDateTimeFormater = self.get_formater_class()
-		formater = NepaliDateTimeFormater(self)
-		return formater.get_str(format)
+		NepaliDateTimeFormatter = self.get_formatter_class()
+		formatter = NepaliDateTimeFormatter(self)
+		return formatter.get_str(format)
 
 	def strftime_en(self, format):
-		NepaliDateTimeFormater = self.get_formater_class()
-		formater = NepaliDateTimeFormater(self, english=True)
-		return formater.get_str(format)
-
+		NepaliDateTimeFormatter = self.get_formatter_class()
+		formatter = NepaliDateTimeFormatter(self, english=True)
+		return formatter.get_str(format)
 	
 	# operators overloading
-	# TODO: add more operators overloading
+
+	def __add__(self, other):
+		""" addition """
+		if type(other) == pythonDateTime.timedelta:
+			# timedelta object
+			return nepalidate.from_date(self.to_date() + other)
+		return NotImplemented
+
+	def __sub__(self, other):
+		""" subtraction """
+		if type(other) == self.__class__:
+			# nepalidate object
+			return self.to_date() - other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			# python date object
+			return self.to_date() - other
+
+		elif type(other) == pythonDateTime.timedelta:
+			# timedelta object
+			return nepalidate.from_date(self.to_date() - other)
+
+		return NotImplemented
+
+	def __lt__(self, other):
+		""" less than """
+		if type(other) == self.__class__:
+			# nepalidatetime object
+			return self.to_date() < other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			# python date object
+			return self.to_date() < other
+
+		return NotImplemented
+
+	def __le__(self, other):
+		""" less than equal """
+		if type(other) == self.__class__:
+			# nepalidate object
+			return self.to_date() <= other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			# python date object
+			return self.to_date() <= other
+
+		return NotImplemented
+
 	def __eq__(self, other):
 		""" equal """
-		
 		if type(other) == self.__class__:
-			"""
-			NepaliDate object
-			"""
+			# nepalidate object
 			return self.to_date() == other.to_date()
 
 		elif type(other) == pythonDateTime.date:
-			"""
-			pythonDate object
-			"""
-			return self.to_date() == to_nepali_timezone(other)
-			
+			# python date object
+			return self.to_date() == other
+
 		return False
+
+	def __ne__(self, other):
+		""" not equal """
+		if type(other) == self.__class__:
+			# nepalidate object
+			return self.to_date() != other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			# python date object
+			return self.to_date() != other
+
+		return True
+
+	def __gt__(self, other):
+		""" greater than """
+		if type(other) == self.__class__:
+			# nepalidate object
+			return self.to_date() > other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			# python date object
+			return self.to_date() > other
+
+		return NotImplemented
+
+	def __ge__(self, other):
+		""" greater than equal """
+		if type(other) == self.__class__:
+			# nepalidate object
+			return self.to_date() >= other.to_date()
+
+		elif type(other) == pythonDateTime.date:
+			# python date object
+			return self.to_date() >= other
+
+		return NotImplemented
 
 	# static methods
 	@classmethod
@@ -102,13 +162,12 @@ class nepalidate(formater_class_mixin):
 		return nepalidatetime_strptime(datetime_str, format=format).date()
 
 	@staticmethod
-	def now(*args, **kwargs):
+	def now():
 		return nepalidate.today()
 
 	@staticmethod
 	def today():
-		year, month, day = NepaliDateConverter.current_nepali_date()
-		return nepalidate(year, month, day)
+		return nepalidate.from_date(pythonDateTime.date.today())
 
 	@staticmethod
 	def from_datetime(datetime_object):
@@ -116,7 +175,7 @@ class nepalidate(formater_class_mixin):
 
 	@staticmethod
 	def from_date(date_object):
-		npDate = nepalidate(*NepaliDateConverter.english_to_nepali(date_object.year, date_object.month, date_object.day))
+		npDate = nepalidate(*nepali_date_converter.english_to_nepali(date_object.year, date_object.month, date_object.day))
 		return npDate
 
 	@staticmethod
@@ -130,7 +189,6 @@ class nepalidate(formater_class_mixin):
 		Sunday => 0, Saturday => 6
 		'''
 		return (self.__python_date.weekday() + 1) % 7
-		return self.__python_date.weekday()
 
 	# nepali date properties
 	@property
@@ -145,208 +203,157 @@ class nepalidate(formater_class_mixin):
 	def day(self):
 		return self.__day
 
-	@property
-	def week_day(self):
-		warnings.warn(
-			message="nepalidate.week_day field is depreciated and no longer be available in version >= 1.0.0, use nepalidate.weekday() method instead.", 
-			category=DeprecationWarning
-		)
-		return self.weekday()
 
 class nepalitime(pythonDateTime.time):
 
 	def __repr__(self):
-		return "<nepalitime> "+str(self)
+		return f"<nepalitime> {self}"
 
 	# static methods
 	
 	@staticmethod
-	def now(*args, **kwargs):
+	def now():
 		dt_now = pythonDateTime.datetime.now()
 		return nepalitime(dt_now.hour, dt_now.minute, dt_now.second, dt_now.microsecond)
 
 
-class nepalidatetime(formater_class_mixin):
+class nepalidatetime(formatter_class_mixin):
 	"""
 	nepalidatetime
 	"""
 
 	def __init__(self, year, month, day, hour=0, minute=0, second=0, microsecond=0):
-		self.__npDate = nepalidate(year, month, day)
-		self.__npTime = nepalitime(hour, minute, second, microsecond) 
+		self.__np_date = nepalidate(year, month, day)
+		self.__np_time = nepalitime(hour, minute, second, microsecond)
 
 	def __str__(self):
-		return str(self.__npDate)+' '+str(self.__npTime)
+		return f"{self.__np_date} {self.__np_time}"
 
 	def __repr__(self):
-		return "<nepalidatetime> "+str(self)
+		return f"<nepalidatetime> {self}"
 
-
-	# operator overloadings
+	# operator overloading
 
 	def __add__(self, other):
 		""" addition """
-
 		if type(other) == pythonDateTime.timedelta:
-			"""
-			timedelta object
-			"""
+			# timedelta object
 			return nepalidatetime.from_datetime(self.to_datetime() + other)
 
-
-		return None
+		return NotImplemented
 
 	def __sub__(self, other):
-		""" substraction """
-
+		""" subtraction """
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() - other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
+			# python datetime object
 			return self.to_datetime() - to_nepali_timezone(other)
 
 		elif type(other) == pythonDateTime.timedelta:
-			"""
-			timedelta object
-			"""
+			# timedelta object
 			return nepalidatetime.from_datetime(self.to_datetime() - other)
 
-
-		return None
+		return NotImplemented
 
 	def __lt__(self, other):
 		""" less than """
-
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() < other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
-			"""
-			pythonDateTime object
-			"""
+			# python datetime object
 			return self.to_datetime() < to_nepali_timezone(other)
 
-
-		return None
+		return NotImplemented
 
 	def __le__(self, other):
 		""" less than equal """
-
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() <= other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
-			"""
-			pythonDateTime object
-			"""
+			# python datetime object
 			return self.to_datetime() <= to_nepali_timezone(other)
 
-
-		return None
+		return NotImplemented
 
 	def __eq__(self, other):
 		""" equal """
-		
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() == other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
-			"""
-			pythonDateTime object
-			"""
+			# python datetime object
 			return self.to_datetime() == to_nepali_timezone(other)
 
 		return False
 
-
 	def __ne__(self, other):
 		""" not equal """
-
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() != other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
-			"""
-			pythonDateTime object
-			"""
+			# python datetime object
 			return self.to_datetime() != to_nepali_timezone(other)
-		
+
 		return True
-	
+
 	def __gt__(self, other):
 		""" greater than """
-
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() > other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
-			"""
-			pythonDateTime object
-			"""
+			# python datetime object
 			return self.to_datetime() > to_nepali_timezone(other)
 
-			
-		return None
-	
+		return NotImplemented
+
 	def __ge__(self, other):
 		""" greater than equal """
-
 		if type(other) == self.__class__:
-			"""
-			nepalidatetime object
-			"""
+			# nepalidatetime object
 			return self.to_datetime() >= other.to_datetime()
 
 		elif type(other) == pythonDateTime.datetime:
-			"""
-			pythonDateTime object
-			"""
+			# python datetime object
 			return self.to_datetime() >= to_nepali_timezone(other)
 
-			
-		return None 
+		return NotImplemented
 
 	# object transformation
+
 	def to_datetime(self):
-		return pythonDateTime.datetime.combine(self.__npDate.to_date(), self.__npTime, tzinfo=NepaliTimeZone())
+		return pythonDateTime.datetime.combine(self.__np_date.to_date(), self.__np_time, tzinfo=NepaliTimeZone())
 
 	def to_date(self):
 		return self.to_datetime().date()
 
 	def date(self):
-		return self.__npDate
+		return self.__np_date
 
 	def time(self):
-		return self.__npTime
+		return self.__np_time
 
 	# string format
 	def strftime(self, format):
-		NepaliDateTimeFormater = self.get_formater_class()
-		formater = NepaliDateTimeFormater(self)
-		return formater.get_str(format)
+		NepaliDateTimeFormatter = self.get_formatter_class()
+		formatter = NepaliDateTimeFormatter(self)
+		return formatter.get_str(format)
 
 	def strftime_en(self, format):
-		NepaliDateTimeFormater = self.get_formater_class()
-		formater = NepaliDateTimeFormater(self, english=True)
-		return formater.get_str(format)
+		NepaliDateTimeFormatter = self.get_formatter_class()
+		formatter = NepaliDateTimeFormatter(self, english=True)
+		return formatter.get_str(format)
 
 	# static methods
 
@@ -378,64 +385,30 @@ class nepalidatetime(formater_class_mixin):
 
 	@property
 	def year(self):
-		return self.__npDate.year
+		return self.__np_date.year
 
 	@property
 	def month(self):
-		return self.__npDate.month
+		return self.__np_date.month
 
 	@property
 	def day(self):
-		return self.__npDate.day
+		return self.__np_date.day
 
 	def weekday(self):
 		'''
 		Sunday => 0, Saturday => 6
 		'''
-		return self.__npDate.weekday()
-
-	@property
-	def week_day(self):
-		warnings.warn(
-			message="nepalidate.week_day field is depreciated and no longer be available in version >= 1.0.0, use nepalidatetime.weekday() method instead.", 
-			category=DeprecationWarning
-		)
-		return self.__npDate.weekday()
+		return self.__np_date.weekday()
 
 	@property
 	def hour(self):
-		return self.__npTime.hour
+		return self.__np_time.hour
 
 	@property
 	def minute(self):
-		return self.__npTime.minute
+		return self.__np_time.minute
 
 	@property
 	def second(self):
-		return self.__npTime.second
-
-
-class NepaliDate(nepalidate):
-	def __init__(self, *args, **kwargs):
-		warnings.warn(
-			message="NepaliDate is depreciated and no longer be available in version >= 1.0.0, use nepalidate instead.", 
-			category=DeprecationWarning
-		)
-		super().__init__(*args, **kwargs)
-
-class NepaliTime(nepalidate):
-	def __init__(self, *args, **kwargs):
-		warnings.warn(
-			message="NepaliTime is depreciated and no longer be available in version >= 1.0.0, use nepalitime instead.", 
-			category=DeprecationWarning
-		)
-		super().__init__(*args, **kwargs)
-
-class NepaliDateTime(nepalidate):
-	def __init__(self, *args, **kwargs):
-		warnings.warn(
-			message="NepaliDateTime is depreciated and no longer be available in version >= 1.0.0, use nepalidatetime instead.", 
-			category=DeprecationWarning
-		)
-		super().__init__(*args, **kwargs)
-
+		return self.__np_time.second
