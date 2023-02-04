@@ -4,3 +4,7 @@ __pycache__/
 build
 dist
 .vscode
+htmlcov
+.coverage
+.coverage.*
+.DS_Store

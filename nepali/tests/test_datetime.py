@@ -1,7 +1,3 @@
-"""
-NOTE: To run only this test case use the below command
-python setup.py test -s nepali.tests.test_datetime
-"""
 import datetime
 import unittest
 
