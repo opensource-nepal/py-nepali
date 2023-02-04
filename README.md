@@ -1,5 +1,9 @@
 # nepali
 
+[![PyPI version](https://badge.fury.io/py/nepali.svg)](https://badge.fury.io/py/nepali)
+[![CI status](https://github.com/opensource-nepal/py-nepali/actions/workflows/python-package.yml/badge.svg?branch=master)](https://github.com/opensource-nepal/py-nepali/actions)
+[![image](https://img.shields.io/pypi/dm/nepali.svg?maxAge=180)](https://pypi.org/project/nepali/)
+
 `nepali` is a python package containing features that will be useful for Nepali projects.
 
 The major feature of this package is nepalidatetime, which is compatible with python's datetime feature. It helps nepali date to english, parsing nepali datetime, nepali timezone, and timedelta support in nepali datetime.
@@ -121,7 +125,6 @@ np_datetime.to_date()		# datetime.date object
 np_datetime.to_datetime() 	# datetime.datetime object
 ```
 
-
 **Date String Format**\
 _Equivalent to python's datetime strftime format_
 
@@ -129,7 +132,7 @@ _Equivalent to python's datetime strftime format_
 npDateTime = nepalidatetime.now()
 print(npDateTime.strftime('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
 print(npDateTime.strftime_en('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
-````
+```
 
 ```
 OUTPUT:
