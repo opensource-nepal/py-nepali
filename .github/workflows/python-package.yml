@@ -44,3 +44,9 @@ jobs:
       - name: Show coverage
         run: |
           coverage report
+
+      - name: Send coverage to CodeCov
+        uses: codecov/codecov-action@v3
+        with:
+          fail_ci_if_error: true
+          verbose: true
