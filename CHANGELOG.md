@@ -2,7 +2,7 @@
 
 ## v1.0.0 
 - Class representation (`__repr__`) added on NepaliTimeZone
-- Refactored converter
+- Refactored date converter
 - Added locations feature
 - Added Phone number parse feature
 - Removed depreciated class and method
