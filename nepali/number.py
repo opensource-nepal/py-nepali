@@ -48,4 +48,12 @@ class NepaliNumber:
 
 	@staticmethod
 	def add_comma_english(number):
-		return '{:,}'.format(number)
+		return '{:,}'.format(int(number))
+
+
+# Adding new function with legacy support (NepaliNumber will be depreciated in future release)
+convert = NepaliNumber.convert
+revert = NepaliNumber.revert
+add_comma = NepaliNumber.add_comma
+add_comma_english = NepaliNumber.add_comma_english
+convert_and_add_comma = NepaliNumber.convert_and_add_comma
