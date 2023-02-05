@@ -63,7 +63,7 @@ class TestNepaliDateTime(unittest.TestCase):
         self.assertEqual(nepalidate(2051, 4, 29) < datetime.date(1994, 8, 14), True)
         self.assertEqual(nepalidate(2051, 4, 29) < datetime.date(1994, 8, 13), False)
         with self.assertRaises(TypeError):
-            nepalidate(2051, 4, 29) < 0
+            _ = nepalidate(2051, 4, 29) < 0
 
         #
         # test less than equal
@@ -74,7 +74,7 @@ class TestNepaliDateTime(unittest.TestCase):
         self.assertEqual(nepalidate(2051, 4, 29) <= datetime.date(1994, 8, 13), True)
         self.assertEqual(nepalidate(2051, 4, 30) <= datetime.date(1994, 8, 13), False)
         with self.assertRaises(TypeError):
-            nepalidate(2051, 4, 29) <= 0
+            _ = nepalidate(2051, 4, 29) <= 0
 
         #
         # test greater than
@@ -83,7 +83,7 @@ class TestNepaliDateTime(unittest.TestCase):
         self.assertEqual(nepalidate(2051, 4, 30) > datetime.date(1994, 8, 14), False)
         self.assertEqual(nepalidate(2051, 4, 30) > datetime.date(1994, 8, 13), True)
         with self.assertRaises(TypeError):
-            nepalidate(2051, 4, 29) > 0
+            _ = nepalidate(2051, 4, 29) > 0
 
         #
         # test greater than equal
@@ -94,7 +94,7 @@ class TestNepaliDateTime(unittest.TestCase):
         self.assertEqual(nepalidate(2051, 4, 30) >= datetime.date(1994, 8, 13), True)
         self.assertEqual(nepalidate(2051, 4, 29) >= datetime.date(1994, 8, 14), False)
         with self.assertRaises(TypeError):
-            nepalidate(2051, 4, 29) >= 0
+            _ = nepalidate(2051, 4, 29) >= 0
 
     def test_nepalidate_year_month_day(self):
         nepalidate_obj = nepalidate(year=2051, month=4, day=28)
