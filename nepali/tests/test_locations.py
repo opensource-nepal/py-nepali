@@ -1,6 +1,7 @@
 import unittest
 
 from nepali import locations
+from nepali.locations.models import Location, MunicipalityType, Province, District, Municipality
 from nepali.locations.utils import _filter_location, get_province, get_district, get_municipality
 
 
@@ -57,6 +58,8 @@ class TestLocations(unittest.TestCase):
         province = _filter_location(locations=locations.provinces, name_nepali="बागमती प्रदेश", exact=True)
         self.assertEqual(province.name_nepali, "बागमती प्रदेश")
 
+
+class TestLocationsUtils(unittest.TestCase):
     def test_utils_get_province(self):
         province = get_province(locations=locations.provinces, name="Bagmati")
         self.assertEqual(province.name, "Bagmati Province")
@@ -68,3 +71,55 @@ class TestLocations(unittest.TestCase):
     def test_utils_get_municipality(self):
         municipality = get_municipality(locations=locations.municipalities, name="Kathmandu")
         self.assertEqual(municipality.name, "Kathmandu Metropolitan City")
+
+
+class TestLocationsModels(unittest.TestCase):
+    def test_location_data(self):
+        location = Location("test_en", "test_ne")
+        self.assertEqual(location.name, "test_en")
+        self.assertEqual(location.name_nepali, "test_ne")
+
+    def test_location_str(self):
+        location = Location("test_en", "test_ne")
+        self.assertEqual(str(location), "test_en")
+
+    def test_location_repr(self):
+        location = Location("test_en", "test_ne")
+        self.assertEqual(repr(location), "test_en")
+
+    def test_districts_from_province(self):
+        province = Province("Province1", "Province1")
+        district = District(province, "District1", "District1")
+        self.assertListEqual(province.districts, [district])
+
+    def test_municipalities_from_province_and_district(self):
+        province = Province("Province1", "Province1")
+        district = District(province, "District1", "District1")
+        municipality = Municipality(district, "Municipality1", "Municipality1", MunicipalityType.METROPOLITAN)
+        self.assertListEqual(province.municipalities, [municipality])
+        self.assertListEqual(district.municipalities, [municipality])
+
+    def test_municipality_province_district_and_type(self):
+        province = Province("Province1", "Province1")
+        district = District(province, "District1", "District1")
+        municipality = Municipality(district, "Municipality1", "Municipality1", MunicipalityType.METROPOLITAN)
+        self.assertEqual(municipality.province, province)
+        self.assertEqual(municipality.district, district)
+        self.assertEqual(municipality.municipality_type, MunicipalityType.METROPOLITAN)
+
+    # MunicipalityType
+    def test_municipality_type_with_invalid_data(self):
+        with self.assertRaises(ValueError):
+            MunicipalityType("Hello")
+
+    def test_municipality_type_with_valid_data(self):
+        municipality_type = MunicipalityType("Metropolitan City")
+        self.assertEqual(municipality_type, MunicipalityType.METROPOLITAN)
+
+    def test_municipality_type_str(self):
+        municipality_type = MunicipalityType.RURAL_MUNICIPALITY
+        self.assertEqual(str(municipality_type), municipality_type.value)
+
+    def test_municipality_type_repr(self):
+        municipality_type = MunicipalityType.SUB_METROPOLITAN
+        self.assertEqual(repr(municipality_type), municipality_type.value)
