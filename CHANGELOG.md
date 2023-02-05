@@ -2,11 +2,12 @@
 
 ## v1.0.0 
 - Class representation (`__repr__`) added on NepaliTimeZone
-- Refactored date converter
+- Refactored date converter (Performance optimized)
 - Added locations feature
 - Added Phone number parse feature
 - Removed depreciated class and method
 - Added operator overloading on nepalidate
+- Changed API of the module `number` into the module function from the class method.
 
 ## v0.5.6 - (July 7, 2022)
 - Test for automatic package publish
