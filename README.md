@@ -40,155 +40,58 @@ phone_number.parse("+977-9845217789")
 
     pip install nepali
 
-## Features
+## Usage
 
-1. Nepali datetime
-2. Phone number
-3. Province / District / Municipality
-4. Nepali Characters (Months, Days, etc)
-5. Nepali/English numbers translation
+### Date and Time
 
-## API Reference
+#### date_converter
+Date converter module converts english date to nepali and nepali date to english. It doesn't contain any extra functionality.
 
-### nepalidate
-
-Represents nepali date, converts English date to nepali date and nepali date to english date
-
+**Convert English date to Nepali Date**
 ```python
-from nepali.datetime import nepalidate
+from nepali.date_converter import converter
+
+np_year, np_month, np_date = converter.english_to_nepali(en_year, en_month, en_date)
 ```
-
-**Creating new object**
-
+Example
 ```python
-# object with current date
-np_date = nepalidate(year, month, day)
+from nepali.date_converter import converter
 
-# object with today's date
-np_date = nepalidate.today()
-
-# parse date
-np_date = nepalidate.strptime('2078-01-12', format='%Y-%m-%d')
+np_year, np_month, np_date = converter.english_to_nepali(2023, 2, 7)
+print(np_year, np_month, np_date)
+# 2079 10 24
 ```
 
-**Object from python's `datetime.date`**
-
+**Convert English date to Nepali Date**
 ```python
-import datetime
+from nepali.date_converter import converter
 
-date = datetime.date.today()
-np_date = nepalidate.from_date(date)
+en_year, en_month, en_date = converter.english_to_nepali(np_year, np_month, np_date)
 ```
-
-**Get python's `datetime` object**
-
+Example
 ```python
-np_date.to_date() 		# datetime.date object
-np_date.to_datetime()	# datetime.datetime object
+from nepali.date_converter import converter
+
+en_year, en_month, en_date = converter.nepali_to_english(2079, 10, 24)
+print(en_year, en_month, en_date)
+# 2023 2 7
 ```
 
-### nepalidatetime
+#### nepalidate
 
-Represents nepali date time
+#### nepalidatetime
 
-```python
-from nepali.datetime import nepalidatetime
-```
+#### nepalihumanize
 
-**Creating new object**
+#### timezone
 
-```python
-# object with specific datetime
-np_datetime = nepalidatetime(year, month, day[, hour[, minute[, second]]]) # arguments must be nepali
+#### parse
 
-# object with current datetime
-np_datetime = nepalidatetime.now()
+### Numbers
 
-# parse datetime
-np_datetime = nepalidatetime.strptime('2078-01-12 13:12', format='%Y-%m-%d %H:%M')
-```
+### Phone Number
 
-**Object from python's `datetime.datetime`**
-
-```python
-import datetime
-
-dt = datetime.datetime.now()
-np_datetime = nepalidatetime.from_datetime(dt)
-```
-
-**Get `nepalidate` and `time` and `datetime`**
-
-```python
-np_datetime.date()			# nepalidate object
-np_datetime.time()			# nepalitime object
-np_datetime.to_date()		# datetime.date object
-np_datetime.to_datetime() 	# datetime.datetime object
-```
-
-**Date String Format**\
-_Equivalent to python's datetime strftime format_
-
-```python
-npDateTime = nepalidatetime.now()
-print(npDateTime.strftime('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
-print(npDateTime.strftime_en('%a %A %w %d %b %B %m %y %Y %H %I %p %M %S'))
-```
-
-```
-OUTPUT:
-बिही बिहीबार ४ २३ असार असार ०३ ७९ २०७९ १२ १२ मध्यान्ह ४० १९
-Thu Thursday 4 23 Ashad Ashad 03 79 2079 12 12 AM 40 19
-```
-
-**timedelta operations**
-
-```python
-ndt = nepalidatetime.now()
-print(ndt + datetime.timedelta(hours=5))
-print(ndt - datetime.timedelta(hours=5))
-```
-
-### parse
-
-Parses datetime from a string.
-
-_Note: `parse` method cost very high, so avoid this as much as you can. Use `strptime`_
-
-```python
-from nepali.datetime import parser as nepalidatetime_parser
-ndt = nepalidatetime_parser.parse('29 Jestha, 2078, 1:30 PM')
-```
-
-### nepalihumanize
-
-`nepalihumanize` converts `nepalidatetime` to nepali human readable form.
-
-```python
-from nepali.datetime import nepalihumanize
-```
-
-**Creating new object**
-
-```python
-# object from nepali datetime
-ndt = nepalidatetime.now()
-humanize_str = nepalihumanize(ndt)
-
-# object from python datetime
-dt = datetime.datetime.now()
-humanize_str = nepalihumanize(dt)
-```
-
-**Humanize with threshold**\
-returns date in nepali characters if more than threshold(in seconds) else returns humanize form
-
-```python
-humanize_str = nepalihumanize(ndt, threshold=60) # 60 seconds
-
-# custom format after threshold
-humanize_str = nepalihumanize(ndt, threshold=60, format='%Y-%m-%d') # 60 seconds
-```
+### Others
 
 ## For Django Template
 
@@ -202,7 +105,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-IN your Template
+In your Template
 
 ```python
 {% load nepalidatetime %}
