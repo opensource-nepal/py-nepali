@@ -45,39 +45,83 @@ phone_number.parse("+977-9845217789")
 ### Date and Time
 
 #### date_converter
+
 Date converter module converts english date to nepali and nepali date to english. It doesn't contain any extra functionality.
 
 **Convert English date to Nepali Date**
+
 ```python
 from nepali.date_converter import converter
 
 np_year, np_month, np_date = converter.english_to_nepali(en_year, en_month, en_date)
 ```
+
 Example
+
 ```python
 from nepali.date_converter import converter
 
 np_year, np_month, np_date = converter.english_to_nepali(2023, 2, 7)
-print(np_year, np_month, np_date)
-# 2079 10 24
+print(np_year, np_month, np_date) # 2079 10 24
 ```
 
 **Convert English date to Nepali Date**
+
 ```python
 from nepali.date_converter import converter
 
 en_year, en_month, en_date = converter.english_to_nepali(np_year, np_month, np_date)
 ```
+
 Example
+
 ```python
 from nepali.date_converter import converter
 
 en_year, en_month, en_date = converter.nepali_to_english(2079, 10, 24)
-print(en_year, en_month, en_date)
-# 2023 2 7
+print(en_year, en_month, en_date) # 2023 2 7
 ```
 
 #### nepalidate
+
+**Creating nepalidate object**
+
+```python
+# nepalidate object with current date
+np_date = nepalidate(year, month, day)
+
+# nepalidate object with today's date
+np_date = nepalidate.today()
+
+# parse nepali date
+np_date = nepalidate.strptime('2078-01-18', format='%Y-%m-%d')
+```
+
+**Getting nepalidate object from python datetime**
+
+```python
+# from date object
+np_date = nepalidate.from_date(date_obj)
+
+# from datetime object
+np_date = nepalidate.from_datetime(datetime_obj)
+```
+
+**Attributes and Methods**
+
+```python
+np_date.year					# 2078
+np_date.month					# 1
+np_date.day						# 18
+
+np_date.to_date() 				# datetime.date object
+np_date.to_datetime()			# datetime.datetime object
+
+np_date.strftime("%Y-%m-%d")	# २०७८-०१-१८
+np_date.strftime_en("%Y-%m-%d")	# 2078-01-18
+
+np_date.weekday()				# Sunday => 0, Monday => 1, ..., Saturday => 6
+```
 
 #### nepalidatetime
 
@@ -86,6 +130,31 @@ print(en_year, en_month, en_date)
 #### timezone
 
 #### parse
+
+#### strftime() and strptime() Format Codes
+
+| Directive | Meaning                                                   | Example                        |
+| --------- | --------------------------------------------------------- | ------------------------------ |
+| `%A`      | Weekday as locale’s abbreviated name.                     | Sun, Mon, …, Sat (आइत, सोम, …) |
+| `%A`      | Weekday as locale’s full name.                            | Sunday, Monday, …, Saturday    |
+| `%d`      | Day of the month as a zero-padded decimal number.         | 01, 02, …, 31                  |
+| `%-d`     | Day of the month as a decimal number.                     | 1, 2, …, 31                    |
+| `%B`      | Month as locale’s full name.                              | Baishak, Jestha, …, Chaitra    |
+| `%m`      | Month as a zero-padded decimal number.                    | 01, 02, …, 12                  |
+| `%-m`     | Month as a decimal number.                                | 1, 2, …, 12                    |
+| `%y`      | Year without century as a zero-padded decimal number.     | 00, 01, …, 99                  |
+| `%Y`      | Year with century as a decimal number.                    | 2001, 2078, 2079, …, 2099      |
+| `%H`      | Hour (24-hour clock) as a zero-padded decimal number.     | 00, 01, …, 23                  |
+| `%-H`     | Hour (24-hour clock) as a decimal number.                 | 0, 1, 2, …, 23                 |
+| `%I`      | Hour (12-hour clock) as a zero-padded decimal number.     | 01, 02, …, 12                  |
+| `%-I`     | Hour (12-hour clock) as a decimal number.                 | 1, 2, …, 12                    |
+| `%p`      | Locale’s equivalent of either AM or PM.                   | AM, PM (en_US)                 |
+| `%M`      | Minute as a zero-padded decimal number.                   | 00, 01, …, 59                  |
+| `%-M`     | Minute as a decimal number.                               | 0, 1, 2, …, 59                 |
+| `%S`      | Second as a zero-padded decimal number.                   | 00, 01, …, 59                  |
+| `%-S`     | Second as a decimal number.                               | 0, 1, 2, …, 59                 |
+| `%f`      | Microsecond as a decimal number, zero-padded to 6 digits. | 000000, 000001, …, 999999      |
+| `%%`      | A literal `'%'` character.                                | %                              |
 
 ### Numbers
 
