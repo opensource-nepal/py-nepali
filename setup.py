@@ -37,20 +37,19 @@ if sys.argv[-1] == 'publish':
 setuptools.setup(
     name="nepali",
     version="1.0.0",
-    author="Ajesh Sen Thapa",
-    author_email="aj3sshh@gmail.com",
+    author="Ajesh Sen Thapa, Sugat Bajracharya",
+    author_email="aj3sshh@gmail.com, sugatbajracharya49@gmail.com",
     description="nepalidatetime compatible with python's datetime feature. Converting nepali date to english, parsing nepali datetime, nepali timezone, and timedelta support in nepali datetime",
     long_description=long_description,
     long_description_content_type="text/markdown",
     keywords=['nepali date conversion', 'convert date', 'nepali date time', 'python convert date', 'parse nepali date time'],
-    url="https://github.com/aj3sh/nepali",
+    url="https://github.com/opensource-nepal/py-nepali",
     packages=setuptools.find_packages(),
     test_suite='nepali.tests',
     install_requires=[
         'pytz'
     ],
     classifiers=[
-
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
