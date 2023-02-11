@@ -40,11 +40,9 @@ phone_number.parse("+977-9845217789")
 
     pip install nepali
 
-## Usage
+## Date and Time
 
-### Date and Time
-
-#### date_converter
+### date_converter
 
 Date converter module converts english date to nepali and nepali date to english. It doesn't contain any extra functionality.
 
@@ -82,12 +80,14 @@ en_year, en_month, en_date = converter.nepali_to_english(2079, 10, 24)
 print(en_year, en_month, en_date) # 2023 2 7
 ```
 
-#### nepalidate
+### nepalidate
 
-**Creating nepalidate object**
+**Creating a new nepalidate object**
 
 ```python
-# nepalidate object with current date
+from nepali.datetime import nepalidate
+
+# nepalidate object with year, month, day
 np_date = nepalidate(year, month, day)
 
 # nepalidate object with today's date
@@ -110,12 +110,13 @@ np_date = nepalidate.from_datetime(datetime_obj)
 **Attributes and Methods**
 
 ```python
-np_date.year					# 2078
-np_date.month					# 1
-np_date.day						# 18
+np_date.year					# 2078 (year)
+np_date.month					# 1 (month)
+np_date.day						# 18 (day)
 
 np_date.to_date() 				# datetime.date object
 np_date.to_datetime()			# datetime.datetime object
+np_date.to_nepalidatetime()		# nepalidatetime object
 
 np_date.strftime("%Y-%m-%d")	# २०७८-०१-१८
 np_date.strftime_en("%Y-%m-%d")	# 2078-01-18
@@ -123,15 +124,81 @@ np_date.strftime_en("%Y-%m-%d")	# 2078-01-18
 np_date.weekday()				# Sunday => 0, Monday => 1, ..., Saturday => 6
 ```
 
-#### nepalidatetime
+### nepalidatetime
 
-#### nepalihumanize
+**Creating a new nepalidatetime object**
 
-#### timezone
+```python
+from nepali.datetime import nepalidatetime
 
-#### parse
+# nepalidate object with year, month, day, hour, minute, second
+np_datetime = nepalidatetime(year, month, day[, hour[, minute[, second]]])
 
-#### strftime() and strptime() Format Codes
+# nepalidate object with current date and time
+np_datetime = nepalidate.now()
+np_datetime = nepalidate.today()
+
+# parse nepali datetime
+np_datetime = nepalidatetime.strptime('2078-01-12 13:12', format='%Y-%m-%d %H:%M')
+```
+
+**Getting nepalidatetime object from python datetime**
+
+```python
+# from date object
+np_datetime = nepalidatetime.from_date(date_obj)
+
+# from datetime object
+np_datetime = nepalidatetime.from_datetime(datetime_obj)
+```
+
+**Getting nepalidatetime object from nepalidate**
+
+```python
+np_datetime = nepalidatetime.from_nepalidate(nepali_date)
+```
+
+**Attributes and Methods**
+
+```python
+np_date.year							# 2078 (year)
+np_date.month							# 1 (month)
+np_date.day								# 18 (day)
+np_date.hour							# 23 (hour)
+np_date.minute							# 59 (minute)
+np_date.second							# 59 (day)
+
+np_date.to_date() 						# datetime.date object
+np_date.to_datetime()					# datetime.datetime object
+np_date.to_nepalidate()					# nepalidatetime object
+np_date.to_time()						# nepalitime object (datetime.time compatible)
+
+np_date.strftime("%Y-%m-%d %H:%M")		# २०७८-०१-१८ २३:५९
+np_date.strftime_en("%Y-%m-%d %H:%M")	# 2078-01-18 23:59
+
+np_date.weekday()						# Sunday => 0, Monday => 1, ..., Saturday => 6
+```
+
+**Timedelta support**
+
+```python
+# timedelta addition and subtraction
+np_datetime - datetime.timedelta(days=3)	# returns nepalidatetime
+
+# comparison between two dates
+np_datetime1 - np_datetime2					# returns timedelta object
+np_datetime1 < np_datetime2					# returns bool (True/False)
+np_datetime1 >= datetime.datetime.now()		# returns bool (True/False)
+...
+```
+
+### nepalihumanize
+
+### timezone
+
+### parse
+
+### strftime() and strptime() Format Codes
 
 | Directive | Meaning                                                   | Example                        |
 | --------- | --------------------------------------------------------- | ------------------------------ |
@@ -168,9 +235,9 @@ Add `'nepali'` to your `INSTALLED_APPS` setting.
 
 ```python
 INSTALLED_APPS = [
-	...
-	'nepali',
-	...
+    ...
+    'nepali',
+    ...
 ]
 ```
 
