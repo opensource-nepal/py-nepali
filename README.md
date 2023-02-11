@@ -26,9 +26,9 @@ nepali_date = nepalidate.from_date(date)
 
 phone_number.parse("+977-9845217789")
 # {
-# 	'type': 	'Mobile',
-#	'number':	'9845217789',
-#	'operator': <Operator: Nepal Telecom>
+#     'type':      'Mobile',
+#     'number':    '9845217789',
+#     'operator':  <Operator: Nepal Telecom>
 # }
 ```
 
@@ -46,7 +46,7 @@ phone_number.parse("+977-9845217789")
 
 Date converter module converts english date to nepali and nepali date to english. It doesn't contain any extra functionality.
 
-**Convert English date to Nepali Date**
+**Convert English date to Nepali date**
 
 ```python
 from nepali.date_converter import converter
@@ -63,12 +63,12 @@ np_year, np_month, np_date = converter.english_to_nepali(2023, 2, 7)
 print(np_year, np_month, np_date) # 2079 10 24
 ```
 
-**Convert English date to Nepali Date**
+**Convert Nepali date to English date**
 
 ```python
 from nepali.date_converter import converter
 
-en_year, en_month, en_date = converter.english_to_nepali(np_year, np_month, np_date)
+en_year, en_month, en_date = converter.nepali_to_english(np_year, np_month, np_date)
 ```
 
 Example
@@ -110,18 +110,18 @@ np_date = nepalidate.from_datetime(datetime_obj)
 **Attributes and Methods**
 
 ```python
-np_date.year					# 2078 (year)
-np_date.month					# 1 (month)
-np_date.day						# 18 (day)
+np_date.year                       # 2078 (year)
+np_date.month                      # 1 (month)
+np_date.day                        # 18 (day)
 
-np_date.to_date() 				# datetime.date object
-np_date.to_datetime()			# datetime.datetime object
-np_date.to_nepalidatetime()		# nepalidatetime object
+np_date.to_date()                  # datetime.date object
+np_date.to_datetime()              # datetime.datetime object
+np_date.to_nepalidatetime()        # nepalidatetime object
 
-np_date.strftime("%Y-%m-%d")	# २०७८-०१-१८
-np_date.strftime_en("%Y-%m-%d")	# 2078-01-18
+np_date.strftime("%Y-%m-%d")       # २०७८-०१-१८
+np_date.strftime_en("%Y-%m-%d")    # 2078-01-18
 
-np_date.weekday()				# Sunday => 0, Monday => 1, ..., Saturday => 6
+np_date.weekday()                  # Sunday => 0, Monday => 1, ..., Saturday => 6
 ```
 
 ### nepalidatetime
@@ -161,34 +161,34 @@ np_datetime = nepalidatetime.from_nepalidate(nepali_date)
 **Attributes and Methods**
 
 ```python
-np_date.year							# 2078 (year)
-np_date.month							# 1 (month)
-np_date.day								# 18 (day)
-np_date.hour							# 23 (hour)
-np_date.minute							# 59 (minute)
-np_date.second							# 59 (day)
+np_date.year                             # 2078 (year)
+np_date.month                            # 1 (month)
+np_date.day                              # 18 (day)
+np_date.hour                             # 23 (hour)
+np_date.minute                           # 59 (minute)
+np_date.second                           # 59 (day)
 
-np_date.to_date() 						# datetime.date object
-np_date.to_datetime()					# datetime.datetime object
-np_date.to_nepalidate()					# nepalidatetime object
-np_date.to_time()						# nepalitime object (datetime.time compatible)
+np_date.to_date()                        # datetime.date object
+np_date.to_datetime()                    # datetime.datetime object
+np_date.to_nepalidate()                  # nepalidatetime object
+np_date.to_time()                        # nepalitime object (datetime.time compatible)
 
-np_date.strftime("%Y-%m-%d %H:%M")		# २०७८-०१-१८ २३:५९
-np_date.strftime_en("%Y-%m-%d %H:%M")	# 2078-01-18 23:59
+np_date.strftime("%Y-%m-%d %H:%M")       # २०७८-०१-१८ २३:५९
+np_date.strftime_en("%Y-%m-%d %H:%M")    # 2078-01-18 23:59
 
-np_date.weekday()						# Sunday => 0, Monday => 1, ..., Saturday => 6
+np_date.weekday()                        # Sunday => 0, Monday => 1, ..., Saturday => 6
 ```
 
 **Timedelta support**
 
 ```python
 # timedelta addition and subtraction
-np_datetime - datetime.timedelta(days=3)	# returns nepalidatetime
+np_datetime - datetime.timedelta(days=3)       # returns nepalidatetime
 
 # comparison between two dates
-np_datetime1 - np_datetime2					# returns timedelta object
-np_datetime1 < np_datetime2					# returns bool (True/False)
-np_datetime1 >= datetime.datetime.now()		# returns bool (True/False)
+np_datetime1 - np_datetime2                    # returns timedelta object
+np_datetime1 < np_datetime2                    # returns bool (True/False)
+np_datetime1 >= datetime.datetime.now()        # returns bool (True/False)
 ...
 ```
 
