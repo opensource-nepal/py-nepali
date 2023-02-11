@@ -34,7 +34,7 @@ class NepaliDateTimeFormatter:
 		'-S': 'second_nonzero',
 	}
 
-	def __init__(self, datetime_object, english=False):
+	def __init__(self, datetime_object, devanagari=False):
 		if type(datetime_object) == nepalidatetime:
 			self.npDateTime = datetime_object
 		elif type(datetime_object) == nepalidate:
@@ -47,13 +47,13 @@ class NepaliDateTimeFormatter:
 			raise InvalidNepaliDateTimeObjectException('Argument must be instance of nepalidate or nepalidatetime or datetime.datetime or datetime.date') 
 
 
-		self.english = english
+		self.devanagari = devanagari
 
 	def __str__(self):
 		return str(self.npDateTime)
 
 	def get_str(self, format):
-		""" generates formated string """
+		""" generates formatted string """
 		i, n = 0, len(format)
 		time_str = []
 		try:
@@ -89,17 +89,17 @@ class NepaliDateTimeFormatter:
 
 		return time_str
 
-	def get_format_map(self, ch):
+	def get_format_map(self, ch: str) -> str:
 		if ch not in self.format_map:
 			raise InvalidDateFormatException('Invalid Date format %{}'.format(ch))
-		return self.format_map.get(ch)
+		return self.format_map[ch]
 
 	@property
 	def weekdayHalf(self):
 		"""
 		%a
 		"""
-		if self.english:
+		if not self.devanagari:
 			return EnglishChar.half_day(self.npDateTime.weekday() + 1)
 		return NepaliChar.half_day(self.npDateTime.weekday() + 1)
 
@@ -108,7 +108,7 @@ class NepaliDateTimeFormatter:
 		"""
 		%A
 		"""
-		if self.english:
+		if not self.devanagari:
 			return EnglishChar.day(self.npDateTime.weekday() + 1)
 		return NepaliChar.day(self.npDateTime.weekday() + 1)
 
@@ -117,7 +117,7 @@ class NepaliDateTimeFormatter:
 		"""
 		%w
 		"""
-		if self.english:
+		if not self.devanagari:
 			return str(self.npDateTime.weekday())
 		return NepaliChar.number(self.npDateTime.weekday())
 
@@ -129,17 +129,17 @@ class NepaliDateTimeFormatter:
 		day = str(self.npDateTime.day)
 		if len(day) < 2:
 			day = '0'+day
-		if self.english:
+		if not self.devanagari:
 			return str(day)
 		return NepaliChar.number(day)
 
 	@property
 	def day_nonzero(self):
 		"""
-		%D
+		%-D
 		"""
 		day = str(self.npDateTime.day)
-		if self.english:
+		if not self.devanagari:
 			return str(day)
 		return NepaliChar.number(day)
 
@@ -148,7 +148,7 @@ class NepaliDateTimeFormatter:
 		"""
 		%B or %b
 		"""
-		if self.english:
+		if not self.devanagari:
 			return EnglishChar.month(self.npDateTime.month)
 		return NepaliChar.month(self.npDateTime.month)
 
@@ -160,17 +160,17 @@ class NepaliDateTimeFormatter:
 		month = str(self.npDateTime.month)
 		if len(month) < 2:
 			month = '0'+month
-		if self.english:
+		if not self.devanagari:
 			return str(month)
 		return NepaliChar.number(month)
 
 	@property
 	def monthNumber_nonzero(self):
 		"""
-		%m
+		%-m
 		"""
 		month = str(self.npDateTime.month)
-		if self.english:
+		if not self.devanagari:
 			return str(month)
 		return NepaliChar.number(month)
 
@@ -179,7 +179,7 @@ class NepaliDateTimeFormatter:
 		"""
 		%y
 		"""
-		if self.english:
+		if not self.devanagari:
 			return str(self.npDateTime.year)[2:]
 		return NepaliChar.number(str(self.npDateTime.year)[2:])
 
@@ -188,7 +188,7 @@ class NepaliDateTimeFormatter:
 		"""
 		%Y
 		"""
-		if self.english:
+		if not self.devanagari:
 			return str(self.npDateTime.year)
 		return NepaliChar.number(self.npDateTime.year)
 	
@@ -200,17 +200,17 @@ class NepaliDateTimeFormatter:
 		hour = str(self.npDateTime.hour)
 		if len(hour) < 2:
 			hour = '0'+hour
-		if self.english:
+		if not self.devanagari:
 			return str(hour)
 		return NepaliChar.number(hour)
 
 	@property
 	def hour24_nonzero(self):
 		"""
-		%H
+		%-H
 		"""
 		hour = self.npDateTime.hour
-		if self.english:
+		if not self.devanagari:
 			return str(hour)
 		return NepaliChar.number(hour)
 	
@@ -228,14 +228,14 @@ class NepaliDateTimeFormatter:
 		if len(hour) < 2:
 			hour = '0'+hour
 
-		if self.english:
+		if not self.devanagari:
 			return str(hour)
 		return NepaliChar.number(hour)
 
 	@property
 	def hour12_nonzero(self):
 		"""
-		%I
+		%-I
 		"""
 		hour = self.npDateTime.hour
 		if hour > 12:
@@ -243,7 +243,7 @@ class NepaliDateTimeFormatter:
 		if hour == 0:
 			hour = 12
 		hour = str(hour)
-		if self.english:
+		if not self.devanagari:
 			return str(hour)
 		return NepaliChar.number(hour)
 	
@@ -252,7 +252,7 @@ class NepaliDateTimeFormatter:
 		"""
 		%p
 		"""
-		if self.english:
+		if not self.devanagari:
 			ampm = 'AM'
 			if self.npDateTime.hour > 12:
 				ampm = 'PM'
@@ -275,17 +275,17 @@ class NepaliDateTimeFormatter:
 		minute = str(self.npDateTime.minute)
 		if len(minute) < 2:
 			minute = '0'+minute
-		if self.english:
+		if not self.devanagari:
 			return str(minute)
 		return NepaliChar.number(minute)
 
 	@property
 	def minute_nonzero(self):
 		"""
-		%M
+		%-M
 		"""
 		minute = str(self.npDateTime.minute)
-		if self.english:
+		if not self.devanagari:
 			return str(minute)
 		return NepaliChar.number(minute)
 	
@@ -297,17 +297,17 @@ class NepaliDateTimeFormatter:
 		second = str(self.npDateTime.second)
 		if len(second) < 2:
 			second = '0'+second
-		if self.english:
+		if not self.devanagari:
 			return str(second)
 		return NepaliChar.number(second)
 
 	@property
 	def second_nonzero(self):
 		"""
-		%S
+		%-S
 		"""
 		second = str(self.npDateTime.second)
-		if self.english:
+		if not self.devanagari:
 			return str(second)
 		return NepaliChar.number(second)
 
