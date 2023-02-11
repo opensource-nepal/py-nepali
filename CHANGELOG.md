@@ -8,6 +8,7 @@
 - Removed depreciated class and method
 - Added operator overloading on nepalidate
 - Changed API of the module `number` into the module function from the class method.
+- Added method `strftime_ne` in `nepalidate` and `nepalidatetime` class and now `strftime` returns in en-US locale
 
 ## v0.5.6 - (July 7, 2022)
 - Test for automatic package publish

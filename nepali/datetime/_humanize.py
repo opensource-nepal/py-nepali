@@ -22,7 +22,7 @@ class HumanizeDateTime:
 	__minute_text = "मिनेट"
 	__second_text = "सेकेन्ड"
 
-	def	__init__(self, datetime_obj, *args, **kwargs):
+	def __init__(self, datetime_obj, **kwargs):
 		""" 
 		initializes humanize class
 		datetime_obj: python datetime object to be humanized
@@ -44,79 +44,73 @@ class HumanizeDateTime:
 		self.format = kwargs.get('format')
 
 		# seconds after from now to datetime_obj
-		self.seconds = None
-
+		self.seconds = 0
 
 	def __calc_seconds(self):
 		""" calculates total seconds from now """
-
 		current_date_time = now()
 		date = self.datetime_obj
-		self.seconds = int((current_date_time-date).total_seconds())
+		self.seconds = int((current_date_time - date).total_seconds())
+
 		self.interval_tense = self.__past_text
-		if(self.seconds < 0):
+		if self.seconds < 0:
+			self.seconds *= -1
 			self.interval_tense = self.__future_text
+
+		return self.seconds
 
 	def to_str(self):
 		""" returns humanize string """
+		seconds = self.__calc_seconds()	# calculating seconds
 
-		self.__calc_seconds()	# refreshing seconds
-		seconds = self.seconds
-		if( seconds < 0):
-			seconds = 0 - seconds
-
-		if not self.threshold == None:
-			if( seconds >= self.threshold):
+		if self.threshold is not None:
+			if seconds >= self.threshold:
 				return self.get_datetime().strip()
 		
 		return self.get_humanize().strip()
-
 
 	def get_humanize(self):
 		"""
 		returns humanize datetime
 		"""
-		self.__calc_seconds()	# refreshing seconds
-
 		interval_value = 0
 		interval_text = ""
-		if( self.seconds == 0 ):
+		if self.seconds == 0:
 			# now
 			return self.__now_text
 
-		elif( self.seconds < 60):
+		elif self.seconds < 60:
 			# seconds
 			interval_value = self.seconds
 			interval_text = self.__second_text
-			
-		elif( self.seconds < 3600):
+
+		elif self.seconds < 3600:
 			# minute
-			interval_value = self.seconds//60
+			interval_value = self.seconds // 60
 			interval_text = self.__minute_text
 
-		elif( self.seconds < 86400):
+		elif self.seconds < 86400:
 			# hour
-			interval_value = self.seconds//3600
+			interval_value = self.seconds // 3600
 			interval_text = self.__hour_text
 
-		elif( self.seconds < 2592000):
+		elif self.seconds < 2764800:
 			# day
-			interval_value = self.seconds//86400
+			interval_value = self.seconds // 86400
 			interval_text = self.__day_text
 
-		elif( self.seconds < 946080000):
+		elif self.seconds < 31622400:
 			# month
-			interval_value = self.seconds//2592000
+			interval_value = self.seconds // 2764800
 			interval_text = self.__month_text
 
 		else:
 			# year
-			interval_value = self.seconds//946080000
+			interval_value = self.seconds // 31622400
 			interval_text = self.__year_text
 
 		interval_value = NepaliChar.number(interval_value)
 		return str(interval_value)+' '+str(interval_text)+' '+self.interval_tense
-
 
 	def get_datetime(self):
 		"""
@@ -125,7 +119,7 @@ class HumanizeDateTime:
 		if not self.format:
 			self.format = '%B %d, %Y'
 		ndt = nepalidatetime.from_datetime(self.datetime_obj)
-		return ndt.strftime(self.format)
+		return ndt.strftime_ne(self.format)
 
 	def __str__(self):
 		return self.to_str()

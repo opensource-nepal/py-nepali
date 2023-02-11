@@ -6,6 +6,10 @@ from nepali.utils import to_nepali_timezone
 
 
 class formatter_class_mixin:
+	"""
+	mixin for date time formatter.
+	adds methods `strftime(format)`
+	"""
 	def get_formatter_class(self):
 		return self.__class__.init_formatter_class()
 
@@ -22,6 +26,19 @@ class formatter_class_mixin:
 			from .parser import strptime
 			cls._strptime_method_CACHE = strptime
 		return cls._strptime_method_CACHE
+
+	def strftime(self, format: str) -> str:
+		return self.strftime_en(format)
+
+	def strftime_en(self, format: str) -> str:
+		NepaliDateTimeFormatter = self.get_formatter_class()
+		formatter = NepaliDateTimeFormatter(self, devanagari=False)
+		return formatter.get_str(format)
+
+	def strftime_ne(self, format: str) -> str:
+		NepaliDateTimeFormatter = self.get_formatter_class()
+		formatter = NepaliDateTimeFormatter(self, devanagari=True)
+		return formatter.get_str(format)
 
 class nepalidate(formatter_class_mixin):
 	def __init__(self, year, month, day) -> None:
@@ -47,16 +64,6 @@ class nepalidate(formatter_class_mixin):
 
 	def to_nepalidatetime(self):
 		return nepalidatetime.from_nepali_date(self)
-
-	def strftime(self, format):
-		NepaliDateTimeFormatter = self.get_formatter_class()
-		formatter = NepaliDateTimeFormatter(self)
-		return formatter.get_str(format)
-
-	def strftime_en(self, format):
-		NepaliDateTimeFormatter = self.get_formatter_class()
-		formatter = NepaliDateTimeFormatter(self, english=True)
-		return formatter.get_str(format)
 	
 	# operators overloading
 
@@ -343,17 +350,6 @@ class nepalidatetime(formatter_class_mixin):
 
 	def time(self):
 		return self.__np_time
-
-	# string format
-	def strftime(self, format):
-		NepaliDateTimeFormatter = self.get_formatter_class()
-		formatter = NepaliDateTimeFormatter(self)
-		return formatter.get_str(format)
-
-	def strftime_en(self, format):
-		NepaliDateTimeFormatter = self.get_formatter_class()
-		formatter = NepaliDateTimeFormatter(self, english=True)
-		return formatter.get_str(format)
 
 	# static methods
 
