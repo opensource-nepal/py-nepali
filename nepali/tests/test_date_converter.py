@@ -1,9 +1,23 @@
+"""
+To run only this unit test use the command below.
+
+    python -m unittest nepali/tests/test_date_converter.py -v
+"""
 import unittest
 
 from nepali.date_converter import converter
 
 
 class TestNepaliDateConverter(unittest.TestCase):
+    # test date range
+    def test_english_date_range(self):
+        self.assertEqual(converter.en_min_year(), 1944)
+        self.assertEqual(converter.en_max_year(), 2042)
+
+    def test_nepali_date_range(self):
+        self.assertEqual(converter.np_min_year(), 2000)
+        self.assertEqual(converter.np_max_year(), 2099)
+
     # english_to_nepali
     def test_converter_english_to_nepali_raise_exception_on_max_year_range(self):
         with self.assertRaises(Exception):
@@ -46,6 +60,18 @@ class TestNepaliDateConverter(unittest.TestCase):
         self.assertEqual(y, 2087)
         self.assertEqual(m, 8)
         self.assertEqual(d, 10)
+
+    def test_converter_english_to_nepali_for_min_edge_date(self):
+        y, m, d = converter.english_to_nepali(1944, 1, 1)
+        self.assertEqual(y, 2000)
+        self.assertEqual(m, 9)
+        self.assertEqual(d, 17)
+
+    def test_converter_english_to_nepali_for_max_edge_date(self):
+        y, m, d = converter.english_to_nepali(2042, 12, 31)
+        self.assertEqual(y, 2099)
+        self.assertEqual(m, 9)
+        self.assertEqual(d, 16)
 
     # nepali_to_english
     def test_converter_nepali_to_englishReturnErrorOnMaxYearRange(self):
@@ -95,3 +121,15 @@ class TestNepaliDateConverter(unittest.TestCase):
         self.assertEqual(y, 2024)
         self.assertEqual(m, 3)
         self.assertEqual(d, 28)
+
+    def test_converter_nepali_to_english_for_min_edge_date(self):
+        y, m, d = converter.nepali_to_english(2000, 1, 1)
+        self.assertEqual(y, 1943)
+        self.assertEqual(m, 4)
+        self.assertEqual(d, 14)
+
+    def test_converter_nepali_to_english_for_max_edge_date(self):
+        y, m, d = converter.nepali_to_english(2099, 12, 30)
+        self.assertEqual(y, 2043)
+        self.assertEqual(m, 4)
+        self.assertEqual(d, 13)
