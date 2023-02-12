@@ -37,7 +37,7 @@ if sys.argv[-1] == 'publish':
 setuptools.setup(
     name="nepali",
     version="1.0.0",
-    author="Ajesh Sen Thapa, Sugat Bajracharya",
+    author="opensource-nepal",
     author_email="aj3sshh@gmail.com, sugatbajracharya49@gmail.com",
     description="nepalidatetime compatible with python's datetime feature. Converting nepali date to english, parsing nepali datetime, nepali timezone, and timedelta support in nepali datetime",
     long_description=long_description,
