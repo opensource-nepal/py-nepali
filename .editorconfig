@@ -24,4 +24,4 @@ max_line_length = 120
 
 # Use single quotes instead of double quotes
 [*.py]
-quote_style = single
+quote_style = double
