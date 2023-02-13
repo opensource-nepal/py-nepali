@@ -13,6 +13,7 @@ class NepaliDateConverter:
 
     All the functions here contains the method to convert english date to nepali and nepali date to english.
     """
+
     # Reference date for conversion is 2000/01/01 BS and 1943/4/14 AD
     NP_INITIAL_YEAR = 2000
     REFERENCE_EN_DATE = (1943, 4, 14)
@@ -24,7 +25,10 @@ class NepaliDateConverter:
     # ]
     #
     NP_MONTHS_DATA = [
-        ((30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31), 365),  # 2000 BS - 1943/1944 AD
+        (
+            (30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31),
+            365,
+        ),  # 2000 BS - 1943/1944 AD
         ((31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30), 365),  # 2001 BS
         ((31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30), 365),
         ((31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31), 366),
@@ -123,12 +127,28 @@ class NepaliDateConverter:
         ((30, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30), 364),
         ((31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30), 366),
         ((31, 31, 32, 31, 31, 31, 29, 30, 29, 30, 29, 31), 365),
-        ((31, 31, 32, 31, 31, 31, 30, 29, 29, 30, 30, 30), 365),  # 2099 BS - 2042/2043 AD
+        (
+            (31, 31, 32, 31, 31, 31, 30, 29, 29, 30, 30, 30),
+            365,
+        ),  # 2099 BS - 2042/2043 AD
     ]
 
     # english month constant data (will never change)
     EN_MONTHS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-    EN_LEAP_YEAR_MONTHS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]  # Leap year months (Just 29 on Feb)
+    EN_LEAP_YEAR_MONTHS = [
+        31,
+        29,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31,
+    ]  # Leap year months (Just 29 on Feb)
 
     @classmethod
     def en_min_year(cls):
@@ -150,9 +170,9 @@ class NepaliDateConverter:
 
     def _is_leap_year(self, year):
         """checks if the english year is leap year or not"""
-        if (year % 4 == 0):
-            if (year % 100 == 0):
-                return (year % 400 == 0)
+        if year % 4 == 0:
+            if year % 100 == 0:
+                return year % 400 == 0
             return True
         return False
 
@@ -174,13 +194,13 @@ class NepaliDateConverter:
     def _get_total_days_from_english_date(self, year, month, day):
         """counts and returns total days from the date 0000-01-01"""
         total_days = year * 365 + day
-        for i in range(0, month-1):
+        for i in range(0, month - 1):
             total_days = total_days + self.EN_MONTHS[i]
 
         # adding leap days (ie. leap year count)
-        if (month <= 2):  # checking February month (where leap exists)
+        if month <= 2:  # checking February month (where leap exists)
             year -= 1
-        total_days += year//4 - year//100 + year//400
+        total_days += year // 4 - year // 100 + year // 400
 
         return total_days
 
@@ -234,7 +254,10 @@ class NepaliDateConverter:
             return False
         if month < 1 or month > 12:
             return False
-        if day < 1 or day > self.NP_MONTHS_DATA[year-self.NP_INITIAL_YEAR][0][month-1]:
+        if (
+            day < 1
+            or day > self.NP_MONTHS_DATA[year - self.NP_INITIAL_YEAR][0][month - 1]
+        ):
             return False
         return True
 
@@ -244,7 +267,7 @@ class NepaliDateConverter:
 
         # adding days of months of initial year
         year_index = year - self.NP_INITIAL_YEAR
-        for i in range(0, month-1):
+        for i in range(0, month - 1):
             total_days = total_days + self.NP_MONTHS_DATA[year_index][0][i]
 
         # adding days of year
@@ -269,21 +292,26 @@ class NepaliDateConverter:
         en_year, en_month, en_day = self.REFERENCE_EN_DATE[0], 1, 1
         # calculating difference from the adjusted reference (eg. 1943/4/14 - 1943/01/01)
         reference_diff = sum(
-            self._get_en_months(en_year)[0:self.REFERENCE_EN_DATE[1]-1]  # months total days
-        ) + (self.REFERENCE_EN_DATE[2]-1) # day - 1
+            self._get_en_months(en_year)[
+                0 : self.REFERENCE_EN_DATE[1] - 1
+            ]  # months total days
+        ) + (
+            self.REFERENCE_EN_DATE[2] - 1
+        )  # day - 1
 
         # DIFFERENCE
         # calculating days count from the reference date
         difference = abs(
-            self._get_total_days_from_nepali_date(year, month, day)  # returns total days from initial date (nepali)
+            self._get_total_days_from_nepali_date(
+                year, month, day
+            )  # returns total days from initial date (nepali)
             + reference_diff
         )
 
         # YEAR
         # Incrementing year until the difference remains less than 365 (or 365)
-        while (
-            (difference >= 366 and self._is_leap_year(en_year))
-            or (difference >= 365 and not (self._is_leap_year(en_year)))
+        while (difference >= 366 and self._is_leap_year(en_year)) or (
+            difference >= 365 and not (self._is_leap_year(en_year))
         ):
             difference -= 366 if self._is_leap_year(en_year) else 365
             en_year += 1
@@ -292,7 +320,7 @@ class NepaliDateConverter:
         # Incrementing month until the difference remains less than next english month (mostly 31)
         month_days = self._get_en_months(en_year)
         i = 0
-        while (difference >= month_days[i]):
+        while difference >= month_days[i]:
             difference -= month_days[i]
             en_month += 1
             i += 1

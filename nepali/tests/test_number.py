@@ -7,6 +7,7 @@ import unittest
 
 from nepali import number
 
+
 class TestNumber(unittest.TestCase):
     def test_number_convert(self):
         self.assertEqual(number.convert("0123456789०१२३४५६७८९"), "०१२३४५६७८९०१२३४५६७८९")

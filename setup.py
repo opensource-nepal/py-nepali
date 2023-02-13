@@ -24,7 +24,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 
-if sys.argv[-1] == 'publish':
+if sys.argv[-1] == "publish":
     if os.system("pip3 freeze | grep twine"):
         print("twine not installed.\nUse `pip install twine`.\nExiting.")
         sys.exit()
@@ -42,16 +42,20 @@ setuptools.setup(
     description="nepalidatetime compatible with python's datetime feature. Converting nepali date to english, parsing nepali datetime, nepali timezone, and timedelta support in nepali datetime",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    keywords=['nepali date conversion', 'convert date', 'nepali date time', 'python convert date', 'parse nepali date time'],
+    keywords=[
+        "nepali date conversion",
+        "convert date",
+        "nepali date time",
+        "python convert date",
+        "parse nepali date time",
+    ],
     url="https://github.com/opensource-nepal/py-nepali",
     packages=setuptools.find_packages(),
-    test_suite='nepali.tests',
-    install_requires=[
-        'pytz'
-    ],
+    test_suite="nepali.tests",
+    install_requires=["pytz"],
     classifiers=[
-        'Programming Language :: Python :: 3',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
     ],
 )

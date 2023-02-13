@@ -10,7 +10,9 @@ def _loadData() -> Tuple[List[Province], List[District], List[Municipality]]:
     districts = []
     municipalities = []
     for province_data in _location_data:
-        province = Province(name=province_data["name"], name_nepali=province_data["name_nepali"])
+        province = Province(
+            name=province_data["name"], name_nepali=province_data["name_nepali"]
+        )
         provinces.append(province)
 
         for district_data in province_data["districts"]:
@@ -26,7 +28,9 @@ def _loadData() -> Tuple[List[Province], List[District], List[Municipality]]:
                     district=district,
                     name=municipality_data["name"],
                     name_nepali=municipality_data["name_nepali"],
-                    municipality_type=MunicipalityType(municipality_data["municipality_type"])
+                    municipality_type=MunicipalityType(
+                        municipality_data["municipality_type"]
+                    ),
                 )
                 municipalities.append(municipality)
 
