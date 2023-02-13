@@ -3,7 +3,9 @@ from enum import Enum
 
 
 _mobile_number_re = re.compile(r"^(?:\+977|977)?(?:-)?(?:98|97|96)[0-9]{8}$")
-_landline_number_re = re.compile(r"^(?:\+977|977)?(?:-)?(?:0)?(?:[01][1-9]|2[13-9]|[3-9][0-9])[0-9]{6,7}$")
+_landline_number_re = re.compile(
+    r"^(?:\+977|977)?(?:-)?(?:0)?(?:[01][1-9]|2[13-9]|[3-9][0-9])[0-9]{6,7}$"
+)
 
 
 class Operator(Enum):
@@ -54,10 +56,10 @@ def is_valid(number: str) -> bool:
 
 def get_exact_number(number: str) -> str:
     # replacing start 977
-    if number.startswith('977'):
-        number = number.replace('977', '')
+    if number.startswith("977"):
+        number = number.replace("977", "")
     # replacing +977 and all -
-    return number.replace('+977', '').replace('-', '')
+    return number.replace("+977", "").replace("-", "")
 
 
 def parse(number: str):
@@ -79,7 +81,7 @@ def parse(number: str):
     if not number and type(number) != str:
         return None
 
-    number = number.replace('-', '')
+    number = number.replace("-", "")
 
     # checking if mobile number
     if is_mobile_number(number):

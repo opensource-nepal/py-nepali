@@ -6,26 +6,33 @@ from nepali.utils import to_local, to_utc, to_nepali_datetime
 
 register = template.Library()
 
-@register.filter(name='nepalidate')
+
+@register.filter(name="nepalidate")
 def nepalidate(datetime_obj, format="%B %d, %Y, %A"):
-	nepali_datetime_obj = to_nepali_datetime(datetime_obj)
-	if nepali_datetime_obj == None: return None
-	return nepali_datetime_obj.strftime(format)
+    nepali_datetime_obj = to_nepali_datetime(datetime_obj)
+    if nepali_datetime_obj == None:
+        return None
+    return nepali_datetime_obj.strftime(format)
 
-@register.filter(name='nepalidate_en')
+
+@register.filter(name="nepalidate_en")
 def nepalidate_en(datetime_obj, format="%B %d, %Y, %A"):
-	nepali_datetime_obj = to_nepali_datetime(datetime_obj)
-	if nepali_datetime_obj == None: return None
-	return nepali_datetime_obj.strftime_en(format)
+    nepali_datetime_obj = to_nepali_datetime(datetime_obj)
+    if nepali_datetime_obj == None:
+        return None
+    return nepali_datetime_obj.strftime_en(format)
 
-@register.filter(name='nepalihumanize')
+
+@register.filter(name="nepalihumanize")
 def nepalihumanize(datetime_obj, threshold=None, format=None):
-	""" templatetag to humanize nepalidatetime """
-	nepali_datetime_obj = to_nepali_datetime(datetime_obj)
-	if nepali_datetime_obj == None: return None
-	return humanize(nepali_datetime_obj, threshold=threshold, format=format)
-	
+    """templatetag to humanize nepalidatetime"""
+    nepali_datetime_obj = to_nepali_datetime(datetime_obj)
+    if nepali_datetime_obj == None:
+        return None
+    return humanize(nepali_datetime_obj, threshold=threshold, format=format)
+
+
 @register.simple_tag
 def nepalinow(format="%B %d, %Y, %A"):
-	""" templatetag to display current datetime in nepali format """
-	return to_nepali_datetime(timezone.now()).strftime(format)
+    """templatetag to display current datetime in nepali format"""
+    return to_nepali_datetime(timezone.now()).strftime(format)

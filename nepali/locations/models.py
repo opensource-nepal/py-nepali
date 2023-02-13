@@ -79,7 +79,13 @@ class MunicipalityType(Enum):
 
 
 class Municipality(Location):
-    def __init__(self, district: District, name: str, name_nepali: str, municipality_type: MunicipalityType):
+    def __init__(
+        self,
+        district: District,
+        name: str,
+        name_nepali: str,
+        municipality_type: MunicipalityType,
+    ):
         super().__init__(name, name_nepali)
         self.__district = district
         self.__municipality_type = municipality_type

@@ -11,7 +11,7 @@ from nepali.phone_number import (
     is_valid,
     get_exact_number,
     parse,
-    Operator
+    Operator,
 )
 
 
@@ -31,6 +31,7 @@ class TestOperator(unittest.TestCase):
     def test_operator_repr(self):
         operator = Operator.NEPAL_TELECOM
         self.assertEqual(repr(operator), f"<Operator: {operator.value}>")
+
 
 class TestPhoneNumberValidation(unittest.TestCase):
     def test_is_mobile_number(self):
@@ -103,7 +104,9 @@ class TestPhoneNumberValidation(unittest.TestCase):
 
     @mock.patch("nepali.phone_number.is_landline_number", return_value=True)
     @mock.patch("nepali.phone_number.is_mobile_number", return_value=True)
-    def test_if__is_valid__returns_true_if_both_mobile_and_landline_returns_true(self, *_):
+    def test_if__is_valid__returns_true_if_both_mobile_and_landline_returns_true(
+        self, *_
+    ):
         self.assertEqual(is_valid("who_cares"), True)
 
 
@@ -159,7 +162,7 @@ class TestMobileNumberParser(unittest.TestCase):
     def test__get_operator__for_hello_mobile(self):
         self.assertEqual(_get_operator("9632536789"), Operator.HELLO_MOBILE)
 
-    @mock.patch("nepali.phone_number._get_operator", return_value='test')
+    @mock.patch("nepali.phone_number._get_operator", return_value="test")
     def test__parse_mobile_number_returns_valid_data(self, *_):
         data = _parse_mobile_number("+977-9842536789")
         self.assertEqual(data and data["type"], "Mobile")

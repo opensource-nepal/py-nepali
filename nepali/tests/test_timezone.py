@@ -19,7 +19,10 @@ class TestNepaliTimeZone(unittest.TestCase):
         self.assertEqual(self.nepali_timezone.dst(None), datetime.timedelta(0))
 
     def test_nepali_timezone_utcoffset(self):
-        self.assertEqual(self.nepali_timezone.utcoffset(None), datetime.timedelta(hours=5, minutes=45))
+        self.assertEqual(
+            self.nepali_timezone.utcoffset(None),
+            datetime.timedelta(hours=5, minutes=45),
+        )
 
     def test_nepali_timezone_tzname(self):
         self.assertEqual(self.nepali_timezone.tzname(None), "Asia/Kathmandu")
@@ -42,13 +45,17 @@ class TestTimezoneUtils(unittest.TestCase):
         tz = get_timezone()
         self.assertIsNotNone(tz)
 
-    @patch('nepali.timezone.get_timezone')
-    @patch('nepali.timezone.datetime')
+    @patch("nepali.timezone.get_timezone")
+    @patch("nepali.timezone.datetime")
     def test_timezone_now(self, mock_datetime, mock_get_timezone):
         # mocking data
-        mock_get_timezone.return_value = datetime.timezone.utc  # mocking get_timezone => UTC
+        mock_get_timezone.return_value = (
+            datetime.timezone.utc
+        )  # mocking get_timezone => UTC
         datetime_now = mock_datetime.datetime.now
-        datetime_now.return_value = datetime.datetime(2015, 1, 1)  # mocking datetime.now => 2015/1/1
+        datetime_now.return_value = datetime.datetime(
+            2015, 1, 1
+        )  # mocking datetime.now => 2015/1/1
 
         # calling now
         current_dt = now()
@@ -57,12 +64,16 @@ class TestTimezoneUtils(unittest.TestCase):
         self.assertEqual(current_dt, datetime.datetime(2015, 1, 1))
         self.assertSequenceEqual(datetime_now.call_args[0], [datetime.timezone.utc])
 
-    @patch('nepali.timezone.datetime')
+    @patch("nepali.timezone.datetime")
     def test_timezone_utc_now(self, mock_datetime):
         # mocking data
-        mock_datetime.timezone.utc = datetime.timezone.utc  # reverting the utc timezone mock
+        mock_datetime.timezone.utc = (
+            datetime.timezone.utc
+        )  # reverting the utc timezone mock
         datetime_now = mock_datetime.datetime.now
-        datetime_now.return_value = datetime.datetime(2015, 1, 1)  # mocking datetime.now => 2015/1/1
+        datetime_now.return_value = datetime.datetime(
+            2015, 1, 1
+        )  # mocking datetime.now => 2015/1/1
 
         # calling utc_now
         utc_dt = utc_now()
