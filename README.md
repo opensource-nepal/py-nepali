@@ -118,8 +118,8 @@ np_date.to_date()                  # datetime.date object
 np_date.to_datetime()              # datetime.datetime object
 np_date.to_nepalidatetime()        # nepalidatetime object
 
-np_date.strftime("%Y-%m-%d")       # २०७८-०१-१८
-np_date.strftime_en("%Y-%m-%d")    # 2078-01-18
+np_date.strftime("%Y-%m-%d")       # 2078-01-18
+np_date.strftime_ne("%Y-%m-%d")    # २०७८-०१-१८
 
 np_date.weekday()                  # Sunday => 0, Monday => 1, ..., Saturday => 6
 ```
@@ -173,8 +173,8 @@ np_date.to_datetime()                    # datetime.datetime object
 np_date.to_nepalidate()                  # nepalidatetime object
 np_date.to_time()                        # nepalitime object (datetime.time compatible)
 
-np_date.strftime("%Y-%m-%d %H:%M")       # २०७८-०१-१८ २३:५९
-np_date.strftime_en("%Y-%m-%d %H:%M")    # 2078-01-18 23:59
+np_date.strftime("%Y-%m-%d %H:%M")       # 2078-01-18 23:59
+np_date.strftime_ne("%Y-%m-%d %H:%M")    # २०७८-०१-१८ २३:५९
 
 np_date.weekday()                        # Sunday => 0, Monday => 1, ..., Saturday => 6
 ```
@@ -194,9 +194,83 @@ np_datetime1 >= datetime.datetime.now()        # returns bool (True/False)
 
 ### nepalihumanize
 
+Returns readable form of nepali date.
+
+```python
+from nepali.datetime import nepalihumanize
+
+
+nepalihumanize(datetime, [threshold, format])
+```
+
+The `threshold` is and optional field and is in seconds and the format is for the `strftime` format. If the datetime object crosses the threshold it print the date with the format. The `format` is also an optional and is `%B %d, %Y` in default.
+
+Example
+
+```python
+from nepali.datetime import nepalihumanize, nepalidatetime
+
+np_datetime = nepalidatetime(2079, 10, 5)
+output = nepalihumanize(np_datetime)
+# output: ३ महिना अघि
+
+output = nepalihumanize(np_datetime, threshold=1400)
+# 1400 = 2 * 30 * 24; two months threshold
+# output: माघ ०५, २०७९
+```
+
 ### timezone
 
+**NepaliTimeZone**  
+You can use `NepaliTimeZone` directly to your datetime object.
+
+```python
+from nepali.timezone import NepaliTimeZone
+
+datetime.datetime(2018, 8, 12, 16, 23, tzinfo=NepaliTimeZone())
+```
+
+**now**  
+Returns current datetime object with timezone
+
+```python
+from nepali import timezone
+
+timezone.now()
+```
+
+`datetime.now()` vs `timezone.now()`:  
+`datetime.now()` doesn't contain timezone, but `timezone.now` will contain timezone of the system.
+
+**utc_now**  
+Returns current UTC datetime object (with timezone UTC)
+
+```python
+from nepali import timezone
+
+timezone.utc_now()
+```
+
 ### parse
+
+Parses date with commonly used date formats. Auto detects date format. If you are sure about the format, please use `strptime`.
+
+```python
+from nepali.datetime.parser import parse
+
+np_datetime = parse(datetime_str)
+```
+Example
+```python
+np_datetime = parse("2079-02-15")                     # 2079-02-15 00:00:00
+np_datetime = parse("२०७८-०१-१८")                     # 2078-01-15 00:00:00
+np_datetime = parse("2079/02/15")                     # 2079-02-15 00:00:00
+np_datetime = parse("2079-02-15 15:23")               # 2079-02-15 15:23:00
+np_datetime = parse("2079-02-15 5:23 AM")             # 2079-02-15 05:23:00
+np_datetime = parse("2079-02-15 5:23 AM")             # 2079-02-15 05:23:00
+np_datetime = parse("Jestha 15, 2079")                # 2079-02-15 00:00:00
+
+```
 
 ### strftime() and strptime() Format Codes
 
@@ -224,6 +298,26 @@ np_datetime1 >= datetime.datetime.now()        # returns bool (True/False)
 | `%%`      | A literal `'%'` character.                                | %                              |
 
 ### Numbers
+```python
+from nepali import number
+```
+**convert**  
+Converts english number to nepali.
+```python
+np_number = number.convert("1234567890")  # १२३४५६७८९०
+```
+
+**revert**  
+Converts english number to nepali.
+```python
+en_number = number.revert("१२३४५६७८९०")  # 1234567890
+```
+
+**add_comma**  
+Adds comma in nepali numbers.
+```python
+number_text = number.add_comma("1234567890")  # 1,23,45,67,890
+```
 
 ### Phone Number
 
