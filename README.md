@@ -260,7 +260,9 @@ from nepali.datetime.parser import parse
 
 np_datetime = parse(datetime_str)
 ```
+
 Example
+
 ```python
 np_datetime = parse("2079-02-15")                     # 2079-02-15 00:00:00
 np_datetime = parse("२०७८-०१-१८")                     # 2078-01-15 00:00:00
@@ -298,30 +300,85 @@ np_datetime = parse("Jestha 15, 2079")                # 2079-02-15 00:00:00
 | `%%`      | A literal `'%'` character.                                | %                              |
 
 ### Numbers
+
 ```python
 from nepali import number
 ```
+
 **convert**  
 Converts english number to nepali.
+
 ```python
 np_number = number.convert("1234567890")  # १२३४५६७८९०
 ```
 
 **revert**  
 Converts english number to nepali.
+
 ```python
 en_number = number.revert("१२३४५६७८९०")  # 1234567890
 ```
 
 **add_comma**  
 Adds comma in nepali numbers.
+
 ```python
 number_text = number.add_comma("1234567890")  # 1,23,45,67,890
 ```
 
 ### Phone Number
 
-### Others
+```python
+from nepali import phone_number
+```
+
+**is_valid**  
+Checks is the given number is a valid nepali phone number.
+
+```python
+phone_number.is_valid("9851377890")      # True
+phone_number.is_valid("+977-142314819")  # True
+
+phone_number.is_valid("8251377890")      # False
+```
+
+**parse**  
+Parse phone number and returns details of the number.
+
+```python
+phone_number.parse("9851377890")
+# {'type': 'Mobile', 'number': '9851377890', 'operator': <Operator: Nepal Telecom>}
+
+phone_number.parse("+977-142314819")
+# {'type': 'Landline', 'number': '0142314819', 'area_code': '01'}
+```
+
+### Locations
+Provides details of Nepal's Province, District, and Municipality.
+
+```python
+from nepali.locations import provinces, districts, municipalities
+```
+
+```python
+from nepali.locations.utils import get_province, get_district, get_municipality
+
+# Province
+get_province(name="Bagmati")
+# Bagmati Province
+
+# District
+get_district(name="Kathmandu")
+# Kathmandu
+
+# Municipality
+get_municipality(name="Kathmandu")
+# Kathmandu Metropolitan City
+
+# Municipality
+get_municipality(name_nepali="विराटनगर")
+# Biratnagar Metropolitan City
+```
 
 ## For Django Template
 
