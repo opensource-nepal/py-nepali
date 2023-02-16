@@ -40,6 +40,20 @@ phone_number.parse("+977-9845217789")
 
     pip install nepali
 
+## Features
+
+1. [Date and Time](#date-and-time)
+   - [date_converter](#date_converter)
+   - [nepalidate](#nepalidate)
+   - [nepalidatetime](#nepalidatetime)
+   - [nepalihumanize](#nepalihumanize)
+   - [timezone](#timezone)
+   - [parse](#parse)
+   - [strftime() and strptime() Format Codes](#strftime-and-strptime-format-codes)
+2. [Numbers](#numbers)
+3. [Phone Number](#phone-number)
+4. [Locations](#locations)
+
 ## Date and Time
 
 ### date_converter
@@ -240,7 +254,7 @@ timezone.now()
 ```
 
 `datetime.now()` vs `timezone.now()`:  
-`datetime.now()` doesn't contain timezone, but `timezone.now` will contain timezone of the system.
+`datetime.now()` doesn't contain timezone, but `timezone.now()` will contain timezone of the system.
 
 **utc_now**  
 Returns current UTC datetime object (with timezone UTC)
@@ -265,7 +279,7 @@ Example
 
 ```python
 np_datetime = parse("2079-02-15")                     # 2079-02-15 00:00:00
-np_datetime = parse("२०७८-०१-१८")                     # 2078-01-15 00:00:00
+np_datetime = parse("२०७८-०१-१८")                      # 2078-01-15 00:00:00
 np_datetime = parse("2079/02/15")                     # 2079-02-15 00:00:00
 np_datetime = parse("2079-02-15 15:23")               # 2079-02-15 15:23:00
 np_datetime = parse("2079-02-15 5:23 AM")             # 2079-02-15 05:23:00
@@ -299,7 +313,9 @@ np_datetime = parse("Jestha 15, 2079")                # 2079-02-15 00:00:00
 | `%f`      | Microsecond as a decimal number, zero-padded to 6 digits. | 000000, 000001, …, 999999      |
 | `%%`      | A literal `'%'` character.                                | %                              |
 
-### Numbers
+---
+
+## Numbers
 
 ```python
 from nepali import number
@@ -326,7 +342,9 @@ Adds comma in nepali numbers.
 number_text = number.add_comma("1234567890")  # 1,23,45,67,890
 ```
 
-### Phone Number
+---
+
+## Phone Number
 
 ```python
 from nepali import phone_number
@@ -353,7 +371,10 @@ phone_number.parse("+977-142314819")
 # {'type': 'Landline', 'number': '0142314819', 'area_code': '01'}
 ```
 
-### Locations
+---
+
+## Locations
+
 Provides details of Nepal's Province, District, and Municipality.
 
 ```python
@@ -379,6 +400,8 @@ get_municipality(name="Kathmandu")
 get_municipality(name_nepali="विराटनगर")
 # Biratnagar Metropolitan City
 ```
+
+---
 
 ## For Django Template
 
