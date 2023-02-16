@@ -86,17 +86,15 @@ class TestLocations(unittest.TestCase):
 
 class TestLocationsUtils(unittest.TestCase):
     def test_utils_get_province(self):
-        province = get_province(locations=locations.provinces, name="Bagmati")
+        province = get_province(name="Bagmati")
         self.assertEqual(province.name, "Bagmati Province")
 
     def test_utils_get_district(self):
-        district = get_district(locations=locations.districts, name="Kathmandu")
+        district = get_district(name="Kathmandu")
         self.assertEqual(district.name, "Kathmandu")
 
     def test_utils_get_municipality(self):
-        municipality = get_municipality(
-            locations=locations.municipalities, name="Kathmandu"
-        )
+        municipality = get_municipality(name="Kathmandu")
         self.assertEqual(municipality.name, "Kathmandu Metropolitan City")
 
 
