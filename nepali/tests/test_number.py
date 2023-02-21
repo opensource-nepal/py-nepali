@@ -35,6 +35,12 @@ class TestNumber(unittest.TestCase):
         self.assertEqual(number.add_comma_english("123456789"), "123,456,789")
         self.assertEqual(NepaliNumber.add_comma_english("123456789"), "123,456,789")
 
+    def test_number_add_comma_with_convert_True(self):
+        self.assertEqual(number.add_comma("123456789", convert=True), "१२,३४,५६,७८९")
+
+    def test_number_add_comma_with_convert_False(self):
+        self.assertEqual(number.add_comma("123456789", convert=False), "12,34,56,789")
+
     def test_number_convert_and_add_comma(self):
         self.assertEqual(number.convert_and_add_comma("123456789"), "१२,३४,५६,७८९")
         self.assertEqual(
