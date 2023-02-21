@@ -1,4 +1,4 @@
-from .number import NepaliNumber
+from . import number
 
 
 MONTHS_MAP = {
@@ -46,7 +46,7 @@ AM_PM_MAP = {
 class NepaliChar:
     @staticmethod
     def number(num):
-        return NepaliNumber.convert(num)
+        return number.english_to_nepali(num)
 
     @staticmethod
     def day(day):
@@ -127,8 +127,6 @@ class EnglishChar:
 def nepali_to_english_text(text):
     # TODO: optimization
 
-    from .number import NepaliNumber
-
     # replacing months
     for k, v in MONTHS_MAP.items():
         text = text.replace(k, v)
@@ -144,4 +142,4 @@ def nepali_to_english_text(text):
     for k, v in AM_PM_MAP.items():
         text = text.replace(k, v)
 
-    return NepaliNumber.revert(text)
+    return number.nepali_to_english(text)

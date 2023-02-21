@@ -1,58 +1,116 @@
+import warnings
+from typing import Any
+
+
+NP_NUMBERS = ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"]
+
+
+def english_to_nepali(number: Any) -> str:
+    """
+    Converts english number to nepali.
+    """
+    number = str(number)
+    converted_number = []
+    for n in number:
+        if n.isdigit() and int(n) in range(0, 10):
+            converted_number.append(NP_NUMBERS[int(n)])
+        else:
+            converted_number.append(n)
+    return "".join(converted_number)
+
+
+def nepali_to_english(number: Any) -> str:
+    """
+    Converts nepali number to english.
+    """
+    number = str(number)
+    converted_number = []
+    nepali_number_set = set(NP_NUMBERS)
+    for n in number:
+        if n in nepali_number_set:
+            converted_number.append(str(NP_NUMBERS.index(n)))
+        else:
+            converted_number.append(n)
+    return "".join(converted_number)
+
+
+def add_comma_english(number: Any) -> str:
+    """
+    Adds comma in english style
+    Eg. 123456789 => 123,456,789
+    """
+    return "{:,}".format(int(number))
+
+
+def add_comma(number: Any, convert=False) -> str:
+    """
+    Adds comma in nepali style
+    Eg. 123456789 => 12,34,56,789
+    
+    :param number Any: Number to be converted
+    :param convert bool: If true converts english number to nepali
+    """
+    if convert:
+        number = english_to_nepali(number)
+    else:
+        number = str(number)
+
+    number_with_comma = []
+    counter = 0
+    for nepali_number_char in list(str(number))[::-1]:
+        if counter == 3 or (counter != 1 and (counter - 1) % 2 == 0):
+            number_with_comma.append(",")
+        number_with_comma.append(nepali_number_char)
+        counter += 1
+
+    return "".join(number_with_comma[::-1])
+
+
+def convert_and_add_comma(number: Any) -> str:
+    """
+    Converts the number into nepali text and adds comma to it.
+    """
+    return add_comma(number, convert=True)
+
+
+# Backward compatibility support for legacy NepaliNumber
 class NepaliNumber:
     @classmethod
     def convert_and_add_comma(cls, number):
-        return cls.add_comma(cls.convert(number))
+        warnings.warn(
+            message="NepaliNumber.convert_and_add_comma has been moved to `convert_and_add_comma. This function is depreciated and will be removed in the future release.",
+            category=DeprecationWarning,
+        )
+        return add_comma(english_to_nepali(number))
 
     @staticmethod
     def convert(num):
-        nepaliNumbers = ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"]
-        np_num = ""
-        en_num = str(num)
-        for e in en_num:
-            if e in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
-                np_num = np_num + str(nepaliNumbers[int(e)])
-            else:
-                np_num = np_num + str(e)
-        return np_num
+        warnings.warn(
+            message="NepaliNumber.convert has been moved to `english_to_nepali. This function is depreciated and will be removed in the future release.",
+            category=DeprecationWarning,
+        )
+        return english_to_nepali(num)
 
     @staticmethod
     def revert(num):
-        nepaliNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-        np_num = ""
-        en_num = str(num)
-        for e in en_num:
-            if e in ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"]:
-                np_num = np_num + str(nepaliNumbers[int(e)])
-            else:
-                np_num = np_num + str(e)
-        return np_num
+        warnings.warn(
+            message="NepaliNumber.revert has been moved to `nepali_to_english. This function is depreciated and will be removed in the future release.",
+            category=DeprecationWarning,
+        )
+        return nepali_to_english(num)
 
     @staticmethod
     def add_comma(number):
-        number_with_comma = ""
-        counter = 0
-        for nepali_number_char in list(str(number))[::-1]:
-            if counter == 3:
-                number_with_comma = "," + number_with_comma
-
-            elif counter != 1 and counter != 3 and (counter - 1) % 2 == 0:
-                number_with_comma = "," + number_with_comma
-
-            number_with_comma = nepali_number_char + number_with_comma
-
-            # increasing counter
-            counter += 1
-
-        return number_with_comma
+        warnings.warn(
+            message="NepaliNumber.add_comma has been moved to `add_comma. This function is depreciated and will be removed in the future release.",
+            category=DeprecationWarning,
+        )
+        return add_comma(number)
 
     @staticmethod
     def add_comma_english(number):
-        return "{:,}".format(int(number))
-
-
-# Adding new function with legacy support (NepaliNumber will be depreciated in future release)
-convert = NepaliNumber.convert
-revert = NepaliNumber.revert
-add_comma = NepaliNumber.add_comma
-add_comma_english = NepaliNumber.add_comma_english
-convert_and_add_comma = NepaliNumber.convert_and_add_comma
+        warnings.warn(
+            message="NepaliNumber.add_comma_english has been moved to `add_comma_english. This function is depreciated and will be removed in the future release.",
+            category=DeprecationWarning,
+        )
+        return add_comma_english(number)

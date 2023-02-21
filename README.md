@@ -19,7 +19,6 @@ from nepali.datetime import nepalidate, parser
 nepali_datetime = parser.parse('2079-02-15')
 # 2079-02-15 00:00:00
 
-# convert
 date = datetime.date(2017, 3, 15)
 nepali_date = nepalidate.from_date(date)
 # 2073-12-02
@@ -436,4 +435,8 @@ In your Template
 
 ```python
 {{ datetimeobj|nepalihumanize }}
+```
+
+```python
+{{ forloop.counter|nepalinumber }}
 ```
