@@ -11,7 +11,9 @@ __all__ = [
 ]
 
 
-def _filter_location(*, locations, name=None, name_nepali=None, exact=False, multiple=False):
+def _filter_location(
+    *, locations, name=None, name_nepali=None, exact=False, multiple=False
+):
     if not name and not name_nepali:
         raise ValueError("name or name_nepali must be passed")
 
@@ -28,10 +30,18 @@ def _filter_location(*, locations, name=None, name_nepali=None, exact=False, mul
 
     # filtering data
     if exact:
-        filtered_locations = [location for location in locations if getattr(location, field).lower() == value]
+        filtered_locations = [
+            location
+            for location in locations
+            if getattr(location, field).lower() == value
+        ]
     else:
-        pattern = re.compile(rf'.*{value}.*')
-        filtered_locations = [location for location in locations if re.match(pattern, getattr(location, field).lower())]
+        pattern = re.compile(rf".*{value}.*")
+        filtered_locations = [
+            location
+            for location in locations
+            if re.match(pattern, getattr(location, field).lower())
+        ]
 
     # returning data if not filtered location is available
     if len(filtered_locations) == 0 and not multiple:

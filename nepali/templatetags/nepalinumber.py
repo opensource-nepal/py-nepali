@@ -1,13 +1,15 @@
 from django import template
 
-from nepali.number import NepaliNumber
+from nepali.number import nepali_to_english, convert_and_add_comma
 
 register = template.Library()
 
-@register.filter(name='nepalinumber')
-def nepalinumber(value):
-	return NepaliNumber.convert(value)
 
-@register.filter(name='nepalinumber_with_comma')
+@register.filter(name="nepalinumber")
+def nepalinumber(value):
+    return nepali_to_english(value)
+
+
+@register.filter(name="nepalinumber_with_comma")
 def nepalinumber_with_comma(value):
-	return NepaliNumber.convert_and_add_comma(value)
+    return convert_and_add_comma(value)

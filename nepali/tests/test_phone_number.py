@@ -1,7 +1,3 @@
-"""
-NOTE: To run only this test case use the below command
-python setup.py test -s nepali.tests.test_phone_number
-"""
 import unittest
 from unittest import mock
 
@@ -15,8 +11,26 @@ from nepali.phone_number import (
     is_valid,
     get_exact_number,
     parse,
-    Operator
+    Operator,
 )
+
+
+class TestOperator(unittest.TestCase):
+    def test_operator_with_invalid_data(self):
+        with self.assertRaises(ValueError):
+            Operator("Hello")
+
+    def test_operator_with_valid_data(self):
+        operator = Operator("Nepal Telecom")
+        self.assertEqual(operator, Operator.NEPAL_TELECOM)
+
+    def test_operator_str(self):
+        operator = Operator.NEPAL_TELECOM
+        self.assertEqual(str(operator), operator.value)
+
+    def test_operator_repr(self):
+        operator = Operator.NEPAL_TELECOM
+        self.assertEqual(repr(operator), f"<Operator: {operator.value}>")
 
 
 class TestPhoneNumberValidation(unittest.TestCase):
@@ -90,7 +104,9 @@ class TestPhoneNumberValidation(unittest.TestCase):
 
     @mock.patch("nepali.phone_number.is_landline_number", return_value=True)
     @mock.patch("nepali.phone_number.is_mobile_number", return_value=True)
-    def test_if__is_valid__returns_true_if_both_mobile_and_landline_returns_true(self, *_):
+    def test_if__is_valid__returns_true_if_both_mobile_and_landline_returns_true(
+        self, *_
+    ):
         self.assertEqual(is_valid("who_cares"), True)
 
 
@@ -116,6 +132,12 @@ class TestPhoneNumberFunctions(unittest.TestCase):
 
 
 class TestMobileNumberParser(unittest.TestCase):
+    def test__get_operator__with_invalid_input(self):
+        self.assertEqual(_get_operator("Hello there"), None)
+
+    def test__get_operator__with_not_matching_input(self):
+        self.assertEqual(_get_operator("9132536789"), None)
+
     def test__get_operator__for_ntc(self):
         self.assertEqual(_get_operator("9842536789"), Operator.NEPAL_TELECOM)
         self.assertEqual(_get_operator("9852536789"), Operator.NEPAL_TELECOM)
@@ -140,12 +162,12 @@ class TestMobileNumberParser(unittest.TestCase):
     def test__get_operator__for_hello_mobile(self):
         self.assertEqual(_get_operator("9632536789"), Operator.HELLO_MOBILE)
 
-    @mock.patch("nepali.phone_number._get_operator", return_value='test')
+    @mock.patch("nepali.phone_number._get_operator", return_value="test")
     def test__parse_mobile_number_returns_valid_data(self, *_):
         data = _parse_mobile_number("+977-9842536789")
-        self.assertEqual(data["type"], "Mobile")
-        self.assertEqual(data["operator"], "test")
-        self.assertEqual(data["number"], "9842536789")
+        self.assertEqual(data and data["type"], "Mobile")
+        self.assertEqual(data and data["operator"], "test")
+        self.assertEqual(data and data["number"], "9842536789")
 
     @mock.patch("nepali.phone_number._get_operator", return_value=None)
     def test__parse_mobile_number_on_invalid_operator(self, *_):
@@ -196,7 +218,7 @@ class TestLandlineNumberParser(unittest.TestCase):
 
 class TestParser(unittest.TestCase):
     def test_none_number_returns_none(self):
-        self.assertEqual(parse(None), None)
+        self.assertEqual(parse(None), None)  # type: ignore
 
     def test_empty_number_returns_none(self):
         self.assertEqual(parse(""), None)
@@ -221,12 +243,12 @@ class TestParser(unittest.TestCase):
 class TestParseIntegration(unittest.TestCase):
     def test_parse_for_mobile_number(self):
         data = parse("+9779842536789")
-        self.assertEqual(data["type"], "Mobile")
-        self.assertEqual(data["number"], "9842536789")
-        self.assertEqual(data["operator"], Operator.NEPAL_TELECOM)
+        self.assertEqual(data and data["type"], "Mobile")
+        self.assertEqual(data and data["number"], "9842536789")
+        self.assertEqual(data and data["operator"], Operator.NEPAL_TELECOM)
 
     def test_parse_for_landline_number(self):
         data = parse("+977-142314819")
-        self.assertEqual(data["type"], "Landline")
-        self.assertEqual(data["number"], "0142314819")
-        self.assertEqual(data["area_code"], "01")
+        self.assertEqual(data and data["type"], "Landline")
+        self.assertEqual(data and data["number"], "0142314819")
+        self.assertEqual(data and data["area_code"], "01")

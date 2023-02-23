@@ -29,9 +29,11 @@ class Province(Location):
         self.__municipalities = []
 
     def _add_district(self, district: "District") -> None:
+        """Do not use outside of the model, automatically called from the models."""
         self.__districts.append(district)
 
     def _add_municipality(self, municipality: "Municipality") -> None:
+        """Do not use outside of the model, automatically called from the models."""
         self.__municipalities.append(municipality)
 
     @property
@@ -51,6 +53,7 @@ class District(Location):
         self.__province._add_district(self)
 
     def _add_municipality(self, district: "Municipality") -> None:
+        """Do not use outside of the model, automatically called from the models."""
         self.__municipalities.append(district)
 
     @property
@@ -71,9 +74,18 @@ class MunicipalityType(Enum):
     def __str__(self) -> str:
         return self.value
 
+    def __repr__(self) -> str:
+        return self.value
+
 
 class Municipality(Location):
-    def __init__(self, district: District, name: str, name_nepali: str, municipality_type: MunicipalityType):
+    def __init__(
+        self,
+        district: District,
+        name: str,
+        name_nepali: str,
+        municipality_type: MunicipalityType,
+    ):
         super().__init__(name, name_nepali)
         self.__district = district
         self.__municipality_type = municipality_type

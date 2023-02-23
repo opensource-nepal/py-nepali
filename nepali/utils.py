@@ -31,7 +31,7 @@ def to_nepali_timezone(datetime_obj: datetime.datetime) -> datetime.datetime:
 
 # TODO: Move inside the datetime
 
-def to_nepalidatetime(datetime_object: Any) -> Any:
+def to_nepalidatetime(datetime_object: Any) -> Any:  # TODO: return data type is nepalidatetime
     """
     Converts nepalidate, datetime.datetime, datetime.date to nepalidatetime.
 
@@ -50,10 +50,11 @@ def to_nepalidatetime(datetime_object: Any) -> Any:
     elif datetime_object == "" or datetime_object == None:
         return None
     raise InvalidNepaliDateTimeObjectException(
-        "Argument must be instance of nepalidate or nepalidatetime or datetime.datetime or datetime.date")
+        "Argument must be instance of nepalidate or nepalidatetime or datetime.datetime or datetime.date"
+    )
 
 
-def to_nepalidate(datetime_object: Any) -> Any:
+def to_nepalidate(datetime_object: Any) -> Any:  # TODO: return data type is nepalidate
     """
     Converts nepalidate, datetime.datetime, datetime.date to nepalidate.
 
@@ -62,4 +63,4 @@ def to_nepalidate(datetime_object: Any) -> Any:
     nepalidatetime_obj = to_nepalidatetime(datetime_object)
     if nepalidatetime_obj != None:
         return nepalidatetime_obj.date()
-    return None
+    return
