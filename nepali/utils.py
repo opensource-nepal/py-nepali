@@ -8,6 +8,7 @@ from .exceptions import InvalidNepaliDateTimeObjectException
 
 # TODO: Move timezone methods to timezone.py
 
+
 def to_utc_timezone(datetime_obj: datetime.datetime) -> datetime.datetime:
     """Changes the timezone of the given datetime object to UTC."""
     if type(datetime_obj) != datetime.datetime:
@@ -31,7 +32,10 @@ def to_nepali_timezone(datetime_obj: datetime.datetime) -> datetime.datetime:
 
 # TODO: Move inside the datetime
 
-def to_nepalidatetime(datetime_object: Any) -> Any:  # TODO: return data type is nepalidatetime
+
+def to_nepalidatetime(
+    datetime_object: Any,
+) -> Any:  # TODO: return data type is nepalidatetime
     """
     Converts nepalidate, datetime.datetime, datetime.date to nepalidatetime.
 

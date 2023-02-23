@@ -46,7 +46,7 @@ def add_comma(number: Any, convert=False) -> str:
     """
     Adds comma in nepali style
     Eg. 123456789 => 12,34,56,789
-    
+
     :param number Any: Number to be converted
     :param convert bool: If true converts english number to nepali
     """
