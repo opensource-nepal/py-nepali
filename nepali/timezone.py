@@ -1,5 +1,6 @@
 import datetime
-from typing import Union
+import pytz
+from typing import Any, Union
 
 
 class NepaliTimeZone(datetime.tzinfo):
@@ -39,3 +40,25 @@ def now() -> datetime.datetime:
 def utc_now() -> datetime.datetime:
     """Returns UTC time datetime object"""
     return datetime.datetime.now(datetime.timezone.utc)
+
+
+def to_utc_timezone(datetime_obj: datetime.datetime) -> datetime.datetime:
+    """Changes the timezone of the given datetime object to UTC."""
+    if type(datetime_obj) != datetime.datetime:
+        # Not a datetime object
+        return datetime_obj
+
+    if not hasattr(datetime_obj, "tzinfo") or not datetime_obj.tzinfo:
+        datetime_obj = datetime_obj.replace(tzinfo=get_timezone())
+    return datetime_obj.astimezone(pytz.timezone("UTC"))
+
+
+def to_nepali_timezone(datetime_obj: datetime.datetime) -> datetime.datetime:
+    """Changes the timezone of the given datetime object to NepaliTimeZone."""
+    if type(datetime_obj) != datetime.datetime:
+        # Not a datetime object
+        return datetime_obj
+
+    if not hasattr(datetime_obj, "tzinfo") or not datetime_obj.tzinfo:
+        datetime_obj = datetime_obj.replace(tzinfo=get_timezone())
+    return datetime_obj.astimezone(NepaliTimeZone())
