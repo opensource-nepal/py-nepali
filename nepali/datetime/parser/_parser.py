@@ -16,7 +16,7 @@ def strptime(datetime_str, format):
     returns nepalidatetime object.
     """
     nepalidatetime_object = validate(datetime_str, format)
-    if nepalidatetime_object == None:
+    if nepalidatetime_object is None:
         raise FormatNotMatchException(
             "Datetime string did not match with the given format."
         )
@@ -25,7 +25,7 @@ def strptime(datetime_str, format):
 
 def _get_standard_formats():
     global _standard_datetime_format_CACHE
-    if _standard_datetime_format_CACHE != None:
+    if _standard_datetime_format_CACHE is not None:
         return _standard_datetime_format_CACHE
 
     STANDARD_DATE_FORMAT = [
@@ -70,7 +70,7 @@ def parse(datetime_str):
     nepalidatetime_object = None
     for format in standard_formats:
         nepalidatetime_object = validate(datetime_str, format=format)
-        if nepalidatetime_object != None:
+        if nepalidatetime_object is not None:
             return nepalidatetime_object
 
     raise InvalidDateTimeFormatException("Invalid format to parse nepali datetime.")

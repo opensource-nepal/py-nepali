@@ -1,9 +1,8 @@
 import datetime as pythonDateTime
 
 from nepali.char import NepaliChar
-from nepali.timezone import now
+from nepali.timezone import now, to_nepali_timezone
 from nepali.exceptions import InvalidNepaliDateTimeObjectException
-from nepali.utils import to_nepali_timezone
 
 from ._datetime import nepalidate, nepalidatetime
 

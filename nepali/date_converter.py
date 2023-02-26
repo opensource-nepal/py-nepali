@@ -291,13 +291,12 @@ class NepaliDateConverter:
         # Eg. ref: 1943/4/14 => 1943/01/01
         en_year, en_month, en_day = self.REFERENCE_EN_DATE[0], 1, 1
         # calculating difference from the adjusted reference (eg. 1943/4/14 - 1943/01/01)
-        reference_diff = sum(
-            self._get_en_months(en_year)[
-                0 : self.REFERENCE_EN_DATE[1] - 1
-            ]  # months total days
-        ) + (
-            self.REFERENCE_EN_DATE[2] - 1
-        )  # day - 1
+        ref_year_months = self._get_en_months(en_year)
+        reference_diff = (
+            sum(ref_year_months[0 : self.REFERENCE_EN_DATE[1] - 1])
+            + self.REFERENCE_EN_DATE[2]
+            - 1  # day - 1
+        )
 
         # DIFFERENCE
         # calculating days count from the reference date

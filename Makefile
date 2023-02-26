@@ -3,6 +3,9 @@
 #
 # @file
 # @version 0.1
+install:
+	pip install -r requirements.txt
+	pre-commit install
 
 test:
 	python -m unittest discover nepali/tests -v
