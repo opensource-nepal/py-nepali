@@ -234,7 +234,7 @@ output = nepalihumanize(np_datetime, threshold=1400)
 
 ### timezone
 
-**NepaliTimeZone**  
+**NepaliTimeZone**
 You can use `NepaliTimeZone` directly to your datetime object.
 
 ```python
@@ -243,7 +243,7 @@ from nepali.timezone import NepaliTimeZone
 datetime.datetime(2018, 8, 12, 16, 23, tzinfo=NepaliTimeZone())
 ```
 
-**now**  
+**now**
 Returns current datetime object with timezone
 
 ```python
@@ -252,10 +252,10 @@ from nepali import timezone
 timezone.now()
 ```
 
-`datetime.now()` vs `timezone.now()`:  
+`datetime.now()` vs `timezone.now()`:
 `datetime.now()` doesn't contain timezone, but `timezone.now()` will contain timezone of the system.
 
-**utc_now**  
+**utc_now**
 Returns current UTC datetime object (with timezone UTC)
 
 ```python
@@ -320,21 +320,21 @@ np_datetime = parse("Jestha 15, 2079")                # 2079-02-15 00:00:00
 from nepali import number
 ```
 
-**convert**  
+**convert**
 Converts english number to nepali.
 
 ```python
 np_number = number.convert("1234567890")  # १२३४५६७८९०
 ```
 
-**revert**  
+**revert**
 Converts english number to nepali.
 
 ```python
 en_number = number.revert("१२३४५६७८९०")  # 1234567890
 ```
 
-**add_comma**  
+**add_comma**
 Adds comma in nepali numbers.
 
 ```python
@@ -349,7 +349,7 @@ number_text = number.add_comma("1234567890")  # 1,23,45,67,890
 from nepali import phone_number
 ```
 
-**is_valid**  
+**is_valid**
 Checks is the given number is a valid nepali phone number.
 
 ```python
@@ -359,7 +359,7 @@ phone_number.is_valid("+977-142314819")  # True
 phone_number.is_valid("8251377890")      # False
 ```
 
-**parse**  
+**parse**
 Parse phone number and returns details of the number.
 
 ```python
@@ -440,3 +440,7 @@ In your Template
 ```python
 {{ forloop.counter|nepalinumber }}
 ```
+
+## Contribution
+
+We appreciate feedback and contribution to this package. To get started please see our [contribution guide](CONTRIBUTION.md)

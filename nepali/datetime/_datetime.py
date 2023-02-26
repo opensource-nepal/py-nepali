@@ -1,8 +1,7 @@
 import datetime as pythonDateTime
 
 from nepali.date_converter import converter as nepali_date_converter
-from nepali.timezone import NepaliTimeZone, utc_now
-from nepali.utils import to_nepali_timezone
+from nepali.timezone import NepaliTimeZone, utc_now, to_nepali_timezone
 
 
 class formatter_class_mixin:

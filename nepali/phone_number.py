@@ -1,5 +1,6 @@
 import re
 from enum import Enum
+from typing import Union
 
 
 _mobile_number_re = re.compile(r"^(?:\+977|977)?(?:-)?(?:98|97|96)[0-9]{8}$")
@@ -93,7 +94,7 @@ def parse(number: str):
     return None
 
 
-def _get_operator(number: str):
+def _get_operator(number: str) -> Union[Operator, None]:
     """
     Returns operator from the number.
     NOTE: The number should be 10digit mobile number.
