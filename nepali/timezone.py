@@ -1,6 +1,6 @@
 import datetime
 import pytz
-from typing import Any, Union
+from typing import Union
 
 
 class NepaliTimeZone(datetime.tzinfo):
@@ -22,6 +22,9 @@ class NepaliTimeZone(datetime.tzinfo):
 
     def __repr__(self):
         return "Asia/Kathmandu"
+
+    def __eq__(self, o: object) -> bool:
+        return isinstance(o, self.__class__)
 
 
 def get_timezone() -> Union[datetime.tzinfo, None]:

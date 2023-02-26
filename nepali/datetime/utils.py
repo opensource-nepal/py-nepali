@@ -13,13 +13,13 @@ def to_nepalidatetime(datetime_object: Any) -> nepalidatetime:
     :return: nepalidatetime
     :raises InvalidNepaliDateTimeObjectException: If the input data is not a date time objects
     """
-    if type(datetime_object) == nepalidatetime:
+    if isinstance(datetime_object, nepalidatetime):
         return datetime_object
-    elif type(datetime_object) == nepalidate:
+    elif isinstance(datetime_object, nepalidate):
         return nepalidatetime.from_nepali_date(datetime_object)
-    elif type(datetime_object) == datetime.datetime:
+    elif isinstance(datetime_object, datetime.datetime):
         return nepalidatetime.from_datetime(datetime_object)
-    elif type(datetime_object) == datetime.date:
+    elif isinstance(datetime_object, datetime.date):
         return nepalidatetime.from_date(datetime_object)
     raise InvalidNepaliDateTimeObjectException(
         "Argument must be instance of nepalidate or nepalidatetime or datetime.datetime or datetime.date"
