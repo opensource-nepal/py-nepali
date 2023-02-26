@@ -306,7 +306,9 @@ class TestDatetimeUtils(unittest.TestCase):
         )
 
     def test_to_nepalidatetime_from_python_datetime(self):
-        np_date = to_nepalidatetime(datetime.datetime(2023, 2, 26, 1, 12, 13))
+        np_date = to_nepalidatetime(
+            datetime.datetime(2023, 2, 26, 4, 30, 13, tzinfo=datetime.timezone.utc)
+        )
         self.assertSequenceEqual(
             (
                 np_date.year,
@@ -316,7 +318,7 @@ class TestDatetimeUtils(unittest.TestCase):
                 np_date.minute,
                 np_date.second,
             ),
-            (2079, 11, 14, 1, 12, 13),
+            (2079, 11, 14, 10, 15, 13),
         )
 
     def test_to_nepalidatetime_from_nepalidate(self):
