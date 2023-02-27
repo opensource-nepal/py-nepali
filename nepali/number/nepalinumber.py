@@ -46,8 +46,11 @@ class nepalinumber:
         :raises ValueError: If the value is invalid
         :raises TypeError: If the value object can't be parsed
         """
-        if isinstance(value, int) or isinstance(value, float):
-            return value
+        if isinstance(value, int):
+            return int(value)
+
+        elif isinstance(value, float):
+            return float(value)
 
         elif isinstance(value, str):
             return self.__parse_str(value)
