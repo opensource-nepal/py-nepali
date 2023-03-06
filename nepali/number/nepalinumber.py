@@ -4,9 +4,7 @@ Contains the class for the nepalinumber feature
 
 
 from typing import Any, Type, Union
-from .utils import NP_NUMBERS
-
-NP_NUMBERS_SET = set(NP_NUMBERS)
+from .utils import NP_NUMBERS, NP_NUMBERS_SET
 
 
 class nepalinumber:
@@ -22,7 +20,7 @@ class nepalinumber:
         """
         self.value = self.__parse(value)
 
-    def _raiseParseException(self, obj, ex_class: Type[Exception] = ValueError):
+    def _raise_parse_exception(self, obj, ex_class: Type[Exception] = ValueError):
         raise ex_class(
             f"could not convert {obj.__class__.__name__} to {self.__class__.__name__}: '{obj}'"
         )
@@ -79,8 +77,8 @@ class nepalinumber:
             # decimal number found
             if value[i] == ".":
                 if decimal_found:
-                    # decimal was already founded
-                    self._raiseParseException(value)
+                    # decimal was already found
+                    self._raise_parse_exception(value)
                 decimal_found = True
                 i += 1
                 continue
@@ -89,7 +87,7 @@ class nepalinumber:
             if digit < 0 or digit > 9:
                 # checking nepali character
                 if value[i] not in NP_NUMBERS_SET:
-                    self._raiseParseException(value)
+                    self._raise_parse_exception(value)
                 digit = NP_NUMBERS.index(value[i])
 
             if decimal_found:
@@ -115,4 +113,4 @@ class nepalinumber:
             return self.__parse_str(str(obj))
         except (ValueError, TypeError):
             # object conversion must raise TypeError if fails
-            self._raiseParseException(obj, ex_class=TypeError)
+            self._raise_parse_exception(obj, ex_class=TypeError)

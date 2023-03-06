@@ -15,7 +15,8 @@ NepaliNumber = number.NepaliNumber
 class TestNumber(unittest.TestCase):
     def test_number_english_to_nepali(self):
         self.assertEqual(
-            number.english_to_nepali("0123456789०१२३४५६७८९"), "०१२३४५६७८९०१२३४५६७८९"
+            number.english_to_nepali("0123456789०१२३४५६७८९hello"),
+            "०१२३४५६७८९०१२३४५६७८९hello",
         )
         self.assertEqual(
             NepaliNumber.convert("0123456789०१२३४५६७८९"), "०१२३४५६७८९०१२३४५६७८९"
@@ -23,7 +24,8 @@ class TestNumber(unittest.TestCase):
 
     def test_number_nepali_to_english(self):
         self.assertEqual(
-            number.nepali_to_english("0123456789०१२३४५६७८९"), "01234567890123456789"
+            number.nepali_to_english("0123456789०१२३४५६७८९hello"),
+            "01234567890123456789hello",
         )
         self.assertEqual(
             NepaliNumber.revert("0123456789०१२३४५६७८९"), "01234567890123456789"
@@ -183,6 +185,7 @@ class TestNepaliNumberParse(unittest.TestCase):
                 return 13.07
 
         num = nepalinumber(_test())
+        self.assertNotEqual(num.value, int(_test()))
         self.assertEqual(num.value, float(_test()))
         self.assertEqual(type(num.value), float)
 
