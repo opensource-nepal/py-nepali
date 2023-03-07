@@ -50,7 +50,7 @@ setuptools.setup(
     url="https://github.com/opensource-nepal/py-nepali",
     packages=setuptools.find_packages(),
     test_suite="nepali.tests",
-    install_requires=["pytz"],
+    install_requires=[],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
