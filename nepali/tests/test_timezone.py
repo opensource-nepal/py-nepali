@@ -4,7 +4,6 @@ To run only this unit test use the command below.
     python -m unittest nepali/tests/test_timezone.py -v
 """
 import datetime
-import pytz
 import unittest
 from unittest.mock import patch
 
@@ -101,7 +100,7 @@ class TestTimezoneUtils(unittest.TestCase):
         )  # Indian timezone
         dt = datetime.datetime(2014, 11, 14, 10, 15, 11)
         utc_dt = to_utc_timezone(dt)
-        self.assertEqual(utc_dt.tzinfo, pytz.UTC)
+        self.assertEqual(utc_dt.tzinfo, datetime.timezone.utc)
         self.assertSequenceEqual(
             (
                 utc_dt.year,
@@ -115,9 +114,9 @@ class TestTimezoneUtils(unittest.TestCase):
         )
 
     def test_to_utc_timezone_with_utc_timezone(self):
-        dt = datetime.datetime(2014, 11, 14, 10, 15, 11, tzinfo=pytz.UTC)
+        dt = datetime.datetime(2014, 11, 14, 10, 15, 11, tzinfo=datetime.timezone.utc)
         utc_dt = to_utc_timezone(dt)
-        self.assertEqual(utc_dt.tzinfo, pytz.UTC)
+        self.assertEqual(utc_dt.tzinfo, datetime.timezone.utc)
         self.assertSequenceEqual(
             (
                 utc_dt.year,
@@ -133,7 +132,7 @@ class TestTimezoneUtils(unittest.TestCase):
     def test_to_utc_timezone_with_nepali_timezone(self):
         dt = datetime.datetime(2014, 11, 14, 10, 15, 11, tzinfo=NepaliTimeZone())
         utc_dt = to_utc_timezone(dt)
-        self.assertEqual(utc_dt.tzinfo, pytz.UTC)
+        self.assertEqual(utc_dt.tzinfo, datetime.timezone.utc)
         self.assertSequenceEqual(
             (
                 utc_dt.year,
@@ -160,7 +159,7 @@ class TestTimezoneUtils(unittest.TestCase):
         )
 
     def test_to_nepali_timezone_with_utc_timezone(self):
-        dt = datetime.datetime(2014, 11, 14, 4, 30, 11, tzinfo=pytz.UTC)
+        dt = datetime.datetime(2014, 11, 14, 4, 30, 11, tzinfo=datetime.timezone.utc)
         nepali_dt = to_nepali_timezone(dt)
         self.assertEqual(nepali_dt.tzinfo, NepaliTimeZone())
         self.assertSequenceEqual(
