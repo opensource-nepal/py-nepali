@@ -122,3 +122,9 @@ class TestNepaliMonth(unittest.TestCase):
     def test_nepalimonth_name_ne(self):
         self.assertEqual(nepalimonth(1).name_ne, "बैशाख")
         self.assertEqual(nepalimonth(12).name_ne, "चैत")
+
+    def test_nepalimonth_variable_cache(self):
+        self.assertEqual(nepalimonth(1), nepalimonth(1))
+        self.assertEqual(id(nepalimonth(1)), id(nepalimonth(1)))
+        self.assertEqual(nepalimonth(12), nepalimonth(12))
+        self.assertEqual(id(nepalimonth(12)), id(nepalimonth(12)))

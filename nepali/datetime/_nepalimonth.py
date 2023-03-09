@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Dict, Union
 
 MONTHS_EN = [
     "Baishakh",
@@ -32,6 +32,8 @@ MONTHS_NE = [
 
 
 class nepalimonth_meta(type):
+    _cache: Dict[int, "nepalimonth"] = {}
+
     def __call__(cls, month: Union[int, str], *args, **kwargs):
         """
         Parses the month data and manages the cache.
@@ -43,10 +45,17 @@ class nepalimonth_meta(type):
         elif isinstance(month, str):
             value = cls._parse_str(month)
 
+        # checking if month is valid
         if value is None or value < 1 or value > 12:
             raise ValueError(f"Invalid month: {month}")
 
-        return super(nepalimonth_meta, cls).__call__(value, *args, **kwargs)
+        # checking cache
+        if value not in cls._cache:
+            cls._cache[value] = super(nepalimonth_meta, cls).__call__(
+                value, *args, **kwargs
+            )
+
+        return cls._cache[value]
 
     def _parse_str(cls, month: str) -> int:
         """
