@@ -5,7 +5,7 @@ import re
 from datetime import date
 
 from nepali.char import EnglishChar, nepali_to_english_text
-from nepali.datetime import nepalidatetime
+from nepali.datetime import nepalidatetime, nepalimonth
 
 
 __nepali_time_re__CACHE = None
@@ -41,8 +41,8 @@ class NepaliTimeRE(dict):
                 "z": r"(?P<z>[+-]\d\d:?[0-5]\d(:?[0-5]\d(\.\d{1,6})?)?|(?-i:Z))",
                 "A": self.__seqToRE(EnglishChar.days, "A"),
                 "a": self.__seqToRE(EnglishChar.days_half, "a"),
-                "B": self.__seqToRE(EnglishChar.months, "B"),
-                "b": self.__seqToRE(EnglishChar.months, "b"),
+                "B": self.__seqToRE(nepalimonth.months(), "B"),
+                "b": self.__seqToRE(nepalimonth.months(), "b"),
                 "p": self.__seqToRE(
                     (
                         "AM",
@@ -174,11 +174,9 @@ def transform(data: dict):
         elif date_key == "m":
             month = int(data["m"])
         elif date_key == "B":
-            # TODO: change indexing process
-            month = EnglishChar.months.index(data["B"].lower().capitalize()) + 1
+            month = nepalimonth(data["B"])
         elif date_key == "b":
-            # TODO: change indexing process
-            month = EnglishChar.months.index(data["b"].lower().capitalize()) + 1
+            month = nepalimonth(data["b"])
         elif date_key == "d":
             day = int(data["d"])
         elif date_key == "H":

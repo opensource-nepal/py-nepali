@@ -113,21 +113,44 @@ class TestNepaliMonth(unittest.TestCase):
         with self.assertRaises(ValueError):
             nepalimonth([])  # type: ignore
 
-    # name
+    def test_nepalimonth_str(self):
+        self.assertEqual(str(nepalimonth(1)), nepalimonth(1).name)
+
+    def test_nepalimonth_repr(self):
+        self.assertEqual(repr(nepalimonth(1)), "<nepalimonth: 1>")
+
     def test_nepalimonth_name(self):
         self.assertEqual(nepalimonth(1).name, "Baishakh")
         self.assertEqual(nepalimonth(12).name, "Chaitra")
 
-    # name_ne
     def test_nepalimonth_name_ne(self):
         self.assertEqual(nepalimonth(1).name_ne, "बैशाख")
         self.assertEqual(nepalimonth(12).name_ne, "चैत")
 
     def test_nepalimonth_variable_cache(self):
-        self.assertEqual(nepalimonth(1), nepalimonth(1))
         self.assertEqual(id(nepalimonth(1)), id(nepalimonth(1)))
-        self.assertEqual(nepalimonth(12), nepalimonth(12))
         self.assertEqual(id(nepalimonth(12)), id(nepalimonth(12)))
+
+    def test_nepalimonth_int(self):
+        self.assertEqual(int(nepalimonth(1)), 1)
+        self.assertEqual(int(nepalimonth(12)), 12)
+
+    def test_nepalimonth_equal_with_nepalimonth(self):
+        self.assertEqual(nepalimonth(1), nepalimonth(1))
+        self.assertEqual(nepalimonth(12), nepalimonth(12))
+
+    def test_nepalimonth_not_equal(self):
+        self.assertNotEqual(nepalimonth(1), nepalimonth(2))
+        self.assertNotEqual(nepalimonth(1), 2)
+
+    def test_nepalimonth_equal_with_int(self):
+        self.assertEqual(nepalimonth(1), 1)
+        self.assertEqual(nepalimonth(12), 12)
+        self.assertEqual(1, nepalimonth(1))
+        self.assertEqual(12, nepalimonth(12))
+
+    def test_nepalimonth_not_equal_with_invalid_object(self):
+        self.assertNotEqual(nepalimonth(1), "invalid")
 
     # static methods
     def test_nepalimonth_months(self):

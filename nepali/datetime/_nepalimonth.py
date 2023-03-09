@@ -1,4 +1,4 @@
-from typing import Dict, Union
+from typing import Any, Dict, List, Union
 
 MONTHS_EN = [
     "Baishakh",
@@ -91,6 +91,21 @@ class nepalimonth(metaclass=nepalimonth_meta):
     def __init__(self, month) -> None:
         self._value = month
 
+    def __str__(self) -> str:
+        return self.name
+
+    def __repr__(self) -> str:
+        return f"<nepalimonth: {self._value}>"
+
+    def __int__(self) -> int:
+        return self.value
+
+    def __eq__(self, other: Any) -> bool:
+        try:
+            return self.value == int(other)
+        except:
+            return False
+
     @property
     def value(self) -> int:
         return self._value
@@ -106,9 +121,11 @@ class nepalimonth(metaclass=nepalimonth_meta):
         return MONTHS_NE[self._value - 1]
 
     @staticmethod
-    def months():
+    def months() -> List[str]:
+        """Returns list of month names (english)."""
         return MONTHS_EN
 
     @staticmethod
-    def months_ne():
+    def months_ne() -> List[str]:
+        """Returns list of month names (nepali)."""
         return MONTHS_NE

@@ -1,12 +1,12 @@
 import datetime as pythonDateTime
 from nepali.char import EnglishChar, NepaliChar
-
 from nepali.exceptions import (
     InvalidDateFormatException,
     InvalidNepaliDateTimeObjectException,
 )
 
 from ._datetime import nepalidate, nepalidatetime
+from ._nepalimonth import nepalimonth
 
 
 class NepaliDateTimeFormatter:
@@ -39,6 +39,7 @@ class NepaliDateTimeFormatter:
     }
 
     def __init__(self, datetime_object, devanagari=False):
+        # TODO: Change variable npDateTime into snakecase: `np_date_time`
         if type(datetime_object) == nepalidatetime:
             self.npDateTime = datetime_object
         elif type(datetime_object) == nepalidate:
@@ -155,9 +156,10 @@ class NepaliDateTimeFormatter:
         """
         %B or %b
         """
+        month = nepalimonth(self.npDateTime.month)
         if not self.devanagari:
-            return EnglishChar.month(self.npDateTime.month)
-        return NepaliChar.month(self.npDateTime.month)
+            return month.name
+        return month.name_ne
 
     @property
     def monthNumber(self):
