@@ -112,3 +112,13 @@ class TestNepaliMonth(unittest.TestCase):
             nepalimonth(2j + 1)  # type: ignore
         with self.assertRaises(ValueError):
             nepalimonth([])  # type: ignore
+
+    # name
+    def test_nepalimonth_name(self):
+        self.assertEqual(nepalimonth(1).name, "Baishakh")
+        self.assertEqual(nepalimonth(12).name, "Chaitra")
+
+    # name_ne
+    def test_nepalimonth_name_ne(self):
+        self.assertEqual(nepalimonth(1).name_ne, "बैशाख")
+        self.assertEqual(nepalimonth(12).name_ne, "चैत")

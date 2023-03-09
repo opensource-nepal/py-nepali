@@ -83,5 +83,15 @@ class nepalimonth(metaclass=nepalimonth_meta):
         self._value = month
 
     @property
-    def value(self):
+    def value(self) -> int:
         return self._value
+
+    @property
+    def name(self) -> str:
+        """Month's english name"""
+        return MONTHS_EN[self._value - 1]
+
+    @property
+    def name_ne(self) -> str:
+        """Month's nepali name"""
+        return MONTHS_NE[self._value - 1]
