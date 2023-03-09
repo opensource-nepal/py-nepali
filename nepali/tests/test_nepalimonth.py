@@ -128,3 +128,12 @@ class TestNepaliMonth(unittest.TestCase):
         self.assertEqual(id(nepalimonth(1)), id(nepalimonth(1)))
         self.assertEqual(nepalimonth(12), nepalimonth(12))
         self.assertEqual(id(nepalimonth(12)), id(nepalimonth(12)))
+
+    # static methods
+    def test_nepalimonth_months(self):
+        months = nepalimonth.months()
+        self.assertEqual(len(months), 12)
+
+    def test_nepalimonth_months_ne(self):
+        months = nepalimonth.months_ne()
+        self.assertEqual(len(months), 12)

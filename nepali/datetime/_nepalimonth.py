@@ -104,3 +104,11 @@ class nepalimonth(metaclass=nepalimonth_meta):
     def name_ne(self) -> str:
         """Month's nepali name"""
         return MONTHS_NE[self._value - 1]
+
+    @staticmethod
+    def months():
+        return MONTHS_EN
+
+    @staticmethod
+    def months_ne():
+        return MONTHS_NE
