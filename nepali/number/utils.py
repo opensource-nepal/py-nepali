@@ -2,6 +2,7 @@ from typing import Any
 
 
 NP_NUMBERS = ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"]
+NP_NUMBERS_SET = set(NP_NUMBERS)
 
 
 def english_to_nepali(number: Any) -> str:
@@ -24,9 +25,8 @@ def nepali_to_english(number: Any) -> str:
     """
     number = str(number)
     converted_number = []
-    nepali_number_set = set(NP_NUMBERS)
     for n in number:
-        if n in nepali_number_set:
+        if n in NP_NUMBERS_SET:
             converted_number.append(str(NP_NUMBERS.index(n)))
         else:
             converted_number.append(n)
