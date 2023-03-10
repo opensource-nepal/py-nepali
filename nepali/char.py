@@ -1,5 +1,7 @@
+import warnings
 from . import number
 
+from .datetime._nepalimonth import nepalimonth
 
 MONTHS_MAP = {
     "बैशाख": "Baishakh",
@@ -68,38 +70,14 @@ class NepaliChar:
 
     @staticmethod
     def month(month):
-        months = [
-            "बैशाख",
-            "जेठ",
-            "असार",
-            "साउन",
-            "भदौ",
-            "असोज",
-            "कात्तिक",
-            "मंसिर",
-            "पुस",
-            "माघ",
-            "फागुन",
-            "चैत",
-        ]
-        return months[month - 1]
+        warnings.warn(
+            message="NepaliChar.month has been depreciated and will be removed in the future release.",
+            category=DeprecationWarning,
+        )
+        return nepalimonth(month).name_ne
 
 
 class EnglishChar:
-    months = [
-        "Baishakh",
-        "Jestha",
-        "Ashad",
-        "Sharwan",
-        "Bhadra",
-        "Ashwin",
-        "Kartik",
-        "Mangsir",
-        "Poush",
-        "Magh",
-        "Falgun",
-        "Chaitra",
-    ]
     days = [
         "Sunday",
         "Monday",
@@ -121,7 +99,11 @@ class EnglishChar:
 
     @staticmethod
     def month(month):
-        return EnglishChar.months[month - 1]
+        warnings.warn(
+            message="EnglishChar.month has been depreciated and will be removed in the future release.",
+            category=DeprecationWarning,
+        )
+        return nepalimonth(month).name
 
 
 def nepali_to_english_text(text):
