@@ -1,5 +1,4 @@
 import datetime
-import pytz
 from typing import Union
 
 
@@ -53,7 +52,7 @@ def to_utc_timezone(datetime_obj: datetime.datetime) -> datetime.datetime:
 
     if not hasattr(datetime_obj, "tzinfo") or not datetime_obj.tzinfo:
         datetime_obj = datetime_obj.replace(tzinfo=get_timezone())
-    return datetime_obj.astimezone(pytz.timezone("UTC"))
+    return datetime_obj.astimezone(datetime.timezone.utc)
 
 
 def to_nepali_timezone(datetime_obj: datetime.datetime) -> datetime.datetime:
