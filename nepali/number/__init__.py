@@ -16,4 +16,5 @@ __all__ = [
     "convert_and_add_comma",
     "english_to_nepali",
     "nepali_to_english",
+    "nepalinumber",
 ]

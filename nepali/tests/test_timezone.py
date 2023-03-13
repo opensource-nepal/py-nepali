@@ -4,10 +4,18 @@ To run only this unit test use the command below.
     python -m unittest nepali/tests/test_timezone.py -v
 """
 import datetime
+import pytz
 import unittest
 from unittest.mock import patch
 
-from nepali.timezone import NepaliTimeZone, utc_now, now, get_timezone
+from nepali.timezone import (
+    NepaliTimeZone,
+    to_nepali_timezone,
+    to_utc_timezone,
+    utc_now,
+    now,
+    get_timezone,
+)
 
 
 class TestNepaliTimeZone(unittest.TestCase):
@@ -81,3 +89,104 @@ class TestTimezoneUtils(unittest.TestCase):
         # checking
         self.assertEqual(utc_dt, datetime.datetime(2015, 1, 1))
         self.assertSequenceEqual(datetime_now.call_args[0], [datetime.timezone.utc])
+
+    # to_utc_timezone
+    def test_to_utc_timezone_invalid_input_returns_as_it_is(self):
+        self.assertEqual(to_utc_timezone("test"), "test")  # type: ignore
+
+    @patch("nepali.timezone.get_timezone")
+    def test_to_utc_timezone_without_timezone(self, mock_get_timezone):
+        mock_get_timezone.return_value = datetime.timezone(
+            offset=datetime.timedelta(hours=5, minutes=30)
+        )  # Indian timezone
+        dt = datetime.datetime(2014, 11, 14, 10, 15, 11)
+        utc_dt = to_utc_timezone(dt)
+        self.assertEqual(utc_dt.tzinfo, pytz.UTC)
+        self.assertSequenceEqual(
+            (
+                utc_dt.year,
+                utc_dt.month,
+                utc_dt.day,
+                utc_dt.hour,
+                utc_dt.minute,
+                utc_dt.second,
+            ),
+            (2014, 11, 14, 4, 45, 11),
+        )
+
+    def test_to_utc_timezone_with_utc_timezone(self):
+        dt = datetime.datetime(2014, 11, 14, 10, 15, 11, tzinfo=pytz.UTC)
+        utc_dt = to_utc_timezone(dt)
+        self.assertEqual(utc_dt.tzinfo, pytz.UTC)
+        self.assertSequenceEqual(
+            (
+                utc_dt.year,
+                utc_dt.month,
+                utc_dt.day,
+                utc_dt.hour,
+                utc_dt.minute,
+                utc_dt.second,
+            ),
+            (2014, 11, 14, 10, 15, 11),
+        )
+
+    def test_to_utc_timezone_with_nepali_timezone(self):
+        dt = datetime.datetime(2014, 11, 14, 10, 15, 11, tzinfo=NepaliTimeZone())
+        utc_dt = to_utc_timezone(dt)
+        self.assertEqual(utc_dt.tzinfo, pytz.UTC)
+        self.assertSequenceEqual(
+            (
+                utc_dt.year,
+                utc_dt.month,
+                utc_dt.day,
+                utc_dt.hour,
+                utc_dt.minute,
+                utc_dt.second,
+            ),
+            (2014, 11, 14, 4, 30, 11),
+        )
+
+    # to_nepali_timezone
+    def test_to_nepali_timezone_invalid_input_returns_as_it_is(self):
+        self.assertEqual(to_nepali_timezone("test"), "test")  # type: ignore
+
+    def test_to_nepali_timezone_without_timezone(self):
+        dt = datetime.datetime(2014, 11, 14, 10, 15, 11)
+        nepali_dt = to_nepali_timezone(dt)
+        self.assertEqual(nepali_dt.tzinfo, NepaliTimeZone())
+        self.assertSequenceEqual(
+            (dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second),
+            (2014, 11, 14, 10, 15, 11),
+        )
+
+    def test_to_nepali_timezone_with_utc_timezone(self):
+        dt = datetime.datetime(2014, 11, 14, 4, 30, 11, tzinfo=pytz.UTC)
+        nepali_dt = to_nepali_timezone(dt)
+        self.assertEqual(nepali_dt.tzinfo, NepaliTimeZone())
+        self.assertSequenceEqual(
+            (
+                nepali_dt.year,
+                nepali_dt.month,
+                nepali_dt.day,
+                nepali_dt.hour,
+                nepali_dt.minute,
+                nepali_dt.second,
+            ),
+            (2014, 11, 14, 10, 15, 11),
+        )
+
+    def test_to_nepali_timezone_with_nepali_timezone(self):
+        dt = datetime.datetime(2014, 11, 14, 10, 15, 11, tzinfo=NepaliTimeZone())
+        nepali_dt = to_nepali_timezone(dt)
+        self.assertEqual(nepali_dt.tzinfo, NepaliTimeZone())
+        self.assertSequenceEqual(
+            (
+                nepali_dt.year,
+                nepali_dt.month,
+                nepali_dt.day,
+                nepali_dt.hour,
+                nepali_dt.minute,
+                nepali_dt.second,
+            ),
+            (2014, 11, 14, 10, 15, 11),
+        )

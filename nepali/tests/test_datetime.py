@@ -2,6 +2,8 @@ import datetime
 import unittest
 
 from nepali.datetime import nepalidate, nepalitime, nepalidatetime
+from nepali.datetime.utils import to_nepalidatetime, to_nepalidate
+from nepali.exceptions import InvalidNepaliDateTimeObjectException
 from nepali.timezone import NepaliTimeZone
 
 
@@ -251,4 +253,98 @@ class TestNepaliDateTime(unittest.TestCase):
             msg="{} and {} are not equal".format(
                 nepalidatetime_obj1, nepalidatetime_obj2
             ),
+        )
+
+
+class TestDatetimeUtils(unittest.TestCase):
+    # to_nepalidate
+    def test_to_nepalidate_raises_exception_on_invalid_input(self):
+        with self.assertRaises(InvalidNepaliDateTimeObjectException):
+            to_nepalidate("Invalid input")
+
+    def test_to_nepalidate_from_python_date(self):
+        np_date = to_nepalidate(datetime.date(2023, 2, 26))
+        self.assertSequenceEqual(
+            (np_date.year, np_date.month, np_date.day), (2079, 11, 14)
+        )
+
+    def test_to_nepalidate_from_python_datetime(self):
+        np_date = to_nepalidate(datetime.datetime(2023, 2, 26, 1, 12, 13))
+        self.assertSequenceEqual(
+            (np_date.year, np_date.month, np_date.day), (2079, 11, 14)
+        )
+
+    def test_to_nepalidate_from_nepalidate(self):
+        np_date = to_nepalidate(nepalidate(2079, 11, 14))
+        self.assertSequenceEqual(
+            (np_date.year, np_date.month, np_date.day), (2079, 11, 14)
+        )
+
+    def test_to_nepalidate_from_nepalidatetime(self):
+        np_date = to_nepalidate(nepalidatetime(2079, 11, 14, 1, 12, 13))
+        self.assertSequenceEqual(
+            (np_date.year, np_date.month, np_date.day), (2079, 11, 14)
+        )
+
+    # to_nepalidatetime
+    def test_to_nepalidatetime_raises_exception_on_invalid_input(self):
+        with self.assertRaises(InvalidNepaliDateTimeObjectException):
+            to_nepalidatetime("Invalid input")
+
+    def test_to_nepalidatetime_from_python_date(self):
+        np_date = to_nepalidatetime(datetime.date(2023, 2, 26))
+        self.assertSequenceEqual(
+            (
+                np_date.year,
+                np_date.month,
+                np_date.day,
+                np_date.hour,
+                np_date.minute,
+                np_date.second,
+            ),
+            (2079, 11, 14, 0, 0, 0),
+        )
+
+    def test_to_nepalidatetime_from_python_datetime(self):
+        np_date = to_nepalidatetime(
+            datetime.datetime(2023, 2, 26, 4, 30, 13, tzinfo=datetime.timezone.utc)
+        )
+        self.assertSequenceEqual(
+            (
+                np_date.year,
+                np_date.month,
+                np_date.day,
+                np_date.hour,
+                np_date.minute,
+                np_date.second,
+            ),
+            (2079, 11, 14, 10, 15, 13),
+        )
+
+    def test_to_nepalidatetime_from_nepalidate(self):
+        np_date = to_nepalidatetime(nepalidate(2079, 11, 14))
+        self.assertSequenceEqual(
+            (
+                np_date.year,
+                np_date.month,
+                np_date.day,
+                np_date.hour,
+                np_date.minute,
+                np_date.second,
+            ),
+            (2079, 11, 14, 0, 0, 0),
+        )
+
+    def test_to_nepalidatetime_from_nepalidatetime(self):
+        np_date = to_nepalidatetime(nepalidatetime(2079, 11, 14, 1, 12, 13))
+        self.assertSequenceEqual(
+            (
+                np_date.year,
+                np_date.month,
+                np_date.day,
+                np_date.hour,
+                np_date.minute,
+                np_date.second,
+            ),
+            (2079, 11, 14, 1, 12, 13),
         )

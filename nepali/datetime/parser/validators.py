@@ -105,7 +105,7 @@ class NepaliTimeRE(dict):
 
 def get_nepali_time_re_object():
     global __nepali_time_re__CACHE
-    if __nepali_time_re__CACHE == None:
+    if __nepali_time_re__CACHE is None:
         __nepali_time_re__CACHE = NepaliTimeRE()
     return __nepali_time_re__CACHE
 
@@ -133,7 +133,7 @@ def extract(datetime_str, format):
 
     re_compiled_format = get_nepali_time_re_object().compile(format=format)
     match = re_compiled_format.match(datetime_str)
-    if match == None:
+    if match is None:
         return {}
     return match.groupdict()
 
@@ -243,19 +243,19 @@ def validate(datetime_str, format):
     """
 
     # 1. validate if format is correct.
-    if get_nepali_time_re_object().pattern(format=format) == None:
+    if get_nepali_time_re_object().pattern(format=format) is None:
         # regex pattern generation failed
         return None
 
     # 2. validate if parse result if not empty
     parsed_result = extract(datetime_str, format)
-    if parsed_result.get("Y") == None and parsed_result.get("y") == None:
+    if parsed_result.get("Y") is None and parsed_result.get("y") is None:
         # compilation failed or year included
         return None
 
     # 3. validate if transformation
     transformed_data = transform(parsed_result)
-    if transformed_data.get("year") == None:
+    if transformed_data.get("year") is None:
         # could not transform data, not getting year
         return None
 

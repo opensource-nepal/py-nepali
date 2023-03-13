@@ -14,8 +14,6 @@ You must have twine installed in your system. `pip install twine`
     twine upload dist/*
 
 """
-
-
 import os
 import sys
 import setuptools
