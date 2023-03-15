@@ -1121,7 +1121,7 @@ class TestNepaliNumber(unittest.TestCase):
 
         self.assertEqual(
             str(te.exception),
-            "unsupported operand type(s) for *: 'nepalinumber' and 'str'",
+            "can't multiply sequence by non-int of type 'nepalinumber'",
         )
 
     def test_nepalinumber_float_throws_error_when_multiplied_to_string(self):
@@ -1130,7 +1130,7 @@ class TestNepaliNumber(unittest.TestCase):
 
         self.assertEqual(
             str(te.exception),
-            "unsupported operand type(s) for *: 'str' and 'nepalinumber'",
+            "can't multiply sequence by non-int of type 'nepalinumber'",
         )
 
     # multiplication negative testing
@@ -2714,21 +2714,17 @@ class TestNepaliNumber(unittest.TestCase):
         )
 
     def test_negative_integer_can_be_powered_to_positive_nepalinumber_float(self):
-        self.assertEqual(
-            (-2) ** self.nepalinumber_float_1_5, number.nepalinumber((-2) ** 1.5)
-        )
+        self.assertEqual((-2) ** self.nepalinumber_float_1_5, (-2) ** 1.5)
 
     def test_negative_float_can_be_powered_to_positive_nepalinumber_float(self):
-        self.assertEqual(
-            (-1.5) ** self.nepalinumber_float_1_5, number.nepalinumber((-1.5) ** 1.5)
-        )
+        self.assertEqual((-1.5) ** self.nepalinumber_float_1_5, (-1.5) ** 1.5)
 
     def test_negative_nepalinumber_integer_can_be_powered_to_positive_nepalinumber_float(
         self,
     ):
         self.assertEqual(
             self.nepalinumber_negative_integer_2**self.nepalinumber_float_1_5,
-            number.nepalinumber((-2) ** 1.5),
+            (-2) ** 1.5,
         )
 
     def test_negative_nepalinumber_float_can_be_powered_to_positive_nepalinumber_float(
@@ -2736,7 +2732,7 @@ class TestNepaliNumber(unittest.TestCase):
     ):
         self.assertEqual(
             self.nepalinumber_negative_float_1_5**self.nepalinumber_float_1_5,
-            number.nepalinumber((-1.5) ** 1.5),
+            (-1.5) ** 1.5,
         )
 
     # pow negative nepalinumber integer as base
@@ -2748,7 +2744,7 @@ class TestNepaliNumber(unittest.TestCase):
     def test_negative_nepalinumber_integer_can_be_powered_to_positive_float(self):
         self.assertEqual(
             self.nepalinumber_negative_integer_2**2.5,
-            number.nepalinumber((-2) ** 2.5),
+            (-2) ** 2.5,
         )
 
     def test_negative_nepalinumber_integer_can_be_powered_to_negative_integer(self):
@@ -2760,7 +2756,7 @@ class TestNepaliNumber(unittest.TestCase):
     def test_negative_nepalinumber_integer_can_be_powered_to_negative_float(self):
         self.assertEqual(
             self.nepalinumber_negative_integer_2**-1.5,
-            number.nepalinumber((-2) ** -1.5),
+            (-2) ** -1.5,
         )
 
     def test_negative_nepalinumber_integer_can_be_powered_to_negative_nepalinumber_integer(
@@ -2778,7 +2774,7 @@ class TestNepaliNumber(unittest.TestCase):
         self.assertEqual(
             self.nepalinumber_negative_integer_2
             ** self.nepalinumber_negative_float_1_5,
-            number.nepalinumber((-2) ** -1.5),
+            (-2) ** -1.5,
         )
 
     # pow negative nepalinumber integer as exponent
@@ -2821,7 +2817,7 @@ class TestNepaliNumber(unittest.TestCase):
     def test_negative_nepalinumber_float_can_be_powered_to_positive_float(self):
         self.assertEqual(
             self.nepalinumber_negative_float_1_5**1.5,
-            number.nepalinumber((-1.5) ** 1.5),
+            (-1.5) ** 1.5,
         )
 
     def test_negative_nepalinumber_float_can_be_powered_to_negative_integer(self):
@@ -2833,7 +2829,7 @@ class TestNepaliNumber(unittest.TestCase):
     def test_negative_nepalinumber_float_can_be_powered_to_negative_float(self):
         self.assertEqual(
             self.nepalinumber_negative_float_1_5**-1.5,
-            number.nepalinumber((-1.5) ** -1.5),
+            (-1.5) ** -1.5,
         )
 
     def test_negative_nepalinumber_float_can_be_powered_to_negative_nepalinumber_float(
@@ -2842,7 +2838,7 @@ class TestNepaliNumber(unittest.TestCase):
         self.assertEqual(
             self.nepalinumber_negative_float_1_5
             ** self.nepalinumber_negative_float_1_5,
-            number.nepalinumber((-1.5) ** -1.5),
+            (-1.5) ** -1.5,
         )
 
     # pow negative nepalinumber float as exponent
@@ -2860,13 +2856,13 @@ class TestNepaliNumber(unittest.TestCase):
     def test_negative_integer_can_be_powered_to_negative_nepalinumber_float(self):
         self.assertEqual(
             (-2) ** self.nepalinumber_negative_float_1_5,
-            number.nepalinumber((-2) ** -1.5),
+            (-2) ** -1.5,
         )
 
     def test_negative_float_can_be_powered_to_negative_nepalinumber_float(self):
         self.assertEqual(
             (-1.5) ** self.nepalinumber_negative_float_1_5,
-            number.nepalinumber((-1.5) ** -1.5),
+            (-1.5) ** -1.5,
         )
 
 

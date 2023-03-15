@@ -2,7 +2,6 @@
 Contains the class for the nepalinumber feature
 """
 
-import logging
 from typing import Any, Tuple, Type, Union
 from .utils import NP_NUMBERS, NP_NUMBERS_SET
 
@@ -23,7 +22,7 @@ class nepalinumber:
     def _raise_parse_exception(self, obj, ex_class: Type[Exception] = ValueError):
         raise ex_class(
             f"could not convert {obj.__class__.__name__} to {self.__class__.__name__}: '{obj}'"
-        )
+        ) from None
 
     def __parse(self, value: Any) -> Union[int, float]:
         """
@@ -110,13 +109,25 @@ class nepalinumber:
                 return float(obj)
             elif hasattr(obj, "__int__"):
                 return int(obj)
-            elif isinstance(obj, complex):
-                return obj
 
             return self.__parse_str(str(obj))
         except (ValueError, TypeError):
             # object conversion must raise TypeError if fails
             self._raise_parse_exception(obj, ex_class=TypeError)
+
+    def __convert_or_return(self, obj) -> Union["nepalinumber", object]:
+        """
+        Will try to parse the given object and convert to nepalinumber
+        else will return the same object
+
+        :param obj: The object to convert
+
+        :returns: Either a nepalinumber or the same object unchanged
+        """
+        try:
+            return nepalinumber(obj)
+        except (TypeError, ValueError) as e:
+            return obj
 
     def __str__(self) -> str:
         """
@@ -200,7 +211,7 @@ class nepalinumber:
         """
         return nepalinumber((-1) * self.value)
 
-    def __add__(self, other) -> "nepalinumber":
+    def __add__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the addition operator +  is used after
         the nepalinumber object
@@ -213,14 +224,11 @@ class nepalinumber:
             object
         """
         try:
-            return nepalinumber(self.__add(other))
+            return self.__convert_or_return(self.__add(other))
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for +: 'nepalinumber' and '{type(other).__name__}'"
-            ) from None  # resets stacktrace because we don't
-        # want to show stacktrace from self.__add()
+            return NotImplemented
 
-    def __radd__(self, other) -> "nepalinumber":
+    def __radd__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the addition operator + is used before
         the nepalinumber object
@@ -233,13 +241,11 @@ class nepalinumber:
             object
         """
         try:
-            return nepalinumber(self.__add(other))
+            return self.__convert_or_return(self.__add(other))
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for +: '{type(other).__name__}' and 'nepalinumber'"
-            ) from None
+            return NotImplemented
 
-    def __sub__(self, other) -> "nepalinumber":
+    def __sub__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the subtraction operator - is used after
         the nepalinumber object
@@ -252,15 +258,13 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return nepalinumber(self.value - other.value)
+                return self.__convert_or_return(self.value - other.value)
 
-            return nepalinumber(self.value - other)
+            return self.__convert_or_return(self.value - other)
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for -: 'nepalinumber' and '{type(other).__name__}'"
-            ) from None
+            return NotImplemented
 
-    def __rsub__(self, other) -> "nepalinumber":
+    def __rsub__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the subtraction operator - is used before
         the nepalinumber object
@@ -274,15 +278,13 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return nepalinumber(other.value - self.value)
+                return self.__convert_or_return(other.value - self.value)
 
-            return nepalinumber(other - self.value)
+            return self.__convert_or_return(other - self.value)
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for -: '{type(other).__name__}' and 'nepalinumber'"
-            ) from None
+            return NotImplemented
 
-    def __mul__(self, other) -> "nepalinumber":
+    def __mul__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the multiplication operator * is used after
         the nepalinumber object
@@ -295,13 +297,14 @@ class nepalinumber:
             object
         """
         try:
-            return nepalinumber(self.__mul(other))
-        except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for *: 'nepalinumber' and '{type(other).__name__}'"
-            ) from None
+            if isinstance(other, str):
+                return self.value * other
 
-    def __rmul__(self, other) -> "nepalinumber":
+            return self.__convert_or_return(self.__mul(other))
+        except TypeError:
+            return NotImplemented
+
+    def __rmul__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the multiplication operator * is used before
         the nepalinumber object
@@ -314,13 +317,14 @@ class nepalinumber:
             object
         """
         try:
-            return nepalinumber(self.__mul(other))
-        except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for *: '{type(other).__name__}' and 'nepalinumber'"
-            ) from None
+            if isinstance(other, str):
+                return other * self.value
 
-    def __truediv__(self, other) -> "nepalinumber":
+            return self.__convert_or_return(self.__mul(other))
+        except TypeError:
+            return NotImplemented
+
+    def __truediv__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the division operator / is used after
         the nepalinumber object
@@ -333,15 +337,13 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return nepalinumber(self.value / other.value)
+                return self.__convert_or_return(self.value / other.value)
 
-            return nepalinumber(self.value / other)
+            return self.__convert_or_return(self.value / other)
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for /: 'nepalinumber' and '{type(other).__name__}'"
-            ) from None
+            return NotImplemented
 
-    def __rtruediv__(self, other) -> "nepalinumber":
+    def __rtruediv__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the division operator / is used before
         the nepalinumber object
@@ -355,15 +357,13 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return nepalinumber(other.value / self.value)
+                return self.__convert_or_return(other.value / self.value)
 
-            return nepalinumber(other / self.value)
+            return self.__convert_or_return(other / self.value)
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for /: '{type(other).__name__}' and 'nepalinumber'"
-            ) from None
+            return NotImplemented
 
-    def __floordiv__(self, other) -> "nepalinumber":
+    def __floordiv__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the floor/integer division operator // is used
         after the nepalinumber object
@@ -376,15 +376,13 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return nepalinumber(self.value // other.value)
+                return self.__convert_or_return(self.value // other.value)
 
-            return nepalinumber(self.value // other)
+            return self.__convert_or_return(self.value // other)
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for //: 'nepalinumber' and '{type(other).__name__}'"
-            ) from None
+            return NotImplemented
 
-    def __rfloordiv__(self, other) -> "nepalinumber":
+    def __rfloordiv__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the floor/integer division operator // is used
         before the nepalinumber object
@@ -398,15 +396,13 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return nepalinumber(other.value // self.value)
+                return self.__convert_or_return(other.value // self.value)
 
-            return nepalinumber(other // self.value)
+            return self.__convert_or_return(other // self.value)
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for //: '{type(other).__name__}' and 'nepalinumber'"
-            ) from None
+            return NotImplemented
 
-    def __mod__(self, other) -> "nepalinumber":
+    def __mod__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the modulo operator % is used after
         the nepalinumber object
@@ -420,15 +416,13 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return nepalinumber(self.value % other.value)
+                return self.__convert_or_return(self.value % other.value)
 
-            return nepalinumber(self.value % other)
+            return self.__convert_or_return(self.value % other)
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for %: 'nepalinumber' and '{type(other).__name__}'"
-            ) from None
+            return NotImplemented
 
-    def __rmod__(self, other) -> "nepalinumber":
+    def __rmod__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the modulo operator % is used before
         the nepalinumber object
@@ -442,15 +436,13 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return nepalinumber(other.value % self.value)
+                return self.__convert_or_return(other.value % self.value)
 
-            return nepalinumber(other % self.value)
+            return self.__convert_or_return(other % self.value)
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for %: '{type(other).__name__}' and 'nepalinumber'"
-            ) from None
+            return NotImplemented
 
-    def __divmod__(self, other) -> Tuple["nepalinumber", "nepalinumber"]:
+    def __divmod__(self, other) -> Tuple[Union["nepalinumber", object], Union["nepalinumber", object]]:
         """
         Called when the built-in function divmod() is used
         with nepalinumber as the dividend and other as divisior
@@ -467,13 +459,11 @@ class nepalinumber:
 
             quotient, remainder = divmod(self.value, other)
 
-            return nepalinumber(quotient), nepalinumber(remainder)
+            return self.__convert_or_return(quotient), self.__convert_or_return(remainder)
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for divmod(): 'nepalinumber' and '{type(other).__name__}'"
-            ) from None
+            return NotImplemented
 
-    def __rdivmod__(self, other) -> Tuple["nepalinumber", "nepalinumber"]:
+    def __rdivmod__(self, other) -> Tuple[Union["nepalinumber", object], Union["nepalinumber", object]]:
         """
         Called when the built-in function divmod() is used
         with nepalinumber as the divisior and other as divident
@@ -490,13 +480,11 @@ class nepalinumber:
 
             quotient, remainder = divmod(other, self.value)
 
-            return nepalinumber(quotient), nepalinumber(remainder)
+            return self.__convert_or_return(quotient), self.__convert_or_return(remainder)
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for divmod(): '{type(other).__name__}' and 'nepalinumber'"
-            ) from None
+            return NotImplemented
 
-    def __pow__(self, other) -> "nepalinumber":
+    def __pow__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the power operator **  is used after
         the nepalinumber object
@@ -510,15 +498,13 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return nepalinumber(self.value**other.value)
+                return self.__convert_or_return(self.value**other.value)
 
-            return nepalinumber(self.value**other)
+            return self.__convert_or_return(self.value**other)
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for ** or pow(): 'nepalinumber' and '{type(other).__name__}'"
-            ) from None
+            return NotImplemented
 
-    def __rpow__(self, other) -> "nepalinumber":
+    def __rpow__(self, other) -> Union["nepalinumber", object]:
         """
         Called when the power operator ** is used before
         the nepalinumber object
@@ -531,16 +517,9 @@ class nepalinumber:
             object
         """
         try:
-            logging.error(f"self: {self.value}")
-            logging.error(f"other: {other}")
             if isinstance(other, nepalinumber):
-                return nepalinumber(other.value**self.value)
+                return self.__convert_or_return(other.value**self.value)
 
-            logging.error("not nepalinumber")
-            logging.error((-1.5) ** -1.5)
-            logging.error(other**self.value)
-            return nepalinumber(other**self.value)
+            return self.__convert_or_return(other**self.value)
         except TypeError:
-            raise TypeError(
-                f"unsupported operand type(s) for ** or pow(): '{type(other).__name__}' and 'nepalinumber'"
-            ) from None
+            return NotImplemented
