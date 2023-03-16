@@ -3,6 +3,7 @@ To run only this unit test use the command below.
 
     python -m unittest nepali/tests/test_number.py -v
 """
+import sys
 import unittest
 
 from nepali import number
@@ -1812,7 +1813,13 @@ class TestNepaliNumber(unittest.TestCase):
         with self.assertRaises(ZeroDivisionError) as ze:
             _ = self.nepalinumber_float_10_1 // 0
 
-        self.assertEqual(str(ze.exception), "float floor division by zero")
+        python_version = sys.version_info
+
+        if python_version.major >= 3:
+            if python_version.minor <= 8:
+                self.assertEqual(str(ze.exception), "float divmod()")
+            else:
+                self.assertEqual(str(ze.exception), "float floor division by zero")
 
     def test_nepalinumber_throws_error_when_zero_nepalinumber_floor_divides_other_numbers(
         self,
@@ -1825,7 +1832,13 @@ class TestNepaliNumber(unittest.TestCase):
         with self.assertRaises(ZeroDivisionError) as ze:
             _ = 12.1 // self.nepalinumber_zero
 
-        self.assertEqual(str(ze.exception), "float floor division by zero")
+        python_version = sys.version_info
+
+        if python_version.major >= 3:
+            if python_version.minor <= 8:
+                self.assertEqual(str(ze.exception), "float divmod()")
+            else:
+                self.assertEqual(str(ze.exception), "float floor division by zero")
 
     def test_nepalinumber_throws_error_when_floor_divided_by_zero_nepalinumber(self):
         with self.assertRaises(ZeroDivisionError) as ze:
@@ -1836,7 +1849,13 @@ class TestNepaliNumber(unittest.TestCase):
         with self.assertRaises(ZeroDivisionError) as ze:
             _ = self.nepalinumber_float_10_1 // self.nepalinumber_zero
 
-        self.assertEqual(str(ze.exception), "float floor division by zero")
+        python_version = sys.version_info
+
+        if python_version.major >= 3:
+            if python_version.minor <= 8:
+                self.assertEqual(str(ze.exception), "float divmod()")
+            else:
+                self.assertEqual(str(ze.exception), "float floor division by zero")
 
     # mod
     # nepalinumber positive integer modulo tests
