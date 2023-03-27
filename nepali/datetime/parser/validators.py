@@ -6,6 +6,7 @@ from datetime import date
 
 from nepali.char import EnglishChar, nepali_to_english_text
 from nepali.datetime import nepalidatetime, nepalimonth
+from nepali.datetime.constants import MONTHS_EN
 
 
 __nepali_time_re__CACHE = None
@@ -41,8 +42,8 @@ class NepaliTimeRE(dict):
                 "z": r"(?P<z>[+-]\d\d:?[0-5]\d(:?[0-5]\d(\.\d{1,6})?)?|(?-i:Z))",
                 "A": self.__seqToRE(EnglishChar.days, "A"),
                 "a": self.__seqToRE(EnglishChar.days_half, "a"),
-                "B": self.__seqToRE(nepalimonth.months(), "B"),
-                "b": self.__seqToRE(nepalimonth.months(), "b"),
+                "B": self.__seqToRE(MONTHS_EN, "B"),
+                "b": self.__seqToRE(MONTHS_EN, "b"),
                 "p": self.__seqToRE(
                     (
                         "AM",

@@ -1,34 +1,6 @@
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, Union
 
-MONTHS_EN = [
-    "Baishakh",
-    "Jestha",
-    "Ashad",
-    "Sharwan",
-    "Bhadra",
-    "Ashwin",
-    "Kartik",
-    "Mangsir",
-    "Poush",
-    "Magh",
-    "Falgun",
-    "Chaitra",
-]
-
-MONTHS_NE = [
-    "बैशाख",
-    "जेठ",
-    "असार",
-    "साउन",
-    "भदौ",
-    "असोज",
-    "कात्तिक",
-    "मंसिर",
-    "पुस",
-    "माघ",
-    "फागुन",
-    "चैत",
-]
+from .constants import MONTHS_EN, MONTHS_NE
 
 
 class nepalimonth_meta(type):
@@ -76,7 +48,7 @@ class nepalimonth(metaclass=nepalimonth_meta):
     Baishak: 1,
     Jestha: 2,
     ...
-    Chaitra: 3
+    Chaitra: 12
 
     >>> nepalimonth(1)
     >>> nepalimonth("Baishakh")
@@ -84,7 +56,6 @@ class nepalimonth(metaclass=nepalimonth_meta):
 
     :param Union[int, str] month: Month data to be parsed.
 
-    :raises TypeError: Invalid object type is passed.
     :raises ValueError: The value is invalid.
     """
 
@@ -119,13 +90,3 @@ class nepalimonth(metaclass=nepalimonth_meta):
     def name_ne(self) -> str:
         """Month's nepali name"""
         return MONTHS_NE[self._value - 1]
-
-    @staticmethod
-    def months() -> List[str]:
-        """Returns list of month names (english)."""
-        return MONTHS_EN
-
-    @staticmethod
-    def months_ne() -> List[str]:
-        """Returns list of month names (nepali)."""
-        return MONTHS_NE
