@@ -9,7 +9,6 @@ from nepali.datetime import nepalimonth
 
 
 class TestNepaliMonth(unittest.TestCase):
-
     # parse
     def test_nepalimonth_parses_int(self):
         self.assertEqual(nepalimonth(1).value, 1)
