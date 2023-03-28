@@ -1,7 +1,8 @@
 import warnings
-from . import number
 
+from . import number
 from .datetime._nepalimonth import nepalimonth
+from .datetime._nepaliweek import nepaliweek
 
 MONTHS_MAP = {
     "बैशाख": "Baishakh",
@@ -48,25 +49,27 @@ AM_PM_MAP = {
 class NepaliChar:
     @staticmethod
     def number(num):
+        warnings.warn(
+            message="NepaliChar.number has been depreciated and will be removed in the future release.",
+            category=DeprecationWarning,
+        )
         return number.english_to_nepali(num)
 
     @staticmethod
     def day(day):
-        days = [
-            "आइतबार",
-            "सोमबार",
-            "मंगलबार",
-            "बुधबार",
-            "बिहीबार",
-            "शुक्रबार",
-            "शनिबार",
-        ]
-        return days[day - 1]
+        warnings.warn(
+            message="NepaliChar.day has been depreciated and will be removed in the future release.",
+            category=DeprecationWarning,
+        )
+        return nepaliweek(day).name_ne
 
     @staticmethod
     def half_day(day):
-        days = ["आइत", "सोम", "मंगल", "बुध", "बिही", "शुक्र", "शनि"]
-        return days[day - 1]
+        warnings.warn(
+            message="NepaliChar.half_day has been depreciated and will be removed in the future release.",
+            category=DeprecationWarning,
+        )
+        return nepaliweek(day).abbr_ne
 
     @staticmethod
     def month(month):
@@ -78,24 +81,21 @@ class NepaliChar:
 
 
 class EnglishChar:
-    days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-    ]
-    days_half = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-
     @staticmethod
     def day(day):
-        return EnglishChar.days[day - 1]
+        warnings.warn(
+            message="EnglishChar.day has been depreciated and will be removed in the future release.",
+            category=DeprecationWarning,
+        )
+        return nepaliweek(day).name
 
     @staticmethod
     def half_day(day):
-        return EnglishChar.days_half[day - 1]
+        warnings.warn(
+            message="EnglishChar.half_day has been depreciated and will be removed in the future release.",
+            category=DeprecationWarning,
+        )
+        return nepaliweek(day).abbr
 
     @staticmethod
     def month(month):
