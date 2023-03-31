@@ -10,6 +10,7 @@ from .utils import (
 
 __all__ = [
     "NepaliNumber",
+    "nepalinumber",
     "add_comma",
     "add_comma_english",
     "convert_and_add_comma",
