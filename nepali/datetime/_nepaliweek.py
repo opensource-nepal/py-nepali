@@ -28,7 +28,7 @@ class NepaliWeekMeta(type):
                 pass
 
         # checking if week is valid
-        if value is None or not (1 <= value <= 7):
+        if value is None or not (0 <= value <= 6):
             raise ValueError(f"Invalid week: {week}")
 
         # checking cache
@@ -57,18 +57,18 @@ class NepaliWeekMeta(type):
         except ValueError:
             raise ValueError(f"Invalid week name: {week}")
 
-        return (index % 7) + 1
+        return index % 7
 
 
 class nepaliweek(metaclass=NepaliWeekMeta):
     """
     Represents Nepali week: Sunday, Monday, ..., Saturday.
-    Sunday: 1,
-    Monday: 2,
+    Sunday: 0,
+    Monday: 1,
     ...
-    Saturday: 7
+    Saturday: 6
 
-    >>> nepaliweek(1)
+    >>> nepaliweek(0)
     >>> nepaliweek("Sunday")
     >>> nepaliweek("आइतबार")
     >>> nepaliweek("Sun")
@@ -105,19 +105,19 @@ class nepaliweek(metaclass=NepaliWeekMeta):
     @cached_property
     def name(self) -> str:
         """Week's english name"""
-        return WEEKS_EN[self.__value - 1]
+        return WEEKS_EN[self.__value]
 
     @cached_property
     def abbr(self) -> str:
         """Week's english abbreviated name"""
-        return WEEKS_ABBR_EN[self.__value - 1]
+        return WEEKS_ABBR_EN[self.__value]
 
     @cached_property
     def name_ne(self) -> str:
         """Week's nepali name"""
-        return WEEKS_NE[self.__value - 1]
+        return WEEKS_NE[self.__value]
 
     @cached_property
     def abbr_ne(self) -> str:
         """Week's nepali abbreviated name"""
-        return WEEKS_ABBR_NE[self.__value - 1]
+        return WEEKS_ABBR_NE[self.__value]
