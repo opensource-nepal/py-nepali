@@ -94,7 +94,7 @@ class TestNepaliDateTimeParserValidators(unittest.TestCase):
         self.assertEqual(data.get("minute"), 25)
         self.assertEqual(data.get("second"), 31)
         self.assertEqual(data.get("microsecond"), 455000)
-        self.assertEqual(data.get("weekday"), 4)
+        self.assertEqual(data.get("weekday"), 3)
 
     #
     # test validate

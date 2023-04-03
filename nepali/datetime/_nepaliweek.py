@@ -74,7 +74,6 @@ class nepaliweek(metaclass=NepaliWeekMeta):
     >>> nepaliweek("Sun")
 
     :param Union[int, str] week: Week data to be parsed.
-
     :raises ValueError: The value is invalid.
     """
 

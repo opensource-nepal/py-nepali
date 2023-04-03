@@ -108,7 +108,7 @@ class NepaliDateTimeFormatter:
         """
         %a
         """
-        week = nepaliweek(self.npDateTime.weekday() + 1)
+        week = nepaliweek(self.npDateTime.weekday())
         if not self.devanagari:
             return week.abbr
         return week.abbr_ne
@@ -118,7 +118,7 @@ class NepaliDateTimeFormatter:
         """
         %A
         """
-        week = nepaliweek(self.npDateTime.weekday() + 1)
+        week = nepaliweek(self.npDateTime.weekday())
         if not self.devanagari:
             return week.name
         return week.name_ne
