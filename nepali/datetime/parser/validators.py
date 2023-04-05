@@ -2,10 +2,10 @@
 validates parsing
 """
 import re
-from datetime import date
 
-from nepali.char import EnglishChar, nepali_to_english_text
-from nepali.datetime import nepalidatetime, nepalimonth
+from nepali.char import nepali_to_english_text
+from nepali.datetime import nepalidatetime, nepalimonth, nepaliweek
+from nepali.datetime.constants import MONTHS_EN, WEEKS_EN, WEEKS_ABBR_EN
 
 
 __nepali_time_re__CACHE = None
@@ -39,10 +39,10 @@ class NepaliTimeRE(dict):
                 "y": r"(?P<y>\d\d)",
                 "Y": r"(?P<Y>\d\d\d\d)",
                 "z": r"(?P<z>[+-]\d\d:?[0-5]\d(:?[0-5]\d(\.\d{1,6})?)?|(?-i:Z))",
-                "A": self.__seqToRE(EnglishChar.days, "A"),
-                "a": self.__seqToRE(EnglishChar.days_half, "a"),
-                "B": self.__seqToRE(nepalimonth.months(), "B"),
-                "b": self.__seqToRE(nepalimonth.months(), "b"),
+                "A": self.__seqToRE(WEEKS_EN, "A"),
+                "a": self.__seqToRE(WEEKS_ABBR_EN, "a"),
+                "B": self.__seqToRE(MONTHS_EN, "B"),
+                "b": self.__seqToRE(MONTHS_EN, "b"),
                 "p": self.__seqToRE(
                     (
                         "AM",
@@ -207,11 +207,9 @@ def transform(data: dict):
             s += "0" * (6 - len(s))
             fraction = int(s)
         elif date_key == "A":
-            # TODO: change indexing process
-            weekday = EnglishChar.days.index(data["A"].lower().capitalize()) + 1
+            weekday = nepaliweek(data["A"])
         elif date_key == "a":
-            # TODO: change indexing process
-            weekday = EnglishChar.days_half.index(data["a"].lower().capitalize()) + 1
+            weekday = nepaliweek(data["a"])
         elif date_key == "w":
             weekday = int(data["w"])
             if weekday == 0:

@@ -1,6 +1,6 @@
 import datetime as pythonDateTime
 
-from nepali.char import NepaliChar
+from nepali import number
 from nepali.timezone import now, to_nepali_timezone
 from nepali.exceptions import InvalidNepaliDateTimeObjectException
 
@@ -113,7 +113,7 @@ class HumanizeDateTime:
             interval_value = self.seconds // 31622400
             interval_text = self.__year_text
 
-        interval_value = NepaliChar.number(interval_value)
+        interval_value = number.english_to_nepali(interval_value)
         return (
             str(interval_value) + " " + str(interval_text) + " " + self.interval_tense
         )

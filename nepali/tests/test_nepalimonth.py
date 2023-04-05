@@ -9,7 +9,6 @@ from nepali.datetime import nepalimonth
 
 
 class TestNepaliMonth(unittest.TestCase):
-
     # parse
     def test_nepalimonth_parses_int(self):
         self.assertEqual(nepalimonth(1).value, 1)
@@ -151,12 +150,3 @@ class TestNepaliMonth(unittest.TestCase):
 
     def test_nepalimonth_not_equal_with_invalid_object(self):
         self.assertNotEqual(nepalimonth(1), "invalid")
-
-    # static methods
-    def test_nepalimonth_months(self):
-        months = nepalimonth.months()
-        self.assertEqual(len(months), 12)
-
-    def test_nepalimonth_months_ne(self):
-        months = nepalimonth.months_ne()
-        self.assertEqual(len(months), 12)
