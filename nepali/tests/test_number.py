@@ -7,10 +7,7 @@ import sys
 import unittest
 
 from nepali import number
-from nepali.number import nepalinumber
-
-
-NepaliNumber = number.NepaliNumber
+from nepali.number import nepalinumber, NepaliNumber
 
 
 class TestNumber(unittest.TestCase):
@@ -55,7 +52,7 @@ class TestNumber(unittest.TestCase):
 
 # to run this test suite exclusively
 # python -m unittest nepali.tests.test_number.TestNepaliNumber -v
-class TestNepaliNumber(unittest.TestCase):
+class TestNepaliNumberArithmeticOperations(unittest.TestCase):
     """
     Contains test cases related to nepalinumber
     arithmetic operations
@@ -3067,3 +3064,61 @@ class TestNepaliNumberParse(unittest.TestCase):
         num = nepalinumber(_test(13.07))
         self.assertEqual(num.value, 13.07)
         self.assertEqual(type(num.value), float)
+
+
+class TestNepaliNumberMethods(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        # positive integers
+        cls.nepalinumber_integer_999999 = number.nepalinumber(999999)
+        cls.nepalinumber_integer_1 = number.nepalinumber(1)
+        cls.nepalinumber_integer_0 = number.nepalinumber(0)
+        # positive floats
+        cls.nepalinumber_float_999999_999999 = number.nepalinumber(999999.999999)
+        cls.nepalinumber_float_1_25 = number.nepalinumber(1.25)
+        cls.nepalinumber_float_0_05 = number.nepalinumber(0.05)
+        cls.nepalinumber_float_0_0 = number.nepalinumber(0.0)
+        # negative numbers
+        cls.nepalinumber_negative_integer_999999 = number.nepalinumber(-999999)
+        cls.nepalinumber_negative_integer_1 = number.nepalinumber(-1)
+        # negative floats
+        cls.nepalinumber_negative_float_999999_999999 = number.nepalinumber(
+            -999999.999999
+        )
+        cls.nepalinumber_negative_float_1_25 = number.nepalinumber(-1.25)
+        cls.nepalinumber_negative_float_0_05 = number.nepalinumber(-0.05)
+
+    # tests for str_ne methods
+    def test_nepalinumber_str_ne_for_small_positive_integer(self):
+        self.assertEqual(self.nepalinumber_integer_1.str_ne(), "१")
+
+    def test_nepalinumber_str_ne_for_large_positive_integer(self):
+        self.assertEqual(self.nepalinumber_integer_999999.str_ne(), "९९९९९९")
+
+    def test_nepalinumber_str_ne_for_small_negative_integer(self):
+        self.assertEqual(self.nepalinumber_negative_integer_1.str_ne(), "-१")
+
+    def test_nepalinumber_str_ne_for_large_negative_integer(self):
+        self.assertEqual(self.nepalinumber_negative_integer_999999.str_ne(), "-९९९९९९")
+
+    def test_nepalinumber_str_ne_for_small_positive_float(self):
+        self.assertEqual(self.nepalinumber_float_1_25.str_ne(), "१.२५")
+        self.assertEqual(self.nepalinumber_float_0_05.str_ne(), "०.०५")
+
+    def test_nepalinumber_str_ne_for_large_positive_float(self):
+        self.assertEqual(
+            self.nepalinumber_float_999999_999999.str_ne(), "९९९९९९.९९९९९९"
+        )
+
+    def test_nepalinumber_str_ne_for_small_negative_float(self):
+        self.assertEqual(self.nepalinumber_negative_float_1_25.str_ne(), "-१.२५")
+        self.assertEqual(self.nepalinumber_negative_float_0_05.str_ne(), "-०.०५")
+
+    def test_nepalinumber_str_ne_for_large_negative_float(self):
+        self.assertEqual(
+            self.nepalinumber_negative_float_999999_999999.str_ne(), "-९९९९९९.९९९९९९"
+        )
+
+    def test_nepalinumber_str_ne_for_zero(self):
+        self.assertEqual(self.nepalinumber_integer_0.str_ne(), "०")
+        self.assertEqual(self.nepalinumber_float_0_0.str_ne(), "०.०")

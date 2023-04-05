@@ -12,8 +12,9 @@ def english_to_nepali(number: Any) -> str:
     number = str(number)
     converted_number = []
     for n in number:
-        if n.isdigit() and int(n) in range(0, 10):
-            converted_number.append(NP_NUMBERS[int(n)])
+        num = ord(n) - ord("0")
+        if num in range(0, 10):
+            converted_number.append(NP_NUMBERS[num])
         else:
             converted_number.append(n)
     return "".join(converted_number)

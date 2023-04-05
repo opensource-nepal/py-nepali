@@ -3,7 +3,7 @@ Contains the class for the nepalinumber feature
 """
 
 from typing import Any, Tuple, Type, Union
-from .utils import NP_NUMBERS, NP_NUMBERS_SET
+from .utils import NP_NUMBERS, NP_NUMBERS_SET, english_to_nepali
 
 
 class nepalinumber:
@@ -17,6 +17,7 @@ class nepalinumber:
         """
         Constructor/Initializer
         """
+        # TODO: use private property for value
         self.value = self.__parse(value)
 
     def _raise_parse_exception(self, obj, ex_class: Type[Exception] = ValueError):
@@ -442,7 +443,9 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __divmod__(self, other) -> Tuple[Union["nepalinumber", object], Union["nepalinumber", object]]:
+    def __divmod__(
+        self, other
+    ) -> Tuple[Union["nepalinumber", object], Union["nepalinumber", object]]:
         """
         Called when the built-in function divmod() is used
         with nepalinumber as the dividend and other as divisior
@@ -459,11 +462,15 @@ class nepalinumber:
 
             quotient, remainder = divmod(self.value, other)
 
-            return self.__convert_or_return(quotient), self.__convert_or_return(remainder)
+            return self.__convert_or_return(quotient), self.__convert_or_return(
+                remainder
+            )
         except TypeError:
             return NotImplemented
 
-    def __rdivmod__(self, other) -> Tuple[Union["nepalinumber", object], Union["nepalinumber", object]]:
+    def __rdivmod__(
+        self, other
+    ) -> Tuple[Union["nepalinumber", object], Union["nepalinumber", object]]:
         """
         Called when the built-in function divmod() is used
         with nepalinumber as the divisior and other as divident
@@ -480,7 +487,9 @@ class nepalinumber:
 
             quotient, remainder = divmod(other, self.value)
 
-            return self.__convert_or_return(quotient), self.__convert_or_return(remainder)
+            return self.__convert_or_return(quotient), self.__convert_or_return(
+                remainder
+            )
         except TypeError:
             return NotImplemented
 
@@ -523,3 +532,13 @@ class nepalinumber:
             return self.__convert_or_return(other**self.value)
         except TypeError:
             return NotImplemented
+
+    def str_ne(self) -> str:
+        """
+        Returns nepali (devanagari) format for the number
+
+        :return: Nepali number
+        """
+        if not hasattr(self, "__str_ne"):
+            self.__str_ne = english_to_nepali(self.value)
+        return self.__str_ne
