@@ -537,7 +537,7 @@ class nepalinumber:
         """
         Returns nepali (devanagari) format for the number
 
-        :return: Nepali number
+        :return: Stringified Nepali number
         """
         if not hasattr(self, "__str_ne"):
             self.__str_ne = english_to_nepali(self.value)
