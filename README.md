@@ -50,6 +50,7 @@ phone_number.parse("+977-9845217789")
    - [parse](#parse)
    - [strftime() and strptime() Format Codes](#strftime-and-strptime-format-codes)
 2. [Numbers](#numbers)
+    - [nepalinumber](#nepalinumber)
 3. [Phone Number](#phone-number)
 4. [Locations](#locations)
 
@@ -341,6 +342,35 @@ Adds comma in nepali numbers.
 number_text = number.add_comma("1234567890")  # 1,23,45,67,890
 ```
 
+### nepalinumber
+`nepalinumber` is a new data type, which can be used to represent Nepali (Devanagari) numbers. It allows us to perform arithmetic operations, just like with int and float. Additionally, it can be used to parse numbers and output them in Devanagari format.
+
+```python
+from nepali.number import nepalinumber
+```
+
+**Parsing**
+```python
+a = nepalinumber("१८.२७")
+print(a)  # 18.27
+
+b = nepalinumber(15)
+print(b)  # 15
+```
+
+**Nepali (Devanagari) output**
+```python
+a = nepalinumber("18.27")
+print(a.str_ne())  # १८.२७
+```
+
+**Arithmetic operations**
+```python
+a = nepalinumber("1")
+b = nepalinumber("२")
+c = a + b * 3
+print(c)  # 7
+```
 ---
 
 ## Phone Number
