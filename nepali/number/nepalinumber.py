@@ -17,8 +17,7 @@ class nepalinumber:
         """
         Constructor/Initializer
         """
-        # TODO: use private property for value
-        self.value = self.__parse(value)
+        self.__value = self.__parse(value)
 
     def _raise_parse_exception(self, obj, ex_class: Type[Exception] = ValueError):
         raise ex_class(
@@ -135,22 +134,22 @@ class nepalinumber:
         Called when the object is called with functions
         like print or logger.debug()
         """
-        return str(self.value)
+        return str(self.__value)
 
     def __repr__(self) -> str:
-        return str(self.value)
+        return str(self.__value)
 
     def __int__(self) -> int:
         """
         Called when the object is typecasted into integer
         """
-        return int(self.value)
+        return int(self.__value)
 
     def __float__(self) -> float:
         """
         Called when the object is typecasted into float
         """
-        return float(self.value)
+        return float(self.__value)
 
     def __add(self, other) -> Union[int, float]:
         """
@@ -162,9 +161,9 @@ class nepalinumber:
         :return: A new nepalinumber object with the added values
         """
         if isinstance(other, nepalinumber):
-            return self.value + other.value
+            return self.__value + other.value
 
-        return self.value + other
+        return self.__value + other
 
     def __mul(self, other) -> Union[int, float]:
         """
@@ -176,9 +175,9 @@ class nepalinumber:
         :return: A new nepalinumber object with the multiplied values
         """
         if isinstance(other, nepalinumber):
-            return self.value * other.value
+            return self.__value * other.value
 
-        return self.value * other
+        return self.__value * other
 
     def __eq__(self, other) -> bool:
         """
@@ -189,9 +188,9 @@ class nepalinumber:
         :return: True if equal else False
         """
         if isinstance(other, nepalinumber):
-            return self.value == other.value
+            return self.__value == other.value
 
-        return self.value == other
+        return self.__value == other
 
     def __ne__(self, other) -> bool:
         """
@@ -202,15 +201,15 @@ class nepalinumber:
         :return: True if not equal else False
         """
         if isinstance(other, nepalinumber):
-            return self.value != other.value
+            return self.__value != other.value
 
-        return self.value != other
+        return self.__value != other
 
     def __neg__(self) -> "nepalinumber":
         """
         Returns the negative value of the nepalinumber value
         """
-        return nepalinumber((-1) * self.value)
+        return nepalinumber((-1) * self.__value)
 
     def __add__(self, other) -> Union["nepalinumber", object]:
         """
@@ -259,9 +258,9 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return self.__convert_or_return(self.value - other.value)
+                return self.__convert_or_return(self.__value - other.value)
 
-            return self.__convert_or_return(self.value - other)
+            return self.__convert_or_return(self.__value - other)
         except TypeError:
             return NotImplemented
 
@@ -279,9 +278,9 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return self.__convert_or_return(other.value - self.value)
+                return self.__convert_or_return(other.value - self.__value)
 
-            return self.__convert_or_return(other - self.value)
+            return self.__convert_or_return(other - self.__value)
         except TypeError:
             return NotImplemented
 
@@ -299,7 +298,7 @@ class nepalinumber:
         """
         try:
             if isinstance(other, str):
-                return self.value * other
+                return self.__value * other  # type: ignore
 
             return self.__convert_or_return(self.__mul(other))
         except TypeError:
@@ -319,7 +318,7 @@ class nepalinumber:
         """
         try:
             if isinstance(other, str):
-                return other * self.value
+                return other * self.__value  # type: ignore
 
             return self.__convert_or_return(self.__mul(other))
         except TypeError:
@@ -338,9 +337,9 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return self.__convert_or_return(self.value / other.value)
+                return self.__convert_or_return(self.__value / other.value)
 
-            return self.__convert_or_return(self.value / other)
+            return self.__convert_or_return(self.__value / other)
         except TypeError:
             return NotImplemented
 
@@ -358,9 +357,9 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return self.__convert_or_return(other.value / self.value)
+                return self.__convert_or_return(other.value / self.__value)
 
-            return self.__convert_or_return(other / self.value)
+            return self.__convert_or_return(other / self.__value)
         except TypeError:
             return NotImplemented
 
@@ -377,9 +376,9 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return self.__convert_or_return(self.value // other.value)
+                return self.__convert_or_return(self.__value // other.value)
 
-            return self.__convert_or_return(self.value // other)
+            return self.__convert_or_return(self.__value // other)
         except TypeError:
             return NotImplemented
 
@@ -397,9 +396,9 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return self.__convert_or_return(other.value // self.value)
+                return self.__convert_or_return(other.value // self.__value)
 
-            return self.__convert_or_return(other // self.value)
+            return self.__convert_or_return(other // self.__value)
         except TypeError:
             return NotImplemented
 
@@ -417,9 +416,9 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return self.__convert_or_return(self.value % other.value)
+                return self.__convert_or_return(self.__value % other.value)
 
-            return self.__convert_or_return(self.value % other)
+            return self.__convert_or_return(self.__value % other)
         except TypeError:
             return NotImplemented
 
@@ -437,9 +436,9 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return self.__convert_or_return(other.value % self.value)
+                return self.__convert_or_return(other.value % self.__value)
 
-            return self.__convert_or_return(other % self.value)
+            return self.__convert_or_return(other % self.__value)
         except TypeError:
             return NotImplemented
 
@@ -448,19 +447,19 @@ class nepalinumber:
     ) -> Tuple[Union["nepalinumber", object], Union["nepalinumber", object]]:
         """
         Called when the built-in function divmod() is used
-        with nepalinumber as the dividend and other as divisior
+        with nepalinumber as the dividend and other as divisor
 
         :param other: The other number/object that is to be
-            divisior for the value in the nepalinumber object
+            divisor for the value in the nepalinumber object
         :raises TypeError: Raised when unsupported data types are
-            used as divisior for nepalinumber object
+            used as divisor for nepalinumber object
         :return: Returns a tuple of quotient and remainder
         """
         try:
             if isinstance(other, nepalinumber):
-                quotient, remainder = divmod(self.value, other.value)
+                quotient, remainder = divmod(self.__value, other.value)
 
-            quotient, remainder = divmod(self.value, other)
+            quotient, remainder = divmod(self.__value, other)
 
             return self.__convert_or_return(quotient), self.__convert_or_return(
                 remainder
@@ -473,7 +472,7 @@ class nepalinumber:
     ) -> Tuple[Union["nepalinumber", object], Union["nepalinumber", object]]:
         """
         Called when the built-in function divmod() is used
-        with nepalinumber as the divisior and other as divident
+        with nepalinumber as the divisor and other as dividend
 
         :param other: The other number/object that is to be
             dividend for the value in the nepalinumber object
@@ -483,9 +482,9 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                quotient, remainder = divmod(other.value, self.value)
+                quotient, remainder = divmod(other.value, self.__value)
 
-            quotient, remainder = divmod(other, self.value)
+            quotient, remainder = divmod(other, self.__value)
 
             return self.__convert_or_return(quotient), self.__convert_or_return(
                 remainder
@@ -507,9 +506,9 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return self.__convert_or_return(self.value**other.value)
+                return self.__convert_or_return(self.__value**other.value)
 
-            return self.__convert_or_return(self.value**other)
+            return self.__convert_or_return(self.__value**other)
         except TypeError:
             return NotImplemented
 
@@ -527,9 +526,9 @@ class nepalinumber:
         """
         try:
             if isinstance(other, nepalinumber):
-                return self.__convert_or_return(other.value**self.value)
+                return self.__convert_or_return(other.value**self.__value)
 
-            return self.__convert_or_return(other**self.value)
+            return self.__convert_or_return(other**self.__value)
         except TypeError:
             return NotImplemented
 
@@ -540,5 +539,9 @@ class nepalinumber:
         :return: Stringified Nepali number
         """
         if not hasattr(self, "__str_ne"):
-            self.__str_ne = english_to_nepali(self.value)
+            self.__str_ne = english_to_nepali(self.__value)
         return self.__str_ne
+
+    @property
+    def value(self):
+        return self.__value
