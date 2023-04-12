@@ -7,6 +7,7 @@ from .utils import (
     nepali_to_english,
 )
 
+
 # Backward compatibility support for legacy NepaliNumber
 class NepaliNumber:
     @classmethod
