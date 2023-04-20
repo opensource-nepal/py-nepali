@@ -3,6 +3,8 @@ import datetime as pythonDateTime
 from nepali.date_converter import converter as nepali_date_converter
 from nepali.timezone import NepaliTimeZone, utc_now, to_nepali_timezone
 
+from ._nepalimonth import nepalimonth
+
 
 class formatter_class_mixin:
     """
@@ -45,6 +47,9 @@ class formatter_class_mixin:
 
 class nepalidate(formatter_class_mixin):
     def __init__(self, year, month, day) -> None:
+        if isinstance(month, nepalimonth):
+            month = month.value
+
         self.__year = year
         self.__month = month
         self.__day = day
