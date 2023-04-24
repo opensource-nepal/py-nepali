@@ -2961,23 +2961,23 @@ class TestNepaliNumberParse(unittest.TestCase):
         )
 
     def test_nepalinumber_raises_exception_for_chars_nepali(self):
-        with self.assertRaises(ValueError) as ex:
+        with self.assertRaises(ValueError):
             nepalinumber("आइतबार")
 
     def test_nepalinumber_raises_exception_for_two_dots(self):
-        with self.assertRaises(ValueError) as ex:
+        with self.assertRaises(ValueError):
             nepalinumber("10..5")
 
     def test_nepalinumber_raises_exception_for_nepali_aplha(self):
-        with self.assertRaises(ValueError) as ex:
+        with self.assertRaises(ValueError):
             nepalinumber("10..5")
 
     def test_nepalinumber_raises_exception_for_special_chars(self):
-        with self.assertRaises(ValueError) as ex:
+        with self.assertRaises(ValueError):
             nepalinumber("!@#$%^&*()-+")
 
     def test_nepalinumber_raise_exception_for_number_with_spaces(self):
-        with self.assertRaises(ValueError) as ex:
+        with self.assertRaises(ValueError):
             nepalinumber("10 20")
 
     def test_nepalinumber_raises_exception_on_complex_number(self):

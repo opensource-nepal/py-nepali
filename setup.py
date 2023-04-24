@@ -37,7 +37,9 @@ setuptools.setup(
     version="1.0.0",
     author="opensource-nepal",
     author_email="aj3sshh@gmail.com, sugatbajracharya49@gmail.com",
-    description="nepalidatetime compatible with python's datetime feature. Converting nepali date to english, parsing nepali datetime, nepali timezone, and timedelta support in nepali datetime",
+    description="nepalidatetime compatible with python's datetime feature. "
+    "Converting nepali date to english, parsing nepali datetime, "
+    "nepali timezone, and timedelta support in nepali datetime",
     long_description=long_description,
     long_description_content_type="text/markdown",
     keywords=[

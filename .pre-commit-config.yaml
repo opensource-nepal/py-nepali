@@ -1,10 +1,16 @@
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
     hooks:
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
--   repo: https://github.com/psf/black
-    rev: 22.10.0
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/akaihola/darker
+    rev: 1.7.1
     hooks:
-    -   id: black
+      - id: darker
+        args:
+          - --isort
+          - --lint=flake8 --max-line-length=88
+        additional_dependencies:
+          - isort==5.11.5
+          - flake8==5.0.4
