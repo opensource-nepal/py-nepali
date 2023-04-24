@@ -126,7 +126,7 @@ class nepalinumber:
         """
         try:
             return nepalinumber(obj)
-        except (TypeError, ValueError) as e:
+        except (TypeError, ValueError):
             return obj
 
     def __str__(self) -> str:

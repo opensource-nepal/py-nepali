@@ -35,8 +35,8 @@ jobs:
           # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-
+          flake8 . --count --exit-zero --max-complexity=10 --ignore=E203,W503 --max-line-length=127 --statistics
+          # For the reason behind ignoring E203 and W503, visit https://blackq.readthedocs.io/en/stable/faq.html#why-are-flake8-s-e203-and-w503-violated
       - name: Run tests
         run: |
           coverage run -m unittest discover nepali/tests -v

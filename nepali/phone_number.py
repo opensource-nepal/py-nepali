@@ -33,7 +33,7 @@ def is_mobile_number(number: str) -> bool:
     """
     try:
         return bool(_mobile_number_re.match(number))
-    except:
+    except Exception:
         return False
 
 
@@ -47,7 +47,7 @@ def is_landline_number(number: str) -> bool:
     """
     try:
         return bool(_landline_number_re.match(number))
-    except:
+    except Exception:
         return False
 
 
