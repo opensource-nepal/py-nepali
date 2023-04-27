@@ -2,11 +2,7 @@
 # py-nepali
 #
 # @file
-# @version 0.1
-install:
-	pip install -r requirements.txt
-	pre-commit install
-
+# @version 0.2
 test:
 	python -m unittest discover nepali/tests -v
 
