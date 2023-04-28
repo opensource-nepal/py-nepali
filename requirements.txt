@@ -1,3 +1,1 @@
 coverage
-black==23.1.0
-pre-commit==3.1.0
