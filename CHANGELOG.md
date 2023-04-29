@@ -11,7 +11,8 @@
 - Added method `strftime_ne` in `nepalidate` and `nepalidatetime` class and now `strftime` returns in en-US locale
 - Bug fix for Django templatetags
 - Added `CONTRIBUTION.md` file
-- Created class `nepalimonth` and `nepaliweek`.
+- Created class `nepalimonth` and `nepaliweek`
+- Created class `nepalinumber` supporting all numeric operations
 
 ## v0.5.6 - (July 7, 2022)
 - Test for automatic package publish

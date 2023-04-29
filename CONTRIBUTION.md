@@ -28,7 +28,7 @@ A `.editorconfig` is available to maintain the coding style. You can also use `b
 black your-file-to-format.py
 ```
 
-## Unitest
+## Unit tests
 
 Run the unittest using the below command:
 
