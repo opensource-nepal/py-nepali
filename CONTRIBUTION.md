@@ -3,6 +3,7 @@
 ## Creating a Separate virtualenv
 
 Before you contribute on this project you need to create a new separate [virtualenv](https://docs.python.org/3/library/venv.html).
+
 Here is one example.
 
 ```bash
@@ -12,21 +13,15 @@ source .env/bin/activate
 
 ## Dependencies
 
-We have listed all the dependencies in the `requirements.txt` files.
+We have listed all the python dependencies in the `requirements.txt` files.
 
-To install dependencies and prepare [`pre-commit`](https://pre-commit.com/) hooks you would need to run `install` command:
+## Pre-commit Hook
 
-```bash
-make install
-```
+The config file for [`pre-commit`](https://pre-commit.com/) hooks is in [.pre-commit-config.yaml](./.pre-commit-config.yaml) file. To install pre-commit and enable the hook please refer to [https://pre-commit.com](https://pre-commit.com/)
 
 ## Codestyle
 
-A `.editorconfig` is available to maintain the coding style. You can also use `black` for autoformatting.
-
-```bash
-black your-file-to-format.py
-```
+A [.editorconfig](./editorconfig) is available to maintain the coding style. Besides, your code will automatically gets formatted if you have install the pre-commit hook.
 
 ## Unit tests
 
@@ -58,7 +53,6 @@ Before submitting your code please do the following steps:
 1. Add tests for the new changes
 1. Update the `CHANGELOG.md` file if necessary
 1. Edit documentation if you have changed something significant
-1. Run `black .` to format your changes.
 
 ## Other help
 
