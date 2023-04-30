@@ -23,7 +23,7 @@ The config file for [`pre-commit`](https://pre-commit.com/) hooks is in [.pre-co
 
 A [.editorconfig](./editorconfig) is available to maintain the coding style. Besides, your code will automatically gets formatted if you have install the pre-commit hook.
 
-## Unitest
+## Unit tests
 
 Run the unittest using the below command:
 
