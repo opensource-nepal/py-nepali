@@ -245,7 +245,7 @@ def __calculate_hour_minute_seconds(data: dict) -> Tuple[int, int, int, int]:
     if "H" in data:
         hour = int(data["H"])
     elif "I" in data:
-        am_pm = data.get("p", "am").lower() or "am"
+        am_pm = data.get("p", "").lower() or "am"
         hour = __convert_12_hour_to_24_hour(hour=int(data["I"]), am_pm=am_pm)
 
     if "M" in data:
