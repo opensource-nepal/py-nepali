@@ -178,7 +178,7 @@ def __calculate_year(data: dict) -> Optional[int]:
     return None
 
 
-def __calculate_month(data: dict) -> int:
+def __calculate_month(data: dict) -> nepalimonth:
     """Calculates the month value from given data.
 
     Args:
@@ -194,12 +194,12 @@ def __calculate_month(data: dict) -> int:
         int: The month value of given date data.
     """
     if "m" in data:
-        return int(data["m"])
+        return nepalimonth(int(data["m"]))
     elif "b" in data:
         return nepalimonth(data["b"])
     elif "B" in data:
         return nepalimonth(data["B"])
-    return 1
+    return nepalimonth(1)
 
 
 def __calculate_day(data: dict) -> int:
@@ -263,7 +263,7 @@ def __calculate_hour_minute_seconds(data: dict) -> Tuple[int, int, int, int]:
     return (hour, minute, second, fraction)
 
 
-def __calculate_weekday(data: dict) -> Optional[int]:
+def __calculate_weekday(data: dict) -> Optional[nepaliweek]:
     """Calculates the weekday of the date given in data.
 
     Args:
@@ -277,7 +277,7 @@ def __calculate_weekday(data: dict) -> Optional[int]:
     elif "A" in data:
         return nepaliweek(data["A"])
     elif "w" in data:
-        return (int(data["w"]) - 1) % 7
+        return nepaliweek((int(data["w"]) - 1) % 7)
     return None
 
 
