@@ -141,12 +141,10 @@ def extract(datetime_str, format):
 def __convert_12_hour_to_24_hour(hour: int, am_pm: str) -> int:
     """Converts hours from 12-hour format to 24-hour format.
 
-    Args:
-        hour (int): The hour value to convert.
-        am_pm (str): Either "am" or "pm"; signifies whether the hour is in am or pm.
+    :param hour: The hour value to convert.
+    :param am_pm: Either "am" or "pm"; signifies whether the hour is in am or pm.
 
-    Returns:
-        int: The value of `hour` converted to 24-hour format.
+    :returns: The value of `hour` converted to 24-hour format.
     """
     am_pm = am_pm.lower()
     if am_pm == "am" and hour == 12:
@@ -159,8 +157,7 @@ def __convert_12_hour_to_24_hour(hour: int, am_pm: str) -> int:
 def __calculate_year(data: dict) -> Optional[int]:
     """Calculates the year value from given data.
 
-    Args:
-        data (dict): The dictionary of the format:
+    :param data: The dictionary of the format:
                     {
                         "Y": 2078,
                         "b": "Mangsir",
@@ -168,8 +165,7 @@ def __calculate_year(data: dict) -> Optional[int]:
                         ...
                     }
 
-    Returns:
-        Optional[int]: The year value of given date data.
+    :returns: The year value of given date data.
     """
     if "y" in data:
         return int(data["y"]) + 2000
@@ -181,8 +177,7 @@ def __calculate_year(data: dict) -> Optional[int]:
 def __calculate_month(data: dict) -> nepalimonth:
     """Calculates the month value from given data.
 
-    Args:
-        data (dict): The dictionary of the format:
+    :param data: The dictionary of the format:
                     {
                         "Y": 2078,
                         "b": "Mangsir",
@@ -190,8 +185,7 @@ def __calculate_month(data: dict) -> nepalimonth:
                         ...
                     }
 
-    Returns:
-        int: The month value of given date data.
+    :returns: The month value of given date data.
     """
     if "m" in data:
         return nepalimonth(int(data["m"]))
@@ -205,8 +199,7 @@ def __calculate_month(data: dict) -> nepalimonth:
 def __calculate_day(data: dict) -> int:
     """Calculates the day value from given data.
 
-    Args:
-        data (dict): The dictionary of the format:
+    :param data: The dictionary of the format:
                     {
                         "Y": 2078,
                         "b": "Mangsir",
@@ -214,8 +207,7 @@ def __calculate_day(data: dict) -> int:
                         ...
                     }
 
-    Returns:
-        int: The day value of given date data.
+    :returns: The day value of given date data.
     """
     if "d" in data:
         return int(data["d"])
@@ -225,8 +217,7 @@ def __calculate_day(data: dict) -> int:
 def __calculate_hour_minute_seconds(data: dict) -> Tuple[int, int, int, int]:
     """Calculates hour, minutes, seconds and microseconds from given data.
 
-    Args:
-        data (dict): The dictionary of the format:
+    :param data: The dictionary of the format:
                     {
                         "Y": 2078,
                         "b": "Mangsir",
@@ -238,8 +229,7 @@ def __calculate_hour_minute_seconds(data: dict) -> Tuple[int, int, int, int]:
                         ...
                     }
 
-    Returns:
-        Tuple[int, int, int, int]: A tuple of hour, minute, seconds and microseconds.
+    :returns: A tuple of hour, minute, seconds and microseconds.
     """
     hour = minute = second = fraction = 0
     if "H" in data:
@@ -266,11 +256,9 @@ def __calculate_hour_minute_seconds(data: dict) -> Tuple[int, int, int, int]:
 def __calculate_weekday(data: dict) -> Optional[nepaliweek]:
     """Calculates the weekday of the date given in data.
 
-    Args:
-        data (dict): The data that describes the date.
+    :param data: The data that describes the date.
 
-    Returns:
-        Optional[int]: The weekday value; 0 for Sunday, 1 for Monday, etc.
+    :returns: The weekday value; 0 for Sunday, 1 for Monday, etc.
     """
     if "a" in data:
         return nepaliweek(data["a"])
