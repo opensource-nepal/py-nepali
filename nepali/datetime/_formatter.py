@@ -40,7 +40,7 @@ class NepaliDateTimeFormatter:
     }
 
     def __init__(self, datetime_object, devanagari=False):
-        # TODO: Change variable npDateTime into snakecase: `np_date_time`
+        # TODO: Change variable npDateTime into snake case: `np_date_time`
         if type(datetime_object) == nepalidatetime:
             self.npDateTime = datetime_object
         elif type(datetime_object) == nepalidate:
