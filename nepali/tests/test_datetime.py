@@ -250,9 +250,7 @@ class TestNepaliDateTime(unittest.TestCase):
         self.assertEqual(
             nepalidatetime_obj1,
             nepalidatetime_obj2,
-            msg="{} and {} are not equal".format(
-                nepalidatetime_obj1, nepalidatetime_obj2
-            ),
+            msg=f"{nepalidatetime_obj1} and {nepalidatetime_obj2} are not equal",
         )
 
 
