@@ -68,8 +68,8 @@ class NepaliTimeRE(dict):
         else:
             return ""
         regex = "|".join(re.escape(stuff) for stuff in to_convert)
-        regex = "(?P<%s>%s" % (directive, regex)
-        return "%s)" % regex
+        regex = f"(?P<{directive}>{regex}"
+        return f"{regex})"
 
     def pattern(self, format):
         """
@@ -96,7 +96,7 @@ class NepaliTimeRE(dict):
                 self[format[directive_index : directive_index + index_increment]],
             )
             format = format[directive_index + index_increment :]
-        return "^%s%s$" % (processed_format, format)
+        return f"^{processed_format}{format}$"
 
     def compile(self, format):
         """Return a compiled re object for the format string."""
