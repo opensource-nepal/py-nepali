@@ -11,12 +11,14 @@ from nepali.exceptions import InvalidNepaliDateTimeObjectException
 from nepali.utils import to_nepalidatetime
 
 _DEFAULT_DATE_FORMAT = "%B %d, %Y, %A"
-_datetimes = Union[datetime.date, datetime.datetime, _nepalidate, _nepalidatetime]
+_datetime = Union[datetime.date, datetime.datetime, _nepalidate, _nepalidatetime]
 register = template.Library()
 
 
 @register.filter(name="nepalidate")
-def nepalidate(datetime_obj: _datetimes, format: str = _DEFAULT_DATE_FORMAT) -> str:
+def nepalidate(
+    datetime_obj: _datetime, format: str = _DEFAULT_DATE_FORMAT
+) -> Union[str, None]:
     """
     Renders the datetime object into nepali datetime format in 'en-US' locale (English).
 
@@ -34,7 +36,9 @@ def nepalidate(datetime_obj: _datetimes, format: str = _DEFAULT_DATE_FORMAT) -> 
 
 
 @register.filter(name="nepalidate_en")
-def nepalidate_en(datetime_obj: _datetimes, format: str = _DEFAULT_DATE_FORMAT):
+def nepalidate_en(
+    datetime_obj: _datetime, format: str = _DEFAULT_DATE_FORMAT
+) -> Union[str, None]:
     """
     Renders the datetime object into nepali datetime format in 'en-US' locale (English).
 
@@ -56,7 +60,9 @@ def nepalidate_en(datetime_obj: _datetimes, format: str = _DEFAULT_DATE_FORMAT):
 
 
 @register.filter(name="nepalidate_ne")
-def nepalidate_ne(datetime_obj: _datetimes, format: str = _DEFAULT_DATE_FORMAT):
+def nepalidate_ne(
+    datetime_obj: _datetime, format: str = _DEFAULT_DATE_FORMAT
+) -> Union[str, None]:
     """
     Renders the datetime object into nepali datetime format in 'ne' locale (Nepali).
 
@@ -79,10 +85,10 @@ def nepalidate_ne(datetime_obj: _datetimes, format: str = _DEFAULT_DATE_FORMAT):
 
 @register.filter(name="nepalihumanize")
 def nepalihumanize(
-    datetime_obj: _datetimes,
+    datetime_obj: _datetime,
     threshold: Optional[int] = None,
     format: Optional[str] = None,
-):
+) -> Union[str, None]:
     """
     Renders the datetime object to a human readable form for 'ne' locale (Nepali).
 
@@ -105,7 +111,7 @@ def nepalihumanize(
 
 
 @register.simple_tag
-def nepalinow(format: str = _DEFAULT_DATE_FORMAT):
+def nepalinow(format: str = _DEFAULT_DATE_FORMAT) -> str:
     """
     Renders the current nepali datetime in 'en-US' locale (English).
 
@@ -123,7 +129,7 @@ def nepalinow(format: str = _DEFAULT_DATE_FORMAT):
 
 
 @register.simple_tag
-def nepalinow_en(format: str = _DEFAULT_DATE_FORMAT):
+def nepalinow_en(format: str = _DEFAULT_DATE_FORMAT) -> str:
     """
     Renders the current nepali datetime in 'en-US' locale (English).
 
@@ -141,7 +147,7 @@ def nepalinow_en(format: str = _DEFAULT_DATE_FORMAT):
 
 
 @register.simple_tag
-def nepalinow_ne(format: str = _DEFAULT_DATE_FORMAT):
+def nepalinow_ne(format: str = _DEFAULT_DATE_FORMAT) -> str:
     """
     Renders the current nepali datetime in 'ne' locale (Nepali).
 
