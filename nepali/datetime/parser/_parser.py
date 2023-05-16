@@ -53,10 +53,8 @@ def _get_standard_formats():
     for time_format in STANDARD_TIME_FORMAT:
         for date_format in STANDARD_DATE_FORMAT:
             _standard_datetime_format_CACHE += [
-                "{} {}".format(date_format, time_format)
-            ]
-            _standard_datetime_format_CACHE += [
-                "{}, {}".format(date_format, time_format)
+                f"{date_format} {time_format}",
+                f"{date_format}, {time_format}",
             ]
     return _standard_datetime_format_CACHE
 

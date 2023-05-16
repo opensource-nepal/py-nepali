@@ -100,7 +100,7 @@ class NepaliDateTimeFormatter:
 
     def get_format_map(self, ch: str) -> str:
         if ch not in self.format_map:
-            raise InvalidDateFormatException("Invalid Date format %{}".format(ch))
+            raise InvalidDateFormatException(f"Invalid Date format %{ch}")
         return self.format_map[ch]
 
     @property
