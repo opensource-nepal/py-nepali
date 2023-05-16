@@ -170,7 +170,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_integer_10 + (-15.5), self.nepalinumber_negative_float_5_5
         )
 
-    def test_nepalinumber_integer_is_addable_to_postive_nepali_number_integer(self):
+    def test_nepalinumber_integer_is_addable_to_positive_nepali_number_integer(self):
         self.assertEqual(
             self.nepalinumber_integer_10 + self.nepalinumber_integer_10,
             self.nepalinumber_integer_20,
@@ -280,7 +280,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_negative_integer_10 + 15.5, self.nepalinumber_float_5_5
         )
 
-    def test_negative_nepalinumber_integer_is_addable_to_postive_nepali_number_integer(
+    def test_negative_nepalinumber_integer_is_addable_to_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -365,7 +365,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_float_10_1 + (-15.6), self.nepalinumber_negative_float_5_5
         )
 
-    def test_nepalinumber_float_is_addable_to_postive_nepali_number_integer(self):
+    def test_nepalinumber_float_is_addable_to_positive_nepali_number_integer(self):
         self.assertEqual(
             self.nepalinumber_float_10_1 + self.nepalinumber_integer_10,
             self.nepalinumber_float_20_1,
@@ -443,7 +443,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_negative_float_10_1 + 15.6, self.nepalinumber_float_5_5
         )
 
-    def test_negative_nepalinumber_float_is_addable_to_postive_nepali_number_integer(
+    def test_negative_nepalinumber_float_is_addable_to_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -542,7 +542,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_integer_10 - (-5.5), self.nepalinumber_float_15_5
         )
 
-    def test_nepalinumber_integer_is_subtractable_by_postive_nepali_number_integer(
+    def test_nepalinumber_integer_is_subtractable_by_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -629,7 +629,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_negative_integer_10 - (-15.5), self.nepalinumber_float_5_5
         )
 
-    def test_negative_nepalinumber_integer_is_subtractable_by_postive_nepali_number_integer(
+    def test_negative_nepalinumber_integer_is_subtractable_by_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -700,7 +700,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_float_10_1 - (-5.4), self.nepalinumber_float_15_5
         )
 
-    def test_nepalinumber_float_is_subtractable_by_postive_nepali_number_integer(self):
+    def test_nepalinumber_float_is_subtractable_by_positive_nepali_number_integer(self):
         self.assertEqual(
             self.nepalinumber_float_10_1 - self.nepalinumber_integer_10,
             self.nepalinumber_float_0_0_9,
@@ -771,7 +771,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_negative_float_10_1 - (-15.6), self.nepalinumber_float_5_5
         )
 
-    def test_negative_nepalinumber_float_is_subtractable_by_postive_nepali_number_integer(
+    def test_negative_nepalinumber_float_is_subtractable_by_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -872,7 +872,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_integer_10 * (-1.5), self.nepalinumber_negative_integer_15
         )
 
-    def test_nepalinumber_integer_is_multiplicable_to_postive_nepali_number_integer(
+    def test_nepalinumber_integer_is_multiplicable_to_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -955,7 +955,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_integer_15,
         )
 
-    def test_negative_nepalinumber_integer_is_multiplicable_to_postive_nepali_number_integer(
+    def test_negative_nepalinumber_integer_is_multiplicable_to_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -1008,7 +1008,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_float_4_5 * (-2.2), self.nepalinumber_negative_float_9_9
         )
 
-    def test_nepalinumber_float_is_multiplicable_to_postive_nepali_number_integer(self):
+    def test_nepalinumber_float_is_multiplicable_to_positive_nepali_number_integer(self):
         self.assertEqual(
             self.nepalinumber_float_10_1 * self.nepalinumber_integer_2,
             self.nepalinumber_float_20_2,
@@ -1059,7 +1059,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_float_5_25,
         )
 
-    def test_negative_nepalinumber_float_is_multiplicable_to_postive_nepali_number_integer(
+    def test_negative_nepalinumber_float_is_multiplicable_to_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -1075,7 +1075,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_negative_float_2_25,
         )
 
-    def test_negative_nepalinumber_float_is_mutliplicable_to_negative_nepali_number_integer(
+    def test_negative_nepalinumber_float_is_multiplicable_to_negative_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -1180,7 +1180,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_integer_10 / (-2.5), self.nepalinumber_negative_integer_4
         )
 
-    def test_nepalinumber_integer_is_divisible_by_postive_nepali_number_integer(self):
+    def test_nepalinumber_integer_is_divisible_by_positive_nepali_number_integer(self):
         self.assertEqual(
             self.nepalinumber_integer_20 / self.nepalinumber_integer_10,
             self.nepalinumber_integer_2,
@@ -1276,7 +1276,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_negative_integer_10 / -2.5, self.nepalinumber_integer_4
         )
 
-    def test_negative_nepalinumber_integer_is_divisible_by_postive_nepali_number_integer(
+    def test_negative_nepalinumber_integer_is_divisible_by_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -1338,7 +1338,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_float_20_2 / (-10.1), self.nepalinumber_negative_integer_2
         )
 
-    def test_nepalinumber_float_is_divisible_by_postive_nepali_number_integer(self):
+    def test_nepalinumber_float_is_divisible_by_positive_nepali_number_integer(self):
         self.assertEqual(
             self.nepalinumber_float_20_2 / self.nepalinumber_integer_2,
             self.nepalinumber_float_10_1,
@@ -1387,7 +1387,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_integer_2,
         )
 
-    def test_negative_nepalinumber_float_is_divisible_by_postive_nepali_number_integer(
+    def test_negative_nepalinumber_float_is_divisible_by_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -1470,7 +1470,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
 
         self.assertEqual(str(ze.exception), "division by zero")
 
-    # floor divison
+    # floor division
     # nepalinumber positive integer division tests
     def test_nepalinumber_integer_is_floor_divisible_by_positive_integer(self):
         self.assertEqual(
@@ -1492,7 +1492,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_integer_10 // (-2.5), self.nepalinumber_negative_integer_4
         )
 
-    def test_nepalinumber_integer_is_floor_divisible_by_postive_nepali_number_integer(
+    def test_nepalinumber_integer_is_floor_divisible_by_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -1600,7 +1600,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_negative_integer_10 // -2.5, self.nepalinumber_integer_4
         )
 
-    def test_negative_nepalinumber_integer_is_floor_divisible_by_postive_nepali_number_integer(
+    def test_negative_nepalinumber_integer_is_floor_divisible_by_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -1665,7 +1665,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_negative_integer_2,
         )
 
-    def test_nepalinumber_float_is_floor_divisible_by_postive_nepali_number_integer(
+    def test_nepalinumber_float_is_floor_divisible_by_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -1722,7 +1722,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_integer_2,
         )
 
-    def test_negative_nepalinumber_float_is_floor_divisible_by_postive_nepali_number_integer(
+    def test_negative_nepalinumber_float_is_floor_divisible_by_positive_nepali_number_integer(
         self,
     ):
         self.assertEqual(
@@ -1896,7 +1896,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_negative_integer_10,
         )
 
-    def test_nepalinumber_integer_can_be_modulo_divided_by_negative_nepainumber_float(
+    def test_nepalinumber_integer_can_be_modulo_divided_by_negative_nepalinumber_float(
         self,
     ):
         self.assertEqual(
@@ -1945,7 +1945,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_integer_10,
         )
 
-    def test_negative_nepalinumber_float_can_be_modulo_divided_by_positive_nepainumber_float(
+    def test_negative_nepalinumber_float_can_be_modulo_divided_by_positive_nepalinumber_integer(
         self,
     ):
         self.assertEqual(
@@ -2000,7 +2000,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_negative_integer_10,
         )
 
-    def test_negative_nepalinumber_integer_can_be_modulo_divided_by_negative_nepainumber_float(
+    def test_negative_nepalinumber_integer_can_be_modulo_divided_by_negative_nepalinumber_float(
         self,
     ):
         self.assertEqual(
@@ -2048,7 +2048,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_negative_float_5_5,
         )
 
-    def test_negative_nepalinumber_float_can_be_modulo_divided_by_negative_nepainumber_integer(
+    def test_negative_nepalinumber_float_can_be_modulo_divided_by_negative_nepalinumber_integer(
         self,
     ):
         self.assertEqual(
@@ -2096,7 +2096,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_negative_float_15_5,
         )
 
-    def test_nepalinumber_float_can_be_modulo_divided_by_negative_nepainumber_float(
+    def test_nepalinumber_float_can_be_modulo_divided_by_negative_nepalinumber_float(
         self,
     ):
         self.assertEqual(
@@ -2148,7 +2148,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_integer_2,
         )
 
-    def test_negative_nepalinumber_float_can_be_modulo_divided_by_negative_nepalinumber_integer(
+    def test_negative_nepalinumber_float_can_be_modulo_divided_by_negative_nepalinumber_integer_2(
         self,
     ):
         self.assertEqual(
@@ -2290,7 +2290,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             ),
         )
 
-    # divmod positive nepalinumber integer as divisior tests
+    # divmod positive nepalinumber integer as divisor tests
     def test_positive_integer_can_be_divmod_with_positive_nepalinumber_integer(self):
         self.assertEqual(
             divmod(10, self.nepalinumber_integer_2),
@@ -2397,7 +2397,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             ),
         )
 
-    # divmod positive nepalinumber float as divisior tests
+    # divmod positive nepalinumber float as divisor tests
     def test_positive_integer_can_be_divmod_with_positive_nepalinumber_float(self):
         self.assertEqual(
             divmod(10, self.nepalinumber_float_2_5),
@@ -2485,7 +2485,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             (self.nepalinumber_integer_1, self.nepalinumber_negative_float_4_5),
         )
 
-    # divmod negative nepalinumber integer as divisior tests
+    # divmod negative nepalinumber integer as divisor tests
     def test_positive_integer_can_be_divmod_with_negative_nepalinumber_integer(self):
         self.assertEqual(
             divmod(10, self.nepalinumber_negative_integer_2),
@@ -2557,7 +2557,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             (self.nepalinumber_integer_1, self.nepalinumber_negative_integer_2),
         )
 
-    # divmod negative nepalinumber float as divisior tests
+    # divmod negative nepalinumber float as divisor tests
     def test_positive_integer_can_be_divmod_with_negative_nepalinumber_float(self):
         self.assertEqual(
             divmod(10, self.nepalinumber_negative_float_2_5),

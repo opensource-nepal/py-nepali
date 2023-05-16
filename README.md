@@ -297,7 +297,7 @@ np_datetime = parse("Jestha 15, 2079")                # 2079-02-15 00:00:00
 | `%A`      | Weekday as locale’s full name.                            | Sunday, Monday, …, Saturday    |
 | `%d`      | Day of the month as a zero-padded decimal number.         | 01, 02, …, 31                  |
 | `%-d`     | Day of the month as a decimal number.                     | 1, 2, …, 31                    |
-| `%B`      | Month as locale’s full name.                              | Baishak, Jestha, …, Chaitra    |
+| `%B`      | Month as locale’s full name.                              | Baishakh, Jestha, …, Chaitra   |
 | `%m`      | Month as a zero-padded decimal number.                    | 01, 02, …, 12                  |
 | `%-m`     | Month as a decimal number.                                | 1, 2, …, 12                    |
 | `%y`      | Year without century as a zero-padded decimal number.     | 00, 01, …, 99                  |

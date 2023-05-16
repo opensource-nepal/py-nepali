@@ -2,6 +2,10 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
+      - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: check-yaml
+      - id: pretty-format-json
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/akaihola/darker
@@ -11,6 +15,11 @@ repos:
         args:
           - --isort
           - --lint=flake8 --max-line-length=88
+          - --lint=mypy --strict
+          - --lint=pylint --max-line-length=88
         additional_dependencies:
-          - isort==5.11.5
+          - black==23.3.0
           - flake8==5.0.4
+          - isort==5.12.0
+          - mypy==1.2.0
+          - pylint==2.17.4

@@ -2,11 +2,11 @@
 validates parsing
 """
 import re
+from typing import Optional, Tuple
 
 from nepali.char import nepali_to_english_text
 from nepali.datetime import nepalidatetime, nepalimonth, nepaliweek
-from nepali.datetime.constants import MONTHS_EN, WEEKS_EN, WEEKS_ABBR_EN
-
+from nepali.datetime.constants import MONTHS_EN, WEEKS_ABBR_EN, WEEKS_EN
 
 __nepali_time_re__CACHE = None
 
@@ -68,12 +68,12 @@ class NepaliTimeRE(dict):
         else:
             return ""
         regex = "|".join(re.escape(stuff) for stuff in to_convert)
-        regex = "(?P<%s>%s" % (directive, regex)
-        return "%s)" % regex
+        regex = f"(?P<{directive}>{regex}"
+        return f"{regex})"
 
     def pattern(self, format):
         """
-        Handle conversion from format directives to regexes.
+        Handle conversion from format directives to regex.
         """
         processed_format = ""
         regex_chars = re.compile(r"([\\.^$*+?\(\){}\[\]|])")
@@ -96,7 +96,7 @@ class NepaliTimeRE(dict):
                 self[format[directive_index : directive_index + index_increment]],
             )
             format = format[directive_index + index_increment :]
-        return "^%s%s$" % (processed_format, format)
+        return f"^{processed_format}{format}$"
 
     def compile(self, format):
         """Return a compiled re object for the format string."""
@@ -138,6 +138,137 @@ def extract(datetime_str, format):
     return match.groupdict()
 
 
+def __convert_12_hour_to_24_hour(hour: int, am_pm: str) -> int:
+    """Converts hours from 12-hour format to 24-hour format.
+
+    :param hour: The hour value to convert.
+    :param am_pm: Either "am" or "pm"; signifies whether the hour is in am or pm.
+
+    :returns: The value of `hour` converted to 24-hour format.
+    """
+    am_pm = am_pm.lower()
+    if am_pm == "am" and hour == 12:
+        return 0
+    elif am_pm == "pm" and hour != 12:
+        return hour + 12
+    return hour
+
+
+def __calculate_year(data: dict) -> Optional[int]:
+    """Calculates the year value from given data.
+
+    :param data: The dictionary of the format:
+                    {
+                        "Y": 2078,
+                        "b": "Mangsir",
+                        "d": 12,
+                        ...
+                    }
+
+    :returns: The year value of given date data.
+    """
+    if "y" in data:
+        return int(data["y"]) + 2000
+    elif "Y" in data:
+        return int(data["Y"])
+    return None
+
+
+def __calculate_month(data: dict) -> nepalimonth:
+    """Calculates the month value from given data.
+
+    :param data: The dictionary of the format:
+                    {
+                        "Y": 2078,
+                        "b": "Mangsir",
+                        "d": 12,
+                        ...
+                    }
+
+    :returns: The month value of given date data.
+    """
+    if "m" in data:
+        return nepalimonth(int(data["m"]))
+    elif "b" in data:
+        return nepalimonth(data["b"])
+    elif "B" in data:
+        return nepalimonth(data["B"])
+    return nepalimonth(1)
+
+
+def __calculate_day(data: dict) -> int:
+    """Calculates the day value from given data.
+
+    :param data: The dictionary of the format:
+                    {
+                        "Y": 2078,
+                        "b": "Mangsir",
+                        "d": 12,
+                        ...
+                    }
+
+    :returns: The day value of given date data.
+    """
+    if "d" in data:
+        return int(data["d"])
+    return 1
+
+
+def __calculate_hour_minute_seconds(data: dict) -> Tuple[int, int, int, int]:
+    """Calculates hour, minutes, seconds and microseconds from given data.
+
+    :param data: The dictionary of the format:
+                    {
+                        "Y": 2078,
+                        "b": "Mangsir",
+                        "d": 12,
+                        "H": 12,
+                        "M": 12,
+                        "S": 12,
+                        "f": 12,
+                        ...
+                    }
+
+    :returns: A tuple of hour, minute, seconds and microseconds.
+    """
+    hour = minute = second = fraction = 0
+    if "H" in data:
+        hour = int(data["H"])
+    elif "I" in data:
+        am_pm = data.get("p", "").lower() or "am"
+        hour = __convert_12_hour_to_24_hour(hour=int(data["I"]), am_pm=am_pm)
+
+    if "M" in data:
+        minute = int(data["M"])
+
+    if "S" in data:
+        second = int(data["S"])
+
+    if "f" in data:
+        s = data["f"]
+        # Pad to always return microseconds.
+        s += "0" * (6 - len(s))
+        fraction = int(s)
+
+    return (hour, minute, second, fraction)
+
+
+def __calculate_weekday(data: dict) -> Optional[nepaliweek]:
+    """Calculates the weekday of the date given in data.
+
+    :param data: The data that describes the date.
+
+    :returns: The weekday value; 0 for Sunday, 1 for Monday, etc.
+    """
+    if "a" in data:
+        return nepaliweek(data["a"])
+    elif "A" in data:
+        return nepaliweek(data["A"])
+    elif "w" in data:
+        return nepaliweek((int(data["w"]) - 1) % 7)
+    return None
+
+
 def transform(data: dict):
     """
     transforms different format data to uniform data
@@ -160,62 +291,12 @@ def transform(data: dict):
     }
     """
 
-    year = None
-    month = day = 1
-    hour = minute = second = fraction = 0
-    weekday = None
+    year = __calculate_year(data)
+    month = __calculate_month(data)
+    day = __calculate_day(data)
+    hour, minute, second, fraction = __calculate_hour_minute_seconds(data)
+    weekday = __calculate_weekday(data)
 
-    for date_key in data.keys():
-        if date_key == "y":
-            year = int(data["y"])
-            year += 2000
-        elif date_key == "Y":
-            year = int(data["Y"])
-        elif date_key == "m":
-            month = int(data["m"])
-        elif date_key == "B":
-            month = nepalimonth(data["B"])
-        elif date_key == "b":
-            month = nepalimonth(data["b"])
-        elif date_key == "d":
-            day = int(data["d"])
-        elif date_key == "H":
-            hour = int(data["H"])
-        elif date_key == "I":
-            hour = int(data["I"])
-            ampm = data.get("p", "").lower()
-            # If there was no AM/PM indicator, we'll treat this like AM
-            if ampm in ("", "am"):
-                # We're in AM so the hour is correct unless we're
-                # looking at 12 midnight.
-                # 12 midnight == 12 AM == hour 0
-                if hour == 12:
-                    hour = 0
-            elif ampm == "pm":
-                # We're in PM so we need to add 12 to the hour unless
-                # we're looking at 12 noon.
-                # 12 noon == 12 PM == hour 12
-                if hour != 12:
-                    hour += 12
-        elif date_key == "M":
-            minute = int(data["M"])
-        elif date_key == "S":
-            second = int(data["S"])
-        elif date_key == "f":
-            s = data["f"]
-            # Pad to always return microseconds.
-            s += "0" * (6 - len(s))
-            fraction = int(s)
-        elif date_key == "A":
-            weekday = nepaliweek(data["A"])
-        elif date_key == "a":
-            weekday = nepaliweek(data["a"])
-        elif date_key == "w":
-            weekday = int(data["w"])
-            if weekday == 0:
-                weekday = 6
-            else:
-                weekday -= 1
     return {
         "year": year,
         "month": month,
