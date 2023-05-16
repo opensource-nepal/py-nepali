@@ -184,7 +184,7 @@ class nepalinumber:
         Checks if nepalinumber is equal to another object
 
         :param other: The other number/object which is to be checked for
-            equality againt nepalinumber
+            equality against nepalinumber
         :return: True if equal else False
         """
         if isinstance(other, nepalinumber):
@@ -197,7 +197,7 @@ class nepalinumber:
         Checks if nepalinumber is not equal to another object
 
         :param other: The other number/object which is to be checked for
-            equality againt nepalinumber
+            equality against nepalinumber
         :return: True if not equal else False
         """
         if isinstance(other, nepalinumber):
@@ -349,7 +349,7 @@ class nepalinumber:
         the nepalinumber object
 
         :param other: The other number/object that is to get
-            dividied by the value in the nepalinumber object
+            divided by the value in the nepalinumber object
         :raises TypeError: Raised when nepalinumber object is
             used to divide unsupported data types
         :return: Returns the quotient number as a nepalinumber
@@ -388,7 +388,7 @@ class nepalinumber:
         before the nepalinumber object
 
         :param other: The other number/object that is to get
-            dividied by the value in the nepalinumber object
+            divided by the value in the nepalinumber object
         :raises TypeError: Raised when nepalinumber object is
             used to divide unsupported data types
         :return: Returns the quotient number as a nepalinumber

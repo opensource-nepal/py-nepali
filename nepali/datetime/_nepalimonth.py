@@ -66,7 +66,7 @@ class NepaliMonthMeta(type):
 class nepalimonth(metaclass=NepaliMonthMeta):
     """
     Represents Nepali month: Baishakh, Jestha, ..., Chaitra.
-    Baishak: 1,
+    Baishakh: 1,
     Jestha: 2,
     ...
     Chaitra: 12

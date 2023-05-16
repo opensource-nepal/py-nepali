@@ -73,7 +73,7 @@ class NepaliTimeRE(dict):
 
     def pattern(self, format):
         """
-        Handle conversion from format directives to regexes.
+        Handle conversion from format directives to regex.
         """
         processed_format = ""
         regex_chars = re.compile(r"([\\.^$*+?\(\){}\[\]|])")
