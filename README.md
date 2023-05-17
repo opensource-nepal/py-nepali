@@ -49,10 +49,11 @@ phone_number.parse("+977-9845217789")
    - [timezone](#timezone)
    - [parse](#parse)
    - [strftime() and strptime() Format Codes](#strftime-and-strptime-format-codes)
-2. [Numbers](#numbers)
-    - [nepalinumber](#nepalinumber)
-3. [Phone Number](#phone-number)
-4. [Locations](#locations)
+1. [Numbers](#numbers)
+   - [nepalinumber](#nepalinumber)
+1. [Phone Number](#phone-number)
+1. [Locations](#locations)
+1. [For Django Template](#for-django-template)
 
 ## Date and Time
 
@@ -444,11 +445,17 @@ INSTALLED_APPS = [
 ]
 ```
 
+### nepalidatetime
+
 In your Template
 
 ```python
 {% load nepalidatetime %}
 ```
+
+#### nepalinow
+
+`nepalinow` renders the current Nepali date and time in 'en-US' locale (English).
 
 ```python
 {% nepalinow %}
@@ -458,18 +465,54 @@ In your Template
 {% nepalinow '%Y-%m-%d' %}
 ```
 
-```python
-{{ datetimeobj|nepalidate:"%Y-%m-%d" }}
-{{ datetimeobj|nepalidate_en:"%Y-%m-%d" }}
-```
+#### nepalinow_ne
+
+`nepalinow_ne` renders the current Nepali date and time in 'ne' locale (Nepali).
 
 ```python
-{{ datetimeobj|nepalihumanize }}
+{% nepalinow_ne %}
 ```
+
+#### nepalidate
+
+`nepalidate` renders the datetime object into nepali datetime format in 'en-US' locale (English).
+
+```python
+{{ datetime_obj|nepalidate:"%Y-%m-%d" }}
+```
+
+#### nepalidate_ne
+
+`nepalidate_ne` renders the datetime object into nepali datetime format in 'ne' locale (Nepali).
+
+```python
+{{ datetime_obj|nepalidate_ne:"%Y-%m-%d" }}
+```
+
+#### nepalihumanize
+
+`nepalihumanize` renders the datetime object to a human readable form for 'ne' locale (Nepali)
+
+```python
+{{ datetime_obj|nepalihumanize }}
+```
+
+### nepalinumber
+
+In your Template
+
+```python
+{% load nepalinumber %}
+```
+
+`nepalinumber` renders the english number into nepali format (devanagari)
 
 ```python
 {{ forloop.counter|nepalinumber }}
+
+{{ 150|nepalinumber }}
 ```
+
 
 ## Contribution
 

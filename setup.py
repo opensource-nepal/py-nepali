@@ -34,7 +34,7 @@ if sys.argv[-1] == "publish":
 
 setuptools.setup(
     name="nepali",
-    version="1.0.0",
+    version="1.0.1",
     author="opensource-nepal",
     author_email="aj3sshh@gmail.com, sugatbajracharya49@gmail.com",
     description="nepalidatetime compatible with python's datetime feature. "
