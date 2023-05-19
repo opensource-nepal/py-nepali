@@ -1,10 +1,10 @@
 # Security Policy
 
-The 'nepali' project is committed to maintaining the security and integrity of our software. This Security Policy outlines the steps we take to address security vulnerabilities, as well as the responsibilities of our contributors and users in reporting and resolving security-related issues.
+The 'py-nepali' project is committed to maintaining the security and integrity of our software. This Security Policy outlines the steps we take to address security vulnerabilities, as well as the responsibilities of our contributors and users in reporting and resolving security-related issues.
 
 ## Supported Versions
 
-We provide security updates and support for the latest stable release of the 'nepali' package. It is important to keep your software up to date to ensure you have the latest security patches.
+We provide security updates and support for the latest stable release of the 'py-nepali' package. It is important to keep your software up to date to ensure you have the latest security patches.
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -18,7 +18,7 @@ If you discover a security vulnerability within the project, we encourage you to
 
 1. Email at aj3sshh@gmail.com or sugatbajracharya49@gmail.com with a detailed description of the vulnerability. Please include the following information:
    - Description of the vulnerability, including steps to reproduce if applicable
-   - Version of the nepali package affected
+   - Version of the py-nepali package affected
    - Any potential mitigations or workarounds
 
 2. Our security team will acknowledge your report within 3 to 7 days and provide further instructions and communication regarding the vulnerability.
@@ -45,7 +45,7 @@ While we appreciate the efforts of security researchers and users who report vul
 
 ## Disclaimer
 
-The nepali project is provided "as is," without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement. In no event shall the package maintainers or contributors be liable for any claim, damages, or other liability arising from the use of the nepali project or any security-related incidents.
+The py-nepali project is provided "as is," without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement. In no event shall the package maintainers or contributors be liable for any claim, damages, or other liability arising from the use of the nepali project or any security-related incidents.
 
 ## Contact
 

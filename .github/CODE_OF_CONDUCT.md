@@ -2,11 +2,11 @@
 
 ## Introduction
 
-This document outlines the code of conduct for contributors, maintainers, and users of the "nepali" project. It aims to foster an inclusive and respectful community, promoting collaboration and positive interactions. By participating in this project, you are expected to adhere to this code of conduct. This code of conduct applies to all project-related spaces, including GitHub repositories, issue trackers, mailing lists, and social media platforms associated with the project.
+This document outlines the code of conduct for contributors, maintainers, and users of the "py-nepali" project. It aims to foster an inclusive and respectful community, promoting collaboration and positive interactions. By participating in this project, you are expected to adhere to this code of conduct. This code of conduct applies to all project-related spaces, including GitHub repositories, issue trackers, mailing lists, and social media platforms associated with the project.
 
 ## Our Pledge
 
-In the interest of fostering an open and welcoming environment, we, as contributors, maintainers, and users of the nepali project, pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual orientation.
+In the interest of fostering an open and welcoming environment, we, as contributors, maintainers, and users of the py-nepali project, pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual orientation.
 
 ## Expected Behavior
 
