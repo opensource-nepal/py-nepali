@@ -11,20 +11,21 @@ assignees: aj3sh, sugat009
 A clear and concise description of what the bug is.
 
 **To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+Please provide the steps to reproduce the issue. Include code snippets or specific examples if applicable.
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Platform/Environment**
-OS, Python version, Environments, etc
-
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Environment**
+- Python version:
+- Package version:
+- Operating system:
+- Any other relevant information about your environment.
 
 **Additional context**
-Add any other context about the problem here.
+Please provide any additional context or information that may be helpful in understanding and resolving the issue. This can include:
+- Exception stack trace
+- Error messages
+- Log files
+- Screenshots
+- Any other relevant details related to the issue.
