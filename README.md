@@ -1,9 +1,9 @@
 # nepali
 
 [![PyPI version](https://badge.fury.io/py/nepali.svg)](https://badge.fury.io/py/nepali)
-[![CI status](https://github.com/opensource-nepal/py-nepali/actions/workflows/python-package.yml/badge.svg?branch=master)](https://github.com/opensource-nepal/py-nepali/actions)
+[![CI status](https://github.com/opensource-nepal/py-nepali/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/opensource-nepal/py-nepali/actions)
 [![Downloads](https://img.shields.io/pypi/dm/nepali.svg?maxAge=180)](https://pypi.org/project/nepali/)
-[![codecov](https://codecov.io/gh/opensource-nepal/py-nepali/branch/master/graph/badge.svg?token=PTUHYWCJ4I)](https://codecov.io/gh/opensource-nepal/py-nepali)
+[![codecov](https://codecov.io/gh/opensource-nepal/py-nepali/branch/main/graph/badge.svg?token=PTUHYWCJ4I)](https://codecov.io/gh/opensource-nepal/py-nepali)
 
 `nepali` is a python package containing features that will be useful for Nepali projects.
 
