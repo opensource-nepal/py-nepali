@@ -17,31 +17,31 @@ class formatter_class_mixin:
 
     @classmethod
     def init_formatter_class(cls):
-        if not hasattr(cls, "__formatter_class__Cache"):
+        if not hasattr(cls, "_formatter_class_cache"):
             from ._formatter import NepaliDateTimeFormatter
 
-            cls.__formatter_class__Cache = NepaliDateTimeFormatter
-        return cls.__formatter_class__Cache
+            cls._formatter_class_cache = NepaliDateTimeFormatter
+        return cls._formatter_class_cache
 
     @classmethod
     def get_strptime_method(cls):
-        if not hasattr(cls, "_strptime_method_CACHE"):
+        if not hasattr(cls, "_strptime_method_cache"):
             from .parser import strptime
 
-            cls._strptime_method_CACHE = strptime
-        return cls._strptime_method_CACHE
+            cls._strptime_method_cache = strptime
+        return cls._strptime_method_cache
 
     def strftime(self, format: str) -> str:
         return self.strftime_en(format)
 
     def strftime_en(self, format: str) -> str:
-        NepaliDateTimeFormatter = self.get_formatter_class()
-        formatter = NepaliDateTimeFormatter(self, devanagari=False)
+        nepali_datetime_formatter = self.get_formatter_class()
+        formatter = nepali_datetime_formatter(self, devanagari=False)
         return formatter.get_str(format)
 
     def strftime_ne(self, format: str) -> str:
-        NepaliDateTimeFormatter = self.get_formatter_class()
-        formatter = NepaliDateTimeFormatter(self, devanagari=True)
+        nepali_datetime_formatter = self.get_formatter_class()
+        formatter = nepali_datetime_formatter(self, devanagari=True)
         return formatter.get_str(format)
 
 
@@ -194,12 +194,11 @@ class nepalidate(formatter_class_mixin):
 
     @staticmethod
     def from_date(date_object):
-        npDate = nepalidate(
+        return nepalidate(
             *nepali_date_converter.english_to_nepali(
                 date_object.year, date_object.month, date_object.day
             )
         )
-        return npDate
 
     @staticmethod
     def from_nepalidatetime(datetime_object):

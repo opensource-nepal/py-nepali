@@ -1,4 +1,12 @@
-MONTHS_EN = (
+"""
+This files contains constants for the py-Nepali project.
+"""
+
+# Nepali timezone
+NEPAL_TIMEZONE = "Asia/Kathmandu"
+
+# Nepali months in english
+NEPALI_MONTHS_EN = (
     "Baishakh",
     "Jestha",
     "Ashad",
@@ -13,7 +21,8 @@ MONTHS_EN = (
     "Chaitra",
 )
 
-MONTHS_NE = (
+# Nepali months in Nepali (devanagari)
+NEPALI_MONTHS_NE = (
     "बैशाख",
     "जेठ",
     "असार",
@@ -28,6 +37,7 @@ MONTHS_NE = (
     "चैत",
 )
 
+# Week names in english
 WEEKS_EN = (
     "Sunday",
     "Monday",
@@ -38,8 +48,10 @@ WEEKS_EN = (
     "Saturday",
 )
 
+# Week abbreviation name in english
 WEEKS_ABBR_EN = ("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
 
+# Weeks names in Nepali (devanagari)
 WEEKS_NE = (
     "आइतबार",
     "सोमबार",
@@ -50,4 +62,5 @@ WEEKS_NE = (
     "शनिबार",
 )
 
+# Week abbreviation name in Nepali (devanagari)
 WEEKS_ABBR_NE = ("आइत", "सोम", "मंगल", "बुध", "बिही", "शुक्र", "शनि")

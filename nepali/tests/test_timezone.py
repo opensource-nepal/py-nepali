@@ -7,13 +7,14 @@ import datetime
 import unittest
 from unittest.mock import patch
 
+from nepali.constants import NEPAL_TIMEZONE
 from nepali.timezone import (
     NepaliTimeZone,
+    get_timezone,
+    now,
     to_nepali_timezone,
     to_utc_timezone,
     utc_now,
-    now,
-    get_timezone,
 )
 
 
@@ -32,13 +33,13 @@ class TestNepaliTimeZone(unittest.TestCase):
         )
 
     def test_nepali_timezone_tzname(self):
-        self.assertEqual(self.nepali_timezone.tzname(None), "Asia/Kathmandu")
+        self.assertEqual(self.nepali_timezone.tzname(None), NEPAL_TIMEZONE)
 
     def test_nepali_timezone_str(self):
-        self.assertEqual(str(self.nepali_timezone), "Asia/Kathmandu")
+        self.assertEqual(str(self.nepali_timezone), NEPAL_TIMEZONE)
 
     def test_nepali_timezone_repr(self):
-        self.assertEqual(repr(self.nepali_timezone), "Asia/Kathmandu")
+        self.assertEqual(repr(self.nepali_timezone), NEPAL_TIMEZONE)
 
     def test_datetime_with_nepali_timezone(self):
         dt = datetime.datetime(2015, 10, 14, tzinfo=self.nepali_timezone)

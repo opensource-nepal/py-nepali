@@ -1,6 +1,8 @@
 import datetime
 from typing import Union
 
+from .constants import NEPAL_TIMEZONE
+
 
 class NepaliTimeZone(datetime.tzinfo):
     """
@@ -14,13 +16,13 @@ class NepaliTimeZone(datetime.tzinfo):
         return datetime.timedelta(0)
 
     def tzname(self, dt):
-        return "Asia/Kathmandu"
+        return NEPAL_TIMEZONE
 
     def __str__(self):
-        return "Asia/Kathmandu"
+        return NEPAL_TIMEZONE
 
     def __repr__(self):
-        return "Asia/Kathmandu"
+        return NEPAL_TIMEZONE
 
     def __eq__(self, o: object) -> bool:
         return isinstance(o, self.__class__)

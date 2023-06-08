@@ -1,10 +1,7 @@
-import datetime as pythonDateTime
-
 from nepali import number
-from nepali.timezone import now, to_nepali_timezone
-from nepali.exceptions import InvalidNepaliDateTimeObjectException
+from nepali.timezone import now
 
-from ._datetime import nepalidate, nepalidatetime
+from .utils import to_nepalidatetime
 
 
 class HumanizeDateTime:
@@ -29,20 +26,7 @@ class HumanizeDateTime:
         threshold (kwargs): threshold to be humanize
         format (kwargs): format to display behind threshold
         """
-        if type(datetime_obj) == nepalidatetime:
-            self.datetime_obj = datetime_obj.to_datetime()
-        elif type(datetime_obj) == nepalidate:
-            self.datetime_obj = nepalidatetime.from_nepali_date(
-                datetime_obj
-            ).to_datetime()
-        elif type(datetime_obj) == pythonDateTime.date:
-            self.datetime_obj = nepalidatetime.from_date(datetime_obj).to_datetime()
-        elif type(datetime_obj) == pythonDateTime.datetime:
-            self.datetime_obj = to_nepali_timezone(datetime_obj)
-        else:
-            raise InvalidNepaliDateTimeObjectException(
-                "Argument must be instance of NepaliDate or NepaliDateTime or datetime.datetime or datetime.date"
-            )
+        self.datetime_obj = to_nepalidatetime(datetime_obj)
 
         self.threshold = kwargs.get("threshold")
         self.format = kwargs.get("format")
@@ -53,8 +37,11 @@ class HumanizeDateTime:
     def __calc_seconds(self):
         """calculates total seconds from now"""
         current_date_time = now()
-        date = self.datetime_obj
-        self.seconds = int((current_date_time - date).total_seconds())
+
+        # TODO (@aj3sh): support datetime - nepalidatetime
+        self.seconds = int(
+            (current_date_time - self.datetime_obj.to_datetime()).total_seconds()
+        )
 
         self.interval_tense = self.__past_text
         if self.seconds < 0:
@@ -67,13 +54,12 @@ class HumanizeDateTime:
         """returns humanize string"""
         seconds = self.__calc_seconds()  # calculating seconds
 
-        if self.threshold is not None:
-            if seconds >= self.threshold:
-                return self.get_datetime().strip()
+        if self.threshold is not None and seconds >= self.threshold:
+            return self._get_datetime_str().strip()
 
-        return self.get_humanize().strip()
+        return self._get_humanize_str().strip()
 
-    def get_humanize(self):
+    def _get_humanize_str(self):
         """
         returns humanize datetime
         """
@@ -118,14 +104,13 @@ class HumanizeDateTime:
             str(interval_value) + " " + str(interval_text) + " " + self.interval_tense
         )
 
-    def get_datetime(self):
+    def _get_datetime_str(self):
         """
         returns date in nepali characters
         """
         if not self.format:
             self.format = "%B %d, %Y"
-        ndt = nepalidatetime.from_datetime(self.datetime_obj)
-        return ndt.strftime_ne(self.format)
+        return self.datetime_obj.strftime_ne(self.format)
 
     def __str__(self):
         return self.to_str()
