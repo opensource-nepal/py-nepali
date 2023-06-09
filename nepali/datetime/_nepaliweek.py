@@ -1,7 +1,7 @@
 from functools import cached_property
 from typing import Any, Dict, Optional, Union
 
-from .constants import WEEKS_EN, WEEKS_NE, WEEKS_ABBR_EN, WEEKS_ABBR_NE
+from nepali.constants import WEEKS_ABBR_EN, WEEKS_ABBR_NE, WEEKS_EN, WEEKS_NE
 
 
 class NepaliWeekMeta(type):
@@ -28,7 +28,7 @@ class NepaliWeekMeta(type):
                 pass
 
         # checking if week is valid
-        if value is None or not (0 <= value <= 6):
+        if value is None or not 0 <= value <= 6:
             raise ValueError(f"Invalid week: {week}")
 
         # checking cache
@@ -37,7 +37,8 @@ class NepaliWeekMeta(type):
 
         return cls._cache[value]
 
-    def _parse_str(cls, week: str) -> int:
+    @staticmethod
+    def _parse_str(week: str) -> int:
         """
         Parses str value of the week and returns int.
 

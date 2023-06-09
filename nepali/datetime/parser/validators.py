@@ -5,8 +5,8 @@ import re
 from typing import Optional, Tuple
 
 from nepali.char import nepali_to_english_text
+from nepali.constants import NEPALI_MONTHS_EN, WEEKS_ABBR_EN, WEEKS_EN
 from nepali.datetime import nepalidatetime, nepalimonth, nepaliweek
-from nepali.datetime.constants import MONTHS_EN, WEEKS_ABBR_EN, WEEKS_EN
 
 __nepali_time_re__CACHE = None
 
@@ -41,8 +41,8 @@ class NepaliTimeRE(dict):
                 "z": r"(?P<z>[+-]\d\d:?[0-5]\d(:?[0-5]\d(\.\d{1,6})?)?|(?-i:Z))",
                 "A": self.__seqToRE(WEEKS_EN, "A"),
                 "a": self.__seqToRE(WEEKS_ABBR_EN, "a"),
-                "B": self.__seqToRE(MONTHS_EN, "B"),
-                "b": self.__seqToRE(MONTHS_EN, "b"),
+                "B": self.__seqToRE(NEPALI_MONTHS_EN, "B"),
+                "b": self.__seqToRE(NEPALI_MONTHS_EN, "b"),
                 "p": self.__seqToRE(
                     (
                         "AM",
@@ -71,36 +71,39 @@ class NepaliTimeRE(dict):
         regex = f"(?P<{directive}>{regex}"
         return f"{regex})"
 
-    def pattern(self, format):
+    def pattern(self, date_format):
         """
         Handle conversion from format directives to regex.
         """
         processed_format = ""
         regex_chars = re.compile(r"([\\.^$*+?\(\){}\[\]|])")
-        format = regex_chars.sub(r"\\\1", format)
+        date_format = regex_chars.sub(r"\\\1", date_format)
         whitespace_replacement = re.compile(r"\s+")
-        format = whitespace_replacement.sub(r"\\s+", format)
-        while "%" in format:
-            directive_index = format.index("%") + 1
+        date_format = whitespace_replacement.sub(r"\\s+", date_format)
+        while "%" in date_format:
+            directive_index = date_format.index("%") + 1
             index_increment = 1
 
-            if format[directive_index] == "-":
+            if date_format[directive_index] == "-":
                 index_increment = 2
 
-            if format[directive_index : directive_index + index_increment] not in self:
+            if (
+                date_format[directive_index : directive_index + index_increment]
+                not in self
+            ):
                 return None
 
             processed_format = "%s%s%s" % (
                 processed_format,
-                format[: directive_index - 1],
-                self[format[directive_index : directive_index + index_increment]],
+                date_format[: directive_index - 1],
+                self[date_format[directive_index : directive_index + index_increment]],
             )
-            format = format[directive_index + index_increment :]
-        return f"^{processed_format}{format}$"
+            date_format = date_format[directive_index + index_increment :]
+        return f"^{processed_format}{date_format}$"
 
-    def compile(self, format):
+    def compile(self, date_format):
         """Return a compiled re object for the format string."""
-        return re.compile(self.pattern(format), re.IGNORECASE)
+        return re.compile(self.pattern(date_format), re.IGNORECASE)
 
 
 def get_nepali_time_re_object():
@@ -131,7 +134,7 @@ def extract(datetime_str, format):
     # converting datetime_str to english if any exists
     datetime_str = nepali_to_english_text(datetime_str)
 
-    re_compiled_format = get_nepali_time_re_object().compile(format=format)
+    re_compiled_format = get_nepali_time_re_object().compile(format)
     match = re_compiled_format.match(datetime_str)
     if match is None:
         return {}
@@ -250,7 +253,7 @@ def __calculate_hour_minute_seconds(data: dict) -> Tuple[int, int, int, int]:
         s += "0" * (6 - len(s))
         fraction = int(s)
 
-    return (hour, minute, second, fraction)
+    return hour, minute, second, fraction
 
 
 def __calculate_weekday(data: dict) -> Optional[nepaliweek]:
@@ -320,7 +323,7 @@ def validate(datetime_str, format):
     """
 
     # 1. validate if format is correct.
-    if get_nepali_time_re_object().pattern(format=format) is None:
+    if get_nepali_time_re_object().pattern(format) is None:
         # regex pattern generation failed
         return None
 

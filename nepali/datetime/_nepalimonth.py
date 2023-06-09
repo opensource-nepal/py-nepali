@@ -1,7 +1,7 @@
 from functools import cached_property
 from typing import Any, Dict, Optional, Union
 
-from .constants import MONTHS_EN, MONTHS_NE
+from nepali.constants import NEPALI_MONTHS_EN, NEPALI_MONTHS_NE
 
 
 class NepaliMonthMeta(type):
@@ -40,7 +40,8 @@ class NepaliMonthMeta(type):
 
         return cls._cache[value]
 
-    def _parse_str(cls, month: str) -> int:
+    @staticmethod
+    def _parse_str(month: str) -> int:
         """
         Parses str value of the month and returns int.
 
@@ -54,7 +55,7 @@ class NepaliMonthMeta(type):
             return int(month)
 
         month = month.capitalize()
-        month_names = MONTHS_EN + MONTHS_NE
+        month_names = NEPALI_MONTHS_EN + NEPALI_MONTHS_NE
         try:
             index = month_names.index(month)
         except ValueError:
@@ -107,9 +108,9 @@ class nepalimonth(metaclass=NepaliMonthMeta):
     @cached_property
     def name(self) -> str:
         """Month's english name"""
-        return MONTHS_EN[self.__value - 1]
+        return NEPALI_MONTHS_EN[self.__value - 1]
 
     @cached_property
     def name_ne(self) -> str:
         """Month's nepali name"""
-        return MONTHS_NE[self.__value - 1]
+        return NEPALI_MONTHS_NE[self.__value - 1]

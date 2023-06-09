@@ -65,10 +65,10 @@ def parse(datetime_str):
     eg. parse('2078-10-12') => <NepaliDateTime: 2078-10-12>
     """
     standard_formats = _get_standard_formats()
-    nepalidatetime_object = None
     for format in standard_formats:
-        nepalidatetime_object = validate(datetime_str, format=format)
-        if nepalidatetime_object is not None:
-            return nepalidatetime_object
+        try:
+            return strptime(datetime_str, format=format)
+        except FormatNotMatchException:
+            pass
 
     raise InvalidDateTimeFormatException("Invalid format to parse nepali datetime.")

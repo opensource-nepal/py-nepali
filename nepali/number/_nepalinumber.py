@@ -19,10 +19,23 @@ class nepalinumber:
         """
         self.__value = self.__parse(value)
 
-    def _raise_parse_exception(self, obj, ex_class: Type[Exception] = ValueError):
-        raise ex_class(
+    def get_parse_exception(
+        self, obj: object, ex_class: Type[Exception] = ValueError
+    ) -> Exception:
+        """
+        Returns the exception object to be raised when the parse is failed.
+        The methods also sets a proper message to the exception class.
+
+        :param obj: Object that is failed during the parse
+        :type obj: object
+        :param ex_class: Exception class type to be returned, defaults to ValueError
+        :type ex_class: Type[Exception], optional
+        :return: Exception object to be raised
+        :rtype: Exception
+        """
+        return ex_class(
             f"could not convert {obj.__class__.__name__} to {self.__class__.__name__}: '{obj}'"
-        ) from None
+        )
 
     def __parse(self, value: Any) -> Union[int, float]:
         """
@@ -61,10 +74,10 @@ class nepalinumber:
 
         :raises ValueError: If the value is invalid
         """
-        result = 0
+        result: float = 0
         sign = 1
         decimal_found = False
-        decimal_place = 1
+        decimal_place: float = 1
         i = 0
 
         # for negative sign
@@ -77,7 +90,7 @@ class nepalinumber:
             if value[i] == ".":
                 if decimal_found:
                     # decimal was already found
-                    self._raise_parse_exception(value)
+                    raise self.get_parse_exception(value) from None
                 decimal_found = True
                 i += 1
                 continue
@@ -86,7 +99,7 @@ class nepalinumber:
             if digit < 0 or digit > 9:
                 # checking nepali character
                 if value[i] not in NP_NUMBERS_SET:
-                    self._raise_parse_exception(value)
+                    raise self.get_parse_exception(value) from None
                 digit = NP_NUMBERS.index(value[i])
 
             if decimal_found:
@@ -113,7 +126,7 @@ class nepalinumber:
             return self.__parse_str(str(obj))
         except (ValueError, TypeError):
             # object conversion must raise TypeError if fails
-            self._raise_parse_exception(obj, ex_class=TypeError)
+            raise self.get_parse_exception(obj, ex_class=TypeError) from None
 
     def __convert_or_return(self, obj) -> Union["nepalinumber", object]:
         """
