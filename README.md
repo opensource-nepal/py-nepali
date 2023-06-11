@@ -433,86 +433,9 @@ get_municipality(name_nepali="विराटनगर")
 
 ---
 
-## For Django Template
+## For Django
 
-Add `'nepali'` to your `INSTALLED_APPS` setting.
-
-```python
-INSTALLED_APPS = [
-    ...
-    'nepali',
-    ...
-]
-```
-
-### nepalidatetime
-
-In your Template
-
-```python
-{% load nepalidatetime %}
-```
-
-#### nepalinow
-
-`nepalinow` renders the current Nepali date and time in 'en-US' locale (English).
-
-```python
-{% nepalinow %}
-```
-
-```python
-{% nepalinow '%Y-%m-%d' %}
-```
-
-#### nepalinow_ne
-
-`nepalinow_ne` renders the current Nepali date and time in 'ne' locale (Nepali).
-
-```python
-{% nepalinow_ne %}
-```
-
-#### nepalidate
-
-`nepalidate` renders the datetime object into nepali datetime format in 'en-US' locale (English).
-
-```python
-{{ datetime_obj|nepalidate:"%Y-%m-%d" }}
-```
-
-#### nepalidate_ne
-
-`nepalidate_ne` renders the datetime object into nepali datetime format in 'ne' locale (Nepali).
-
-```python
-{{ datetime_obj|nepalidate_ne:"%Y-%m-%d" }}
-```
-
-#### nepalihumanize
-
-`nepalihumanize` renders the datetime object to a human readable form for 'ne' locale (Nepali)
-
-```python
-{{ datetime_obj|nepalihumanize }}
-```
-
-### nepalinumber
-
-In your Template
-
-```python
-{% load nepalinumber %}
-```
-
-`nepalinumber` renders the english number into nepali format (devanagari)
-
-```python
-{{ forloop.counter|nepalinumber }}
-
-{{ 150|nepalinumber }}
-```
-
+We have created a new Django package called [django-nepali](https://github.com/opensource-nepal/django-nepali) to support `nepali` package. For more information, please visit [django-nepali](https://github.com/opensource-nepal/django-nepali).
 
 ## Contribution
 

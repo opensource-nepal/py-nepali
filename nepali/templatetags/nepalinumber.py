@@ -1,3 +1,7 @@
+"""
+This module contains django templatetags for nepali number.
+"""
+import warnings
 from typing import Any
 
 from django import template
@@ -10,6 +14,12 @@ from nepali.number import (
 )
 
 register = template.Library()
+
+DEPRECIATION_WARNING_MESSAGE = (
+    "The templatetag 'nepalinumber' has been depreciated "
+    "and will be removed in the future release. "
+    "Please use `django-nepali` package."
+)
 
 
 @register.filter(name="nepalinumber")
@@ -25,6 +35,10 @@ def nepalinumber(value: Any) -> str:
     :param value: Number to be converted
     :returns: Nepali output of given number
     """
+    warnings.warn(
+        message=DEPRECIATION_WARNING_MESSAGE,
+        category=DeprecationWarning,
+    )
     return english_to_nepali(value)
 
 
@@ -42,6 +56,10 @@ def nepalinumber_with_comma(value: Any) -> str:
     :param value: Number to be converted and commas added
     :returns: Nepali output of given number with commas
     """
+    warnings.warn(
+        message=DEPRECIATION_WARNING_MESSAGE,
+        category=DeprecationWarning,
+    )
     return convert_and_add_comma(value)
 
 
@@ -58,6 +76,10 @@ def nepali_comma(value: Any) -> str:
     :param value: Number to be added with commas
     :returns: Output of given number with commas
     """
+    warnings.warn(
+        message=DEPRECIATION_WARNING_MESSAGE,
+        category=DeprecationWarning,
+    )
     return add_comma(value)
 
 
@@ -74,4 +96,8 @@ def english_comma(value: Any) -> str:
     :param value: Number to be added with commas
     :returns: Output of given number with commas
     """
+    warnings.warn(
+        message=DEPRECIATION_WARNING_MESSAGE,
+        category=DeprecationWarning,
+    )
     return add_comma_english(value)

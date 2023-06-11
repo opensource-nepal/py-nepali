@@ -1,4 +1,8 @@
+"""
+This module contains django templatetags for nepali date and time.
+"""
 import datetime
+import warnings
 from typing import Optional, Union
 
 from django import template
@@ -11,6 +15,11 @@ from nepali.exceptions import InvalidNepaliDateTimeObjectException
 from nepali.utils import to_nepalidatetime
 
 _DEFAULT_DATE_FORMAT = "%B %d, %Y, %A"
+DEPRECIATION_WARNING_MESSAGE = (
+    "The templatetag 'nepalidatetime' has been depreciated "
+    "and will be removed in the future release. "
+    "Please use `django-nepali` package."
+)
 _datetime = Union[datetime.date, datetime.datetime, _nepalidate, _nepalidatetime]
 register = template.Library()
 
@@ -32,6 +41,10 @@ def nepalidate(
     :param format: Output format, defaults to "%B %d, %Y, %A"
     :returns: Nepali datetime format in 'en-US' locale
     """
+    warnings.warn(
+        message=DEPRECIATION_WARNING_MESSAGE,
+        category=DeprecationWarning,
+    )
     return nepalidate_en(datetime_obj, format=format)
 
 
@@ -52,6 +65,10 @@ def nepalidate_en(
     :param format: Output format, defaults to "%B %d, %Y, %A"
     :returns: Nepali datetime format in 'en-US' locale
     """
+    warnings.warn(
+        message=DEPRECIATION_WARNING_MESSAGE,
+        category=DeprecationWarning,
+    )
     try:
         nepali_datetime_obj = to_nepalidatetime(datetime_obj)
         return nepali_datetime_obj.strftime_en(format)
@@ -76,6 +93,10 @@ def nepalidate_ne(
     :param format: Output format, defaults to "%B %d, %Y, %A"
     :returns: Nepali datetime format in 'ne' locale
     """
+    warnings.warn(
+        message=DEPRECIATION_WARNING_MESSAGE,
+        category=DeprecationWarning,
+    )
     try:
         nepali_datetime_obj = to_nepalidatetime(datetime_obj)
         return nepali_datetime_obj.strftime_ne(format)
@@ -103,6 +124,10 @@ def nepalihumanize(
     :param format: Output format if threshold exceeded, optional
     :returns: Datetime object in human readable form
     """
+    warnings.warn(
+        message=DEPRECIATION_WARNING_MESSAGE,
+        category=DeprecationWarning,
+    )
     try:
         nepali_datetime_obj = to_nepalidatetime(datetime_obj)
         return humanize(nepali_datetime_obj, threshold=threshold, format=format)
@@ -125,6 +150,10 @@ def nepalinow(format: str = _DEFAULT_DATE_FORMAT) -> str:
     :param format: Output format, defaults to "%B %d, %Y, %A"
     :returns: Current nepali datetime
     """
+    warnings.warn(
+        message=DEPRECIATION_WARNING_MESSAGE,
+        category=DeprecationWarning,
+    )
     return nepalinow_en(format)
 
 
@@ -143,6 +172,10 @@ def nepalinow_en(format: str = _DEFAULT_DATE_FORMAT) -> str:
     :param format: Output format, defaults to "%B %d, %Y, %A"
     :returns: Current nepali datetime
     """
+    warnings.warn(
+        message=DEPRECIATION_WARNING_MESSAGE,
+        category=DeprecationWarning,
+    )
     return to_nepalidatetime(timezone.now()).strftime(format)
 
 
@@ -161,4 +194,8 @@ def nepalinow_ne(format: str = _DEFAULT_DATE_FORMAT) -> str:
     :param format: Output format, defaults to "%B %d, %Y, %A"
     :returns: Current nepali datetime
     """
+    warnings.warn(
+        message=DEPRECIATION_WARNING_MESSAGE,
+        category=DeprecationWarning,
+    )
     return to_nepalidatetime(timezone.now()).strftime_ne(format)
