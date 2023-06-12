@@ -1,6 +1,11 @@
 # CHANGELOG
 
-## v1.0.1
+## main
+
+- Depreciated templatetags.
+- Updated README.md for `django-nepali` package.
+
+## v1.0.1 (May 16, 2023)
 - Fixes on `nepalinumber` templatetags
     - Bug fix on Django templatetags 'nepalinumber' (was returning in en-US locale)
     - Added templatetag `nepali_comma`
