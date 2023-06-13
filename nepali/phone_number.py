@@ -2,7 +2,6 @@ import re
 from enum import Enum
 from typing import Union
 
-
 _mobile_number_re = re.compile(r"^(?:\+977|977)?(?:-)?(?:98|97|96)\d{8}$")
 _landline_number_re = re.compile(
     r"^(?:\+977|977)?(?:-)?(?:0)?(?:[01][1-9]|2[13-9]|[3-9]\d)\d{6,7}$"

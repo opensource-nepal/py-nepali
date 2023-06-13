@@ -1,3 +1,3 @@
-from ._locations import provinces, districts, municipalities
+from ._locations import districts, municipalities, provinces
 
 __all__ = ["provinces", "districts", "municipalities"]

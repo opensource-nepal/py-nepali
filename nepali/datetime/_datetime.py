@@ -1,7 +1,7 @@
 import datetime as pythonDateTime
 
 from nepali.date_converter import converter as nepali_date_converter
-from nepali.timezone import NepaliTimeZone, utc_now, to_nepali_timezone
+from nepali.timezone import NepaliTimeZone, to_nepali_timezone, utc_now
 
 from ._nepalimonth import nepalimonth
 

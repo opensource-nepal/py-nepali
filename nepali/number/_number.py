@@ -1,11 +1,6 @@
 import warnings
 
-from .utils import (
-    add_comma,
-    add_comma_english,
-    english_to_nepali,
-    nepali_to_english,
-)
+from .utils import add_comma, add_comma_english, english_to_nepali, nepali_to_english
 
 
 # Backward compatibility support for legacy NepaliNumber

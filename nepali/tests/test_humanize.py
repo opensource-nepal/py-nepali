@@ -2,10 +2,9 @@ import datetime
 import unittest
 from unittest.mock import patch
 
-from nepali.datetime import nepalihumanize, HumanizeDateTime, nepalidate, nepalidatetime
+from nepali.datetime import HumanizeDateTime, nepalidate, nepalidatetime, nepalihumanize
 from nepali.exceptions import InvalidNepaliDateTimeObjectException
 from nepali.timezone import NepaliTimeZone
-
 
 REF_TIME = datetime.datetime(2015, 1, 1, 10, 15, tzinfo=NepaliTimeZone())
 

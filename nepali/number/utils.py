@@ -1,6 +1,5 @@
 from typing import Any
 
-
 NP_NUMBERS = ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"]
 NP_NUMBERS_SET = set(NP_NUMBERS)
 
