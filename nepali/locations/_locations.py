@@ -1,6 +1,6 @@
 from typing import List, Tuple
 
-from .models import Province, District, Municipality, MunicipalityType
+from .models import District, Municipality, MunicipalityType, Province
 
 
 def _loadData() -> Tuple[List[Province], List[District], List[Municipality]]:

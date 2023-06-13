@@ -1,5 +1,5 @@
-from ._number import NepaliNumber
 from ._nepalinumber import nepalinumber
+from ._number import NepaliNumber
 from .utils import (
     add_comma,
     add_comma_english,

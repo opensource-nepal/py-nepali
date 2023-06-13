@@ -2,17 +2,17 @@ import unittest
 
 from nepali import locations
 from nepali.locations.models import (
+    District,
     Location,
+    Municipality,
     MunicipalityType,
     Province,
-    District,
-    Municipality,
 )
 from nepali.locations.utils import (
     _filter_location,
-    get_province,
     get_district,
     get_municipality,
+    get_province,
 )
 
 

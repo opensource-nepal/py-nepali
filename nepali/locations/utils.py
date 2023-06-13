@@ -1,8 +1,7 @@
 import re
 from functools import partial
 
-from ._locations import provinces, districts, municipalities
-
+from ._locations import districts, municipalities, provinces
 
 __all__ = [
     "get_province",

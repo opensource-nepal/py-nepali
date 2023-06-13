@@ -7,7 +7,7 @@ import sys
 import unittest
 
 from nepali import number
-from nepali.number import nepalinumber, NepaliNumber
+from nepali.number import NepaliNumber, nepalinumber
 
 
 class TestNumber(unittest.TestCase):
@@ -1008,7 +1008,9 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
             self.nepalinumber_float_4_5 * (-2.2), self.nepalinumber_negative_float_9_9
         )
 
-    def test_nepalinumber_float_is_multiplicable_to_positive_nepali_number_integer(self):
+    def test_nepalinumber_float_is_multiplicable_to_positive_nepali_number_integer(
+        self,
+    ):
         self.assertEqual(
             self.nepalinumber_float_10_1 * self.nepalinumber_integer_2,
             self.nepalinumber_float_20_2,

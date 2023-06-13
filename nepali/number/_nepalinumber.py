@@ -3,6 +3,7 @@ Contains the class for the nepalinumber feature
 """
 
 from typing import Any, Tuple, Type, Union
+
 from .utils import NP_NUMBERS, NP_NUMBERS_SET, english_to_nepali
 
 
