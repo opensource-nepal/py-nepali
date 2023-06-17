@@ -19,6 +19,9 @@ import sys
 
 import setuptools
 
+GITHUB_URL = "https://github.com/opensource-nepal/py-nepali"
+CHANGELOG_URL = "https://github.com/opensource-nepal/py-nepali/blob/main/CHANGELOG.md"
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
@@ -35,7 +38,8 @@ if sys.argv[-1] == "publish":
 
 setuptools.setup(
     name="nepali",
-    version="1.0.1",
+    version="1.1.0",
+    license="MIT",
     author="opensource-nepal",
     author_email="aj3sshh@gmail.com, sugatbajracharya49@gmail.com",
     description="nepalidatetime compatible with python's datetime feature. "
@@ -50,8 +54,8 @@ setuptools.setup(
         "python convert date",
         "parse nepali date time",
     ],
-    url="https://github.com/opensource-nepal/py-nepali",
-    packages=setuptools.find_packages(),
+    url=GITHUB_URL,
+    packages=setuptools.find_packages(exclude=["tests*"]),
     test_suite="nepali.tests",
     install_requires=[],
     classifiers=[
@@ -59,4 +63,8 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    project_urls={
+        "Source": GITHUB_URL,
+        "Changelog": CHANGELOG_URL,
+    },
 )
