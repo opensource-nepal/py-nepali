@@ -1,9 +1,11 @@
 # CHANGELOG
 
-## main
+## v1.1.0
 
-- Depreciated templatetags.
+- Depreciated templatetags and added support from `django-nepali` package.
 - Updated README.md for `django-nepali` package.
+- Added source and changelog on the package information
+- Excluded tests from the package
 
 ## v1.0.1 (May 16, 2023)
 - Fixes on `nepalinumber` templatetags
