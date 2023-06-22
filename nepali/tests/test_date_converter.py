@@ -9,6 +9,7 @@ from nepali.date_converter import converter
 
 
 class TestNepaliDateConverter(unittest.TestCase):
+    """tests for date_converter.converter module"""
     # test date range
     def test_english_date_range(self):
         self.assertEqual(converter.en_min_year(), 1944)
@@ -48,6 +49,12 @@ class TestNepaliDateConverter(unittest.TestCase):
         self.assertEqual(y, 2051)
         self.assertEqual(m, 4)
         self.assertEqual(d, 29)
+
+    def test_converter_english_to_nepali_returns_valid_past_nepali_date2(self):
+        y, m, d = converter.english_to_nepali(1944, 5, 28)
+        self.assertEqual(y, 2001)
+        self.assertEqual(m, 2)
+        self.assertEqual(d, 15)
 
     def test_converter_english_to_nepali_returns_valid_recent_nepali_date(self):
         y, m, d = converter.english_to_nepali(2023, 1, 28)
@@ -98,25 +105,31 @@ class TestNepaliDateConverter(unittest.TestCase):
         with self.assertRaises(Exception):
             converter.nepali_to_english(2079, 1, 40)
 
-    def test_converter_nepali_to_englishReturnsValidPastEnglishDate(self):
+    def test_converter_nepali_to_english_returns_valid_past_english_date(self):
         y, m, d = converter.nepali_to_english(2051, 4, 29)
         self.assertEqual(y, 1994)
         self.assertEqual(m, 8)
         self.assertEqual(d, 13)
 
-    def test_converter_nepali_to_englishReturnsValidRecentEnglishDate(self):
+    def test_converter_nepali_to_english_returns_valid_past_english_date2(self):
+        y, m, d = converter.nepali_to_english(2001, 2, 15)
+        self.assertEqual(y, 1944)
+        self.assertEqual(m, 5)
+        self.assertEqual(d, 28)
+
+    def test_converter_nepali_to_english_returns_valid_recent_english_date(self):
         y, m, d = converter.nepali_to_english(2079, 10, 14)
         self.assertEqual(y, 2023)
         self.assertEqual(m, 1)
         self.assertEqual(d, 28)
 
-    def test_converter_nepali_to_englishReturnsValidFutureEnglishDate(self):
+    def test_converter_nepali_to_english_returns_valid_future_english_date(self):
         y, m, d = converter.nepali_to_english(2087, 8, 10)
         self.assertEqual(y, 2030)
         self.assertEqual(m, 11)
         self.assertEqual(d, 26)
 
-    def test_converter_nepali_to_englishReturnsValidEnglishLeapYearDate(self):
+    def test_converter_nepali_to_english_returns_valid_english_leap_year_date(self):
         y, m, d = converter.nepali_to_english(2080, 12, 15)
         self.assertEqual(y, 2024)
         self.assertEqual(m, 3)
