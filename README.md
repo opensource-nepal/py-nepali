@@ -293,7 +293,7 @@ np_datetime = parse("Jestha 15, 2079")                # 2079-02-15 00:00:00
 
 | Directive | Meaning                                                   | Example                        |
 | --------- | --------------------------------------------------------- | ------------------------------ |
-| `%A`      | Weekday as locale’s abbreviated name.                     | Sun, Mon, …, Sat (आइत, सोम, …) |
+| `%a`      | Weekday as locale’s abbreviated name.                     | Sun, Mon, …, Sat (आइत, सोम, …) |
 | `%A`      | Weekday as locale’s full name.                            | Sunday, Monday, …, Saturday    |
 | `%d`      | Day of the month as a zero-padded decimal number.         | 01, 02, …, 31                  |
 | `%-d`     | Day of the month as a decimal number.                     | 1, 2, …, 31                    |
