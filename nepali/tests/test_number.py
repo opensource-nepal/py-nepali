@@ -49,6 +49,18 @@ class TestNumber(unittest.TestCase):
             NepaliNumber.convert_and_add_comma("123456789"), "१२,३४,५६,७८९"
         )
 
+    def test_object_representation(self):
+        nepali_number = nepalinumber("२३४")
+        self.assertEqual(str(nepali_number), "234")
+        self.assertEqual(repr(nepali_number), "234")
+
+    def test_integer_representation(self):
+        self.assertEqual(int(nepalinumber("१२३४")), 1234)
+        self.assertEqual(int(nepalinumber("१२३४५६७८९")), 123456789)
+
+    def test_object_equality(self):
+        self.assertTrue(nepalinumber("123456789") == nepalinumber("123456789"))
+        self.assertTrue(nepalinumber("123456789") != nepalinumber("123456788"))
 
 # to run this test suite exclusively
 # python -m unittest nepali.tests.test_number.TestNepaliNumber -v
@@ -3124,3 +3136,16 @@ class TestNepaliNumberMethods(unittest.TestCase):
     def test_nepalinumber_str_ne_for_zero(self):
         self.assertEqual(self.nepalinumber_integer_0.str_ne(), "०")
         self.assertEqual(self.nepalinumber_float_0_0.str_ne(), "०.०")
+
+    def test_object_representation(self):
+        nepali_number = nepalinumber("२३४")
+        self.assertEqual(str(nepali_number), "234")
+        self.assertEqual(repr(nepali_number), "234")
+
+    def test_integer_representation(self):
+        self.assertEqual(int(nepalinumber("१२३४")), 1234)
+        self.assertEqual(int(nepalinumber("१२३४५६७८९")), 123456789)
+
+    def test_object_equality(self):
+        self.assertTrue(nepalinumber("123456789") == nepalinumber("123456789"))
+        self.assertTrue(nepalinumber("123456789") != nepalinumber("123456788"))
