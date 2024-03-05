@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## v1.1.0
+## v1.1.1
+
+- Updated dates data for 2081
+
+## v1.1.0 (Jun 20, 2023)
 
 - Depreciated templatetags and added support from `django-nepali` package.
 - Updated README.md for `django-nepali` package.
