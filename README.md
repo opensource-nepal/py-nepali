@@ -439,4 +439,4 @@ We have created a new Django package called [django-nepali](https://github.com/o
 
 ## Contribution
 
-We appreciate feedback and contribution to this package. To get started please see our [contribution guide](CONTRIBUTION.md)
+We appreciate feedback and contribution to this package. To get started please see our [contribution guide](./CONTRIBUTING.md)
