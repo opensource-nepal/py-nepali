@@ -6,17 +6,18 @@ The 'py-nepali' project is committed to maintaining the security and integrity o
 
 We provide security updates and support for the latest stable release of the 'py-nepali' package. It is important to keep your software up to date to ensure you have the latest security patches.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.0.0   | :white_check_mark: |
-| 0.5.6   | :white_check_mark: |
-| < 0.5.6 | :x:                |
+| Version  | Supported          |
+| -------- | ------------------ |
+| >= 1.0.0 | :white_check_mark: |
+| 0.5.6    | :white_check_mark: |
+| < 0.5.6  | :x:                |
 
 ## Reporting a Vulnerability
 
 If you discover a security vulnerability within the project, we encourage you to report it the maintainers immediately. Promptly reporting security issues helps us protect our users and take appropriate actions to address the vulnerability. To report a security vulnerability, please follow these steps:
 
 1. Email at aj3sshh@gmail.com or sugatbajracharya49@gmail.com with a detailed description of the vulnerability. Please include the following information:
+
    - Description of the vulnerability, including steps to reproduce if applicable
    - Version of the py-nepali package affected
    - Any potential mitigations or workarounds
