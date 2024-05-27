@@ -19,8 +19,6 @@ Please mark the appropriate option below to describe the type of change your pul
 
 ## Checklist
 
-- [ ] I have used [semantic commit messages](https://seesparkbox.com/foundry/semantic_commit_messages).
-      Examples: `"fix(google): Fixed foobar bug"`, `"feat(accounts): Added foobar feature"`.
 - [ ] I have used pre-commit hooks.
 - [ ] I have added/updated the necessary documentation on `README.md`.
 - [ ] I have updated `CHANGELOG.md` for the significant changes.

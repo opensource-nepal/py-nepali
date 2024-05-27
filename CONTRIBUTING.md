@@ -49,10 +49,12 @@ make coverage-html
 
 Before submitting your code please do the following steps:
 
-1. Add any changes you want
-1. Add tests for the new changes
-1. Update the `CHANGELOG.md` file if necessary
-1. Edit documentation if you have changed something significant
+1. Add any changes you want.
+1. Add tests for the new changes.
+1. Update the `CHANGELOG.md` file if necessary.
+1. Edit documentation (`README.md`) if you have changed something significant.
+1. Commit your changes using [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).  
+   Examples: `feat: add JSON parser`, `feat(parser): add JSON parser`.
 
 ## Other help
 
