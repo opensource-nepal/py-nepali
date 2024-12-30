@@ -1,12 +1,5 @@
-*.egg-info/
 __pycache__/
-.eggs
-build
 dist
-.vscode
 htmlcov
-.coverage
-.coverage.*
 .DS_Store
-venv/
-.env
+.vscode

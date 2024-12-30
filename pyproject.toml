@@ -1,0 +1,61 @@
+[tool.poetry]
+name = "nepali"
+version = "2.0.0"
+description = "A powerful Python library for Nepali datetime, offering seamless conversion, parsing, timezone handling, and timedelta support."
+authors = ["opensource-nepal"]
+license = "GPL-3"
+readme = "README.md"
+homepage = "https://github.com/opensource-nepal/py-nepali"
+repository = "https://github.com/opensource-nepal/py-nepali"
+keywords = [
+    "python",
+    "py-nepali",
+    "nepal",
+    "nepali",
+    "nepali-date",
+    "nepali-date-converter",
+    "nepali-time",
+    "nepali-datetime",
+    "nepali-timezone",
+    "date-converter",
+    "datetime",
+    "calendar",
+    "ad-bs",
+    "ad-to-bs",
+    "bs-ad",
+    "bs-to-ad",
+    "AD to BS",
+    "BS to AD"
+]
+packages = [{ include = "nepali", from = "src" }]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.poetry.urls]
+Changelog = "https://github.com/opensource-nepal/py-nepali/blob/main/CHANGELOG.md"
+Issues = "https://github.com/opensource-nepal/py-nepali/issues"
+
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+pylint = "2.13.5"
+flake8 = "5.0.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.3.2"
+pytest-cov = "^4.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+addopts = "-vvv"
+testpaths = ["tests"]
