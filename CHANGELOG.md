@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## v1.1.1
+## v1.1.2
+
+- Updated months total days data.
+
+## v1.1.1 (Mar 13, 2024)
 
 - Updated dates data for 2081
 
