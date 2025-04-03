@@ -38,7 +38,7 @@ if sys.argv[-1] == "publish":
 
 setuptools.setup(
     name="nepali",
-    version="1.1.2",
+    version="1.1.3",
     license="MIT",
     author="opensource-nepal",
     author_email="aj3sshh@gmail.com, sugatbajracharya49@gmail.com",
