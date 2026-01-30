@@ -1,9 +1,7 @@
-from typing import List, Tuple
-
 from .models import District, Municipality, MunicipalityType, Province
 
 
-def _loadData() -> Tuple[List[Province], List[District], List[Municipality]]:
+def _loadData() -> tuple[list[Province], list[District], list[Municipality]]:
     from ._data import _location_data
 
     provinces = []

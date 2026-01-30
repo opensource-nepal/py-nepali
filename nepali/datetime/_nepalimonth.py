@@ -1,13 +1,15 @@
+from __future__ import annotations
+
 from functools import cached_property
-from typing import Any, Dict, Optional, Union
+from typing import Any
 
 from nepali.constants import NEPALI_MONTHS_EN, NEPALI_MONTHS_NE
 
 
 class NepaliMonthMeta(type):
-    _cache: Dict[int, "nepalimonth"] = {}
+    _cache: dict[int, nepalimonth] = {}
 
-    def __call__(cls, month: Union[int, str], *args, **kwargs) -> "nepalimonth":
+    def __call__(cls, month: int | str, *args, **kwargs) -> nepalimonth:
         """
         Parses the month data and manages the cache.
 
@@ -17,7 +19,7 @@ class NepaliMonthMeta(type):
         :rtype: nepalimonth
         :raises ValueError: If the given month is invalid.
         """
-        value: Optional[int] = None
+        value: int | None = None
         value = None
 
         if isinstance(month, int):

@@ -1,5 +1,4 @@
 import datetime
-from typing import Union
 
 from .constants import NEPAL_TIMEZONE
 
@@ -28,7 +27,7 @@ class NepaliTimeZone(datetime.tzinfo):
         return isinstance(o, self.__class__)
 
 
-def get_timezone() -> Union[datetime.tzinfo, None]:
+def get_timezone() -> datetime.tzinfo | None:
     """
     Returns current device's timezone.
     Timezone of the machine.

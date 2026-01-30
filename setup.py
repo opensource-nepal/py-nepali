@@ -38,7 +38,7 @@ if sys.argv[-1] == "publish":
 
 setuptools.setup(
     name="nepali",
-    version="1.1.3",
+    version="1.2.0",
     license="MIT",
     author="opensource-nepal",
     author_email="aj3sshh@gmail.com, sugatbajracharya49@gmail.com",
@@ -57,9 +57,14 @@ setuptools.setup(
     url=GITHUB_URL,
     packages=setuptools.find_packages(exclude=["tests*"]),
     test_suite="nepali.tests",
+    python_requires=">=3.10",
     install_requires=[],
     classifiers=[
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
