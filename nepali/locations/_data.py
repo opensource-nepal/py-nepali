@@ -3494,8 +3494,8 @@ _location_data = [
         ],
     },
     {
-        "name": "Province 1",
-        "name_nepali": "प्रदेश नं. १",
+        "name": "Koshi Province",
+        "name_nepali": "कोशी प्रदेश",
         "districts": [
             {
                 "name": "Taplejung",
