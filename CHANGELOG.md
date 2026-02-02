@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v1.2.0
+
+- **BREAKING**: Drop support for Python 3.8 and 3.9 (EOL)
+- Add support for Python 3.11, 3.12, and 3.13
+- Minimum Python version is now 3.10
+- Modernize type hints to Python 3.10+ syntax (using `X | Y` instead of `Union[X, Y]`)
+- Update pre-commit hooks to latest versions
+- Update GitHub Actions workflows to use latest action versions
+
 ## v1.1.3
 
 - Update months data for year 2082

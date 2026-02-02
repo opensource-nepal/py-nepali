@@ -1,5 +1,4 @@
 from enum import Enum
-from typing import List
 
 
 class Location:
@@ -37,11 +36,11 @@ class Province(Location):
         self.__municipalities.append(municipality)
 
     @property
-    def districts(self) -> List["District"]:
+    def districts(self) -> list["District"]:
         return self.__districts
 
     @property
-    def municipalities(self) -> List["Municipality"]:
+    def municipalities(self) -> list["Municipality"]:
         return self.__municipalities
 
 
@@ -61,7 +60,7 @@ class District(Location):
         return self.__province
 
     @property
-    def municipalities(self) -> List["Municipality"]:
+    def municipalities(self) -> list["Municipality"]:
         return self.__municipalities
 
 

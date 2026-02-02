@@ -2,7 +2,9 @@
 Contains the class for the nepalinumber feature
 """
 
-from typing import Any, Tuple, Type, Union
+from __future__ import annotations
+
+from typing import Any
 
 from .utils import NP_NUMBERS, NP_NUMBERS_SET, english_to_nepali
 
@@ -21,7 +23,7 @@ class nepalinumber:
         self.__value = self.__parse(value)
 
     def get_parse_exception(
-        self, obj: object, ex_class: Type[Exception] = ValueError
+        self, obj: object, ex_class: type[Exception] = ValueError
     ) -> Exception:
         """
         Returns the exception object to be raised when the parse is failed.
@@ -30,7 +32,7 @@ class nepalinumber:
         :param obj: Object that is failed during the parse
         :type obj: object
         :param ex_class: Exception class type to be returned, defaults to ValueError
-        :type ex_class: Type[Exception], optional
+        :type ex_class: type[Exception], optional
         :return: Exception object to be raised
         :rtype: Exception
         """
@@ -38,7 +40,7 @@ class nepalinumber:
             f"could not convert {obj.__class__.__name__} to {self.__class__.__name__}: '{obj}'"
         )
 
-    def __parse(self, value: Any) -> Union[int, float]:
+    def __parse(self, value: Any) -> int | float:
         """
         Parses nepali number input into a valid value.
 
@@ -68,7 +70,7 @@ class nepalinumber:
 
         return self.__parse_object(value)
 
-    def __parse_str(self, value: str) -> Union[int, float]:
+    def __parse_str(self, value: str) -> int | float:
         """
         Parses str object into int and float.
         This is a low level implementation.
@@ -112,7 +114,7 @@ class nepalinumber:
             i += 1
         return sign * result
 
-    def __parse_object(self, obj: Any) -> Union[int, float]:
+    def __parse_object(self, obj: Any) -> int | float:
         """
         Parses object using __int__, __float__, and __str__.
 
@@ -129,7 +131,7 @@ class nepalinumber:
             # object conversion must raise TypeError if fails
             raise self.get_parse_exception(obj, ex_class=TypeError) from None
 
-    def __convert_or_return(self, obj) -> Union["nepalinumber", object]:
+    def __convert_or_return(self, obj) -> nepalinumber | object:
         """
         Will try to parse the given object and convert to nepalinumber
         else will return the same object
@@ -165,7 +167,7 @@ class nepalinumber:
         """
         return float(self.__value)
 
-    def __add(self, other) -> Union[int, float]:
+    def __add(self, other) -> int | float:
         """
         Adds the value in the object with the passed object
 
@@ -179,7 +181,7 @@ class nepalinumber:
 
         return self.__value + other
 
-    def __mul(self, other) -> Union[int, float]:
+    def __mul(self, other) -> int | float:
         """
         Multiplies the value in the object with the passed object
 
@@ -219,13 +221,13 @@ class nepalinumber:
 
         return self.__value != other
 
-    def __neg__(self) -> "nepalinumber":
+    def __neg__(self) -> nepalinumber:
         """
         Returns the negative value of the nepalinumber value
         """
         return nepalinumber((-1) * self.__value)
 
-    def __add__(self, other) -> Union["nepalinumber", object]:
+    def __add__(self, other) -> nepalinumber | object:
         """
         Called when the addition operator +  is used after
         the nepalinumber object
@@ -242,7 +244,7 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __radd__(self, other) -> Union["nepalinumber", object]:
+    def __radd__(self, other) -> nepalinumber | object:
         """
         Called when the addition operator + is used before
         the nepalinumber object
@@ -259,7 +261,7 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __sub__(self, other) -> Union["nepalinumber", object]:
+    def __sub__(self, other) -> nepalinumber | object:
         """
         Called when the subtraction operator - is used after
         the nepalinumber object
@@ -278,7 +280,7 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __rsub__(self, other) -> Union["nepalinumber", object]:
+    def __rsub__(self, other) -> nepalinumber | object:
         """
         Called when the subtraction operator - is used before
         the nepalinumber object
@@ -298,7 +300,7 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __mul__(self, other) -> Union["nepalinumber", object]:
+    def __mul__(self, other) -> nepalinumber | object:
         """
         Called when the multiplication operator * is used after
         the nepalinumber object
@@ -318,7 +320,7 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __rmul__(self, other) -> Union["nepalinumber", object]:
+    def __rmul__(self, other) -> nepalinumber | object:
         """
         Called when the multiplication operator * is used before
         the nepalinumber object
@@ -338,7 +340,7 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __truediv__(self, other) -> Union["nepalinumber", object]:
+    def __truediv__(self, other) -> nepalinumber | object:
         """
         Called when the division operator / is used after
         the nepalinumber object
@@ -357,7 +359,7 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __rtruediv__(self, other) -> Union["nepalinumber", object]:
+    def __rtruediv__(self, other) -> nepalinumber | object:
         """
         Called when the division operator / is used before
         the nepalinumber object
@@ -377,7 +379,7 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __floordiv__(self, other) -> Union["nepalinumber", object]:
+    def __floordiv__(self, other) -> nepalinumber | object:
         """
         Called when the floor/integer division operator // is used
         after the nepalinumber object
@@ -396,7 +398,7 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __rfloordiv__(self, other) -> Union["nepalinumber", object]:
+    def __rfloordiv__(self, other) -> nepalinumber | object:
         """
         Called when the floor/integer division operator // is used
         before the nepalinumber object
@@ -416,7 +418,7 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __mod__(self, other) -> Union["nepalinumber", object]:
+    def __mod__(self, other) -> nepalinumber | object:
         """
         Called when the modulo operator % is used after
         the nepalinumber object
@@ -436,7 +438,7 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __rmod__(self, other) -> Union["nepalinumber", object]:
+    def __rmod__(self, other) -> nepalinumber | object:
         """
         Called when the modulo operator % is used before
         the nepalinumber object
@@ -458,7 +460,7 @@ class nepalinumber:
 
     def __divmod__(
         self, other
-    ) -> Tuple[Union["nepalinumber", object], Union["nepalinumber", object]]:
+    ) -> tuple[nepalinumber | object, nepalinumber | object]:
         """
         Called when the built-in function divmod() is used
         with nepalinumber as the dividend and other as divisor
@@ -483,7 +485,7 @@ class nepalinumber:
 
     def __rdivmod__(
         self, other
-    ) -> Tuple[Union["nepalinumber", object], Union["nepalinumber", object]]:
+    ) -> tuple[nepalinumber | object, nepalinumber | object]:
         """
         Called when the built-in function divmod() is used
         with nepalinumber as the divisor and other as dividend
@@ -506,7 +508,7 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __pow__(self, other) -> Union["nepalinumber", object]:
+    def __pow__(self, other) -> nepalinumber | object:
         """
         Called when the power operator **  is used after
         the nepalinumber object
@@ -526,7 +528,7 @@ class nepalinumber:
         except TypeError:
             return NotImplemented
 
-    def __rpow__(self, other) -> Union["nepalinumber", object]:
+    def __rpow__(self, other) -> nepalinumber | object:
         """
         Called when the power operator ** is used before
         the nepalinumber object

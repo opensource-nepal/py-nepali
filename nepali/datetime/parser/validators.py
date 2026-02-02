@@ -1,8 +1,9 @@
 """
 validates parsing
 """
+from __future__ import annotations
+
 import re
-from typing import Optional, Tuple
 
 from nepali.char import nepali_to_english_text
 from nepali.constants import NEPALI_MONTHS_EN, WEEKS_ABBR_EN, WEEKS_EN
@@ -157,7 +158,7 @@ def __convert_12_hour_to_24_hour(hour: int, am_pm: str) -> int:
     return hour
 
 
-def __calculate_year(data: dict) -> Optional[int]:
+def __calculate_year(data: dict) -> int | None:
     """Calculates the year value from given data.
 
     :param data: The dictionary of the format:
@@ -217,7 +218,7 @@ def __calculate_day(data: dict) -> int:
     return 1
 
 
-def __calculate_hour_minute_seconds(data: dict) -> Tuple[int, int, int, int]:
+def __calculate_hour_minute_seconds(data: dict) -> tuple[int, int, int, int]:
     """Calculates hour, minutes, seconds and microseconds from given data.
 
     :param data: The dictionary of the format:
@@ -256,7 +257,7 @@ def __calculate_hour_minute_seconds(data: dict) -> Tuple[int, int, int, int]:
     return hour, minute, second, fraction
 
 
-def __calculate_weekday(data: dict) -> Optional[nepaliweek]:
+def __calculate_weekday(data: dict) -> nepaliweek | None:
     """Calculates the weekday of the date given in data.
 
     :param data: The data that describes the date.

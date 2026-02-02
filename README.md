@@ -33,7 +33,7 @@ phone_number.parse("+977-9845217789")
 
 ## Requirements
 
-    Python >= 3
+    Python >= 3.10
 
 ## Installation
 

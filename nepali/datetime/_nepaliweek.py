@@ -1,13 +1,15 @@
+from __future__ import annotations
+
 from functools import cached_property
-from typing import Any, Dict, Optional, Union
+from typing import Any
 
 from nepali.constants import WEEKS_ABBR_EN, WEEKS_ABBR_NE, WEEKS_EN, WEEKS_NE
 
 
 class NepaliWeekMeta(type):
-    _cache: Dict[int, "nepaliweek"] = {}
+    _cache: dict[int, nepaliweek] = {}
 
-    def __call__(cls, week: Union[int, str], *args, **kwargs) -> "nepaliweek":
+    def __call__(cls, week: int | str, *args, **kwargs) -> nepaliweek:
         """
         Parses the week data and manages the cache.
 
@@ -17,7 +19,7 @@ class NepaliWeekMeta(type):
         :rtype: nepaliweek
         :raises ValueError: If the given week is invalid.
         """
-        value: Optional[int] = None
+        value: int | None = None
 
         if isinstance(week, int):
             value = int(week)
