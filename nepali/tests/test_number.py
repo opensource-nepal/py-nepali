@@ -3,7 +3,6 @@ To run only this unit test use the command below.
 
     python -m unittest nepali/tests/test_number.py -v
 """
-import sys
 import unittest
 
 from nepali import number
@@ -1812,13 +1811,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
         with self.assertRaises(ZeroDivisionError) as ze:
             _ = self.nepalinumber_float_10_1 // 0
 
-        python_version = sys.version_info
-
-        if python_version.major >= 3:
-            if python_version.minor <= 8:
-                self.assertEqual(str(ze.exception), "float divmod()")
-            else:
-                self.assertEqual(str(ze.exception), "float floor division by zero")
+        self.assertEqual(str(ze.exception), "float floor division by zero")
 
     def test_nepalinumber_throws_error_when_zero_nepalinumber_floor_divides_other_numbers(
         self,
@@ -1831,13 +1824,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
         with self.assertRaises(ZeroDivisionError) as ze:
             _ = 12.1 // self.nepalinumber_zero
 
-        python_version = sys.version_info
-
-        if python_version.major >= 3:
-            if python_version.minor <= 8:
-                self.assertEqual(str(ze.exception), "float divmod()")
-            else:
-                self.assertEqual(str(ze.exception), "float floor division by zero")
+        self.assertEqual(str(ze.exception), "float floor division by zero")
 
     def test_nepalinumber_throws_error_when_floor_divided_by_zero_nepalinumber(self):
         with self.assertRaises(ZeroDivisionError) as ze:
@@ -1848,13 +1835,7 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
         with self.assertRaises(ZeroDivisionError) as ze:
             _ = self.nepalinumber_float_10_1 // self.nepalinumber_zero
 
-        python_version = sys.version_info
-
-        if python_version.major >= 3:
-            if python_version.minor <= 8:
-                self.assertEqual(str(ze.exception), "float divmod()")
-            else:
-                self.assertEqual(str(ze.exception), "float floor division by zero")
+        self.assertEqual(str(ze.exception), "float floor division by zero")
 
     # mod
     # nepalinumber positive integer modulo tests
@@ -3124,3 +3105,48 @@ class TestNepaliNumberMethods(unittest.TestCase):
     def test_nepalinumber_str_ne_for_zero(self):
         self.assertEqual(self.nepalinumber_integer_0.str_ne(), "०")
         self.assertEqual(self.nepalinumber_float_0_0.str_ne(), "०.०")
+
+    # __str__ tests
+    def test_nepalinumber_str_returns_string_representation(self):
+        self.assertEqual(str(self.nepalinumber_integer_1), "1")
+        self.assertEqual(str(self.nepalinumber_float_1_25), "1.25")
+        self.assertEqual(str(self.nepalinumber_negative_integer_1), "-1")
+
+    # __repr__ tests
+    def test_nepalinumber_repr_returns_string_representation(self):
+        self.assertEqual(repr(self.nepalinumber_integer_1), "1")
+        self.assertEqual(repr(self.nepalinumber_float_1_25), "1.25")
+
+    # __int__ tests
+    def test_nepalinumber_int_returns_integer(self):
+        self.assertEqual(int(self.nepalinumber_integer_1), 1)
+        self.assertEqual(int(self.nepalinumber_float_1_25), 1)
+        self.assertEqual(int(self.nepalinumber_negative_integer_1), -1)
+
+    # __ne__ tests
+    def test_nepalinumber_ne_with_nepalinumber(self):
+        self.assertTrue(self.nepalinumber_integer_1 != self.nepalinumber_integer_0)
+        self.assertFalse(self.nepalinumber_integer_1 != nepalinumber(1))
+
+    def test_nepalinumber_ne_with_int(self):
+        self.assertTrue(self.nepalinumber_integer_1 != 5)
+        self.assertFalse(self.nepalinumber_integer_1 != 1)
+
+    def test_nepalinumber_ne_with_float(self):
+        self.assertTrue(self.nepalinumber_float_1_25 != 1.5)
+        self.assertFalse(self.nepalinumber_float_1_25 != 1.25)
+
+    # __neg__ tests
+    def test_nepalinumber_negation(self):
+        self.assertEqual(-self.nepalinumber_integer_1, nepalinumber(-1))
+        self.assertEqual(-self.nepalinumber_negative_integer_1, nepalinumber(1))
+        self.assertEqual(-self.nepalinumber_float_1_25, nepalinumber(-1.25))
+
+    # __eq__ with non-nepalinumber tests
+    def test_nepalinumber_eq_with_int(self):
+        self.assertTrue(self.nepalinumber_integer_1 == 1)
+        self.assertFalse(self.nepalinumber_integer_1 == 2)
+
+    def test_nepalinumber_eq_with_float(self):
+        self.assertTrue(self.nepalinumber_float_1_25 == 1.25)
+        self.assertFalse(self.nepalinumber_float_1_25 == 1.5)
