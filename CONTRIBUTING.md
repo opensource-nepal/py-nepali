@@ -21,7 +21,7 @@ The config file for [`pre-commit`](https://pre-commit.com/) hooks is in [.pre-co
 
 ## Codestyle
 
-A [.editorconfig](./editorconfig) is available to maintain the coding style. Besides, your code will automatically gets formatted if you have install the pre-commit hook.
+A [.editorconfig](./.editorconfig) is available to maintain the coding style. Besides, your code will automatically gets formatted if you have install the pre-commit hook.
 
 ## Unit tests
 
