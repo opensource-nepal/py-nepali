@@ -162,7 +162,7 @@ def _get_area_code(number) -> str:
 
 def _parse_landline_number(number) -> dict:
     """
-    Parse and returns mobile number details.
+    Parse and returns landline number details.
     :return:
     {
         "type": "Landline",
