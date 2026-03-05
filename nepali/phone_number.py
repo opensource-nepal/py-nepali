@@ -37,10 +37,10 @@ def is_mobile_number(number: str) -> bool:
 
 def is_landline_number(number: str) -> bool:
     """
-    Returns True is the input number is mobile number.
+    Returns True is the input number is landline number.
 
-    >>> is_mobile = is_mobile_number(number)
-    >>> if is_mobile:
+    >>> is_landline = is_landline_number(number)
+    >>> if is_landline:
     >>>     ...
     """
     try:
@@ -162,12 +162,12 @@ def _get_area_code(number) -> str:
 
 def _parse_landline_number(number) -> dict:
     """
-    Parse and returns mobile number details.
+    Parse and returns landline number details.
     :return:
     {
         "type": "Landline",
         "number": "98XXXXXXXX",
-        "operator": <Operator>
+        "area_code": <AreaCode>
     }
     """
     number = get_exact_number(number)
