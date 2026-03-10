@@ -35,15 +35,15 @@ class TestOperator(unittest.TestCase):
         self.assertEqual(repr(operator), f"<Operator: {operator.value}>")
 
 
-class TestAreaCode(unittest.TestCase):
+class TestArea(unittest.TestCase):
     def test_area_with_invalid_data(self):
         with self.assertRaises(ValueError):
             Area(("Bhojpur", "026"))
             Area(("India", "01"))
 
-    def test_area_with_invalid_data(self):
-        a_1 = Area("Udayapur", "035")
-        a_2 = Area("Rolpa", "086")
+    def test_area_with_valid_data(self):
+        a_1 = Area(("Udayapur", "035"))
+        a_2 = Area(("Rolpa", "086"))
         self.assertEqual(a_1, Area.UDAYAPUR)
         self.assertEqual(a_2, Area.ROLPA)
 
