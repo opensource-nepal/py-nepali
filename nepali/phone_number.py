@@ -293,7 +293,7 @@ def _parse_landline_number(number) -> dict:
     return {
         "type": "Landline",
         "number": number,
-        "area_code": _get_area_code(number),
+        "area_code": area_code,
         "area": area,
     }
 
