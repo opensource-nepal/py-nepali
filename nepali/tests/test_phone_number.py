@@ -3,8 +3,10 @@ from unittest import mock
 
 from nepali.phone_number import (
     Operator,
+    Area,
     _get_area_code,
     _get_operator,
+    _get_area,
     _parse_landline_number,
     _parse_mobile_number,
     get_exact_number,
@@ -31,6 +33,28 @@ class TestOperator(unittest.TestCase):
     def test_operator_repr(self):
         operator = Operator.NEPAL_TELECOM
         self.assertEqual(repr(operator), f"<Operator: {operator.value}>")
+
+
+class TestArea(unittest.TestCase):
+    def test_area_with_invalid_data(self):
+        with self.assertRaises(ValueError):
+            Area(("Bhojpur", "026"))
+            Area(("India", "01"))
+
+    def test_area_with_valid_data(self):
+        a_1 = Area(("Udayapur", "035"))
+        a_2 = Area(("Rolpa", "086"))
+        self.assertEqual(a_1, Area.UDAYAPUR)
+        self.assertEqual(a_2, Area.ROLPA)
+
+    def test_get_by_area_code(self):
+        self.assertEqual(
+            set(Area.get_by_area_code("01")),
+            set(["Bhaktapur", "Kathmandu", "Lalitpur"]),
+        )
+
+        self.assertEqual(Area.get_by_area_code(""), [])
+        self.assertEqual(Area.get_by_area_code(), [])
 
 
 class TestPhoneNumberValidation(unittest.TestCase):
@@ -202,18 +226,26 @@ class TestLandlineNumberParser(unittest.TestCase):
         self.assertEqual(_get_area_code("063420211"), "063")
 
     @mock.patch("nepali.phone_number._get_area_code", return_value="test")
+    @mock.patch("nepali.phone_number._get_area", return_value="area name")
     def test__parse_landline_number_returns_valid_data(self, *_):
         data = _parse_landline_number("0142314819")
         self.assertEqual(data["type"], "Landline")
         self.assertEqual(data["area_code"], "test")
+        self.assertEqual(data["area"], "area name")
         self.assertEqual(data["number"], "0142314819")
 
     @mock.patch("nepali.phone_number._get_area_code", return_value="test")
+    @mock.patch("nepali.phone_number._get_area", return_value="area name")
     def test__parse_landline_number_returns_valid_data_for_977(self, *_):
         data = _parse_landline_number("+977142314819")
         self.assertEqual(data["type"], "Landline")
         self.assertEqual(data["area_code"], "test")
+        self.assertEqual(data["area"], "area name")
         self.assertEqual(data["number"], "0142314819")
+
+    @mock.patch("nepali.phone_number.Area.get_by_area_code", return_value="area")
+    def test__get_area(self, *_):
+        self.assertEqual(_get_area("code"), "area")
 
 
 class TestParser(unittest.TestCase):
@@ -252,3 +284,6 @@ class TestParseIntegration(unittest.TestCase):
         self.assertEqual(data and data["type"], "Landline")
         self.assertEqual(data and data["number"], "0142314819")
         self.assertEqual(data and data["area_code"], "01")
+        self.assertEqual(
+            data and set(data["area"]), set(["Kathmandu", "Bhaktapur", "Lalitpur"])
+        )
