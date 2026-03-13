@@ -207,7 +207,7 @@ def _get_operator(number: str) -> Operator | None:
     starting_number = number[:3]
 
     # NTC
-    if starting_number in ["984", "985", "986", "974", "975"]:
+    if starting_number in ["984", "985", "986", "974", "975", "976"]:
         return Operator.NEPAL_TELECOM
 
     # NCELL
