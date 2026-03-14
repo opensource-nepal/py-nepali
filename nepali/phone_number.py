@@ -21,6 +21,15 @@ class Operator(Enum):
         return f"<Operator: {self.value}>"
 
 
+_OPERATOR_PREFIXES = {
+    Operator.NEPAL_TELECOM: ["984", "985", "986", "974", "975", "976"],
+    Operator.NCELL: ["980", "981", "982"],
+    Operator.SMART_CELL: ["961", "962", "988"],
+    Operator.UTL: ["972"],
+    Operator.HELLO_MOBILE: ["963"],
+}
+
+
 class Area(Enum):
     # Koshi Province
     BHOJPUR = ("Bhojpur", "029")
@@ -205,27 +214,9 @@ def _get_operator(number: str) -> Operator | None:
     NOTE: The number should be 10digit mobile number.
     """
     starting_number = number[:3]
-
-    # NTC
-    if starting_number in ["984", "985", "986", "974", "975"]:
-        return Operator.NEPAL_TELECOM
-
-    # NCELL
-    if starting_number in ["980", "981", "982"]:
-        return Operator.NCELL
-
-    # Smart Cell
-    if starting_number in ["961", "962", "988"]:
-        return Operator.SMART_CELL
-
-    # UTL
-    if starting_number == "972":
-        return Operator.UTL
-
-    # Hello Mobile
-    if starting_number == "963":
-        return Operator.HELLO_MOBILE
-
+    for operator, prefixes in _OPERATOR_PREFIXES.items():
+        if starting_number in prefixes:
+            return operator
     return None
 
 
