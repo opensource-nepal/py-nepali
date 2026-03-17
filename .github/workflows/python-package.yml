@@ -36,8 +36,6 @@ jobs:
 
       - name: Ruff lint
         uses: astral-sh/ruff-action@v3
-        with:
-          args: "check"
 
       - name: Run tests
         run: |
