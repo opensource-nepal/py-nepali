@@ -4,4 +4,3 @@ include = ["nepali/**/*.py", "pyproject.toml"]
 
 [tool.ruff.lint]
 select = ["E", "W", "F"]
-ignore = ["E721"]
