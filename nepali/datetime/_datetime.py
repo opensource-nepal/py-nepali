@@ -81,22 +81,22 @@ class nepalidate(formatter_class_mixin):
 
     def __add__(self, other):
         """addition"""
-        if type(other) == pythonDateTime.timedelta:
+        if isinstance(other, pythonDateTime.timedelta):
             # timedelta object
             return nepalidate.from_date(self.to_date() + other)
         return NotImplemented
 
     def __sub__(self, other):
         """subtraction"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidate object
             return self.to_date() - other.to_date()
 
-        elif type(other) == pythonDateTime.date:
+        if isinstance(other, pythonDateTime.date):
             # python date object
             return self.to_date() - other
 
-        elif type(other) == pythonDateTime.timedelta:
+        if isinstance(other, pythonDateTime.timedelta):
             # timedelta object
             return nepalidate.from_date(self.to_date() - other)
 
@@ -104,11 +104,11 @@ class nepalidate(formatter_class_mixin):
 
     def __lt__(self, other):
         """less than"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidatetime object
             return self.to_date() < other.to_date()
 
-        elif type(other) == pythonDateTime.date:
+        if isinstance(other, pythonDateTime.date):
             # python date object
             return self.to_date() < other
 
@@ -116,11 +116,11 @@ class nepalidate(formatter_class_mixin):
 
     def __le__(self, other):
         """less than equal"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidate object
             return self.to_date() <= other.to_date()
 
-        elif type(other) == pythonDateTime.date:
+        if isinstance(other, pythonDateTime.date):
             # python date object
             return self.to_date() <= other
 
@@ -128,11 +128,11 @@ class nepalidate(formatter_class_mixin):
 
     def __eq__(self, other):
         """equal"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidate object
             return self.to_date() == other.to_date()
 
-        elif type(other) == pythonDateTime.date:
+        if isinstance(other, pythonDateTime.date):
             # python date object
             return self.to_date() == other
 
@@ -140,11 +140,11 @@ class nepalidate(formatter_class_mixin):
 
     def __ne__(self, other):
         """not equal"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidate object
             return self.to_date() != other.to_date()
 
-        elif type(other) == pythonDateTime.date:
+        if isinstance(other, pythonDateTime.date):
             # python date object
             return self.to_date() != other
 
@@ -152,11 +152,11 @@ class nepalidate(formatter_class_mixin):
 
     def __gt__(self, other):
         """greater than"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidate object
             return self.to_date() > other.to_date()
 
-        elif type(other) == pythonDateTime.date:
+        if isinstance(other, pythonDateTime.date):
             # python date object
             return self.to_date() > other
 
@@ -164,11 +164,11 @@ class nepalidate(formatter_class_mixin):
 
     def __ge__(self, other):
         """greater than equal"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidate object
             return self.to_date() >= other.to_date()
 
-        elif type(other) == pythonDateTime.date:
+        if isinstance(other, pythonDateTime.date):
             # python date object
             return self.to_date() >= other
 
@@ -257,7 +257,7 @@ class nepalidatetime(formatter_class_mixin):
 
     def __add__(self, other):
         """addition"""
-        if type(other) == pythonDateTime.timedelta:
+        if isinstance(other, pythonDateTime.timedelta):
             # timedelta object
             return nepalidatetime.from_datetime(self.to_datetime() + other)
 
@@ -265,15 +265,15 @@ class nepalidatetime(formatter_class_mixin):
 
     def __sub__(self, other):
         """subtraction"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidatetime object
             return self.to_datetime() - other.to_datetime()
 
-        elif type(other) == pythonDateTime.datetime:
+        if isinstance(other, pythonDateTime.datetime):
             # python datetime object
             return self.to_datetime() - to_nepali_timezone(other)
 
-        elif type(other) == pythonDateTime.timedelta:
+        if isinstance(other, pythonDateTime.timedelta):
             # timedelta object
             return nepalidatetime.from_datetime(self.to_datetime() - other)
 
@@ -281,11 +281,11 @@ class nepalidatetime(formatter_class_mixin):
 
     def __lt__(self, other):
         """less than"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidatetime object
             return self.to_datetime() < other.to_datetime()
 
-        elif type(other) == pythonDateTime.datetime:
+        if isinstance(other, pythonDateTime.datetime):
             # python datetime object
             return self.to_datetime() < to_nepali_timezone(other)
 
@@ -293,11 +293,11 @@ class nepalidatetime(formatter_class_mixin):
 
     def __le__(self, other):
         """less than equal"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidatetime object
             return self.to_datetime() <= other.to_datetime()
 
-        elif type(other) == pythonDateTime.datetime:
+        if isinstance(other, pythonDateTime.datetime):
             # python datetime object
             return self.to_datetime() <= to_nepali_timezone(other)
 
@@ -305,11 +305,11 @@ class nepalidatetime(formatter_class_mixin):
 
     def __eq__(self, other):
         """equal"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidatetime object
             return self.to_datetime() == other.to_datetime()
 
-        elif type(other) == pythonDateTime.datetime:
+        if isinstance(other, pythonDateTime.datetime):
             # python datetime object
             return self.to_datetime() == to_nepali_timezone(other)
 
@@ -317,11 +317,11 @@ class nepalidatetime(formatter_class_mixin):
 
     def __ne__(self, other):
         """not equal"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidatetime object
             return self.to_datetime() != other.to_datetime()
 
-        elif type(other) == pythonDateTime.datetime:
+        if isinstance(other, pythonDateTime.datetime):
             # python datetime object
             return self.to_datetime() != to_nepali_timezone(other)
 
@@ -329,11 +329,11 @@ class nepalidatetime(formatter_class_mixin):
 
     def __gt__(self, other):
         """greater than"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidatetime object
             return self.to_datetime() > other.to_datetime()
 
-        elif type(other) == pythonDateTime.datetime:
+        if isinstance(other, pythonDateTime.datetime):
             # python datetime object
             return self.to_datetime() > to_nepali_timezone(other)
 
@@ -341,11 +341,11 @@ class nepalidatetime(formatter_class_mixin):
 
     def __ge__(self, other):
         """greater than equal"""
-        if type(other) == self.__class__:
+        if isinstance(other, self.__class__):
             # nepalidatetime object
             return self.to_datetime() >= other.to_datetime()
 
-        elif type(other) == pythonDateTime.datetime:
+        if isinstance(other, pythonDateTime.datetime):
             # python datetime object
             return self.to_datetime() >= to_nepali_timezone(other)
 

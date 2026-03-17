@@ -42,13 +42,13 @@ class NepaliDateTimeFormatter:
 
     def __init__(self, datetime_object, devanagari=False):
         # TODO: Change variable npDateTime into snake case: `np_date_time`
-        if type(datetime_object) == nepalidatetime:
+        if isinstance(datetime_object, nepalidatetime):
             self.npDateTime = datetime_object
-        elif type(datetime_object) == nepalidate:
+        elif isinstance(datetime_object, nepalidate):
             self.npDateTime = datetime_object.to_nepalidatetime()
-        elif type(datetime_object) == pythonDateTime.date:
+        elif isinstance(datetime_object, pythonDateTime.date):
             self.npDateTime = nepalidatetime.from_date(datetime_object)
-        elif type(datetime_object) == pythonDateTime.datetime:
+        elif isinstance(datetime_object, pythonDateTime.datetime):
             self.npDateTime = nepalidatetime.from_datetime(datetime_object)
         else:
             raise InvalidNepaliDateTimeObjectException(
