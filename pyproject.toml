@@ -1,0 +1,6 @@
+[tool.ruff]
+line-length = 127
+include = ["nepali/**/*.py", "pyproject.toml"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F"]

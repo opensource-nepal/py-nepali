@@ -193,7 +193,7 @@ def parse(number: str):
         ...
     }
     """
-    if not number and type(number) != str:
+    if not number and not isinstance(number, str):
         return None
 
     number = number.replace("-", "")

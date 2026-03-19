@@ -47,7 +47,7 @@ def utc_now() -> datetime.datetime:
 
 def to_utc_timezone(datetime_obj: datetime.datetime) -> datetime.datetime:
     """Changes the timezone of the given datetime object to UTC."""
-    if type(datetime_obj) != datetime.datetime:
+    if not isinstance(datetime_obj, datetime.datetime):
         # Not a datetime object
         return datetime_obj
 
@@ -58,7 +58,7 @@ def to_utc_timezone(datetime_obj: datetime.datetime) -> datetime.datetime:
 
 def to_nepali_timezone(datetime_obj: datetime.datetime) -> datetime.datetime:
     """Changes the timezone of the given datetime object to NepaliTimeZone."""
-    if type(datetime_obj) != datetime.datetime:
+    if not isinstance(datetime_obj, datetime.datetime):
         # Not a datetime object
         return datetime_obj
 
