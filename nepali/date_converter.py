@@ -278,7 +278,7 @@ class NepaliDateConverter:
 
     def nepali_to_english(self, year, month, day):
         """
-        Converts english date to nepali
+        Converts nepali date to english
         return year, month, day
         """
         # VALIDATION
