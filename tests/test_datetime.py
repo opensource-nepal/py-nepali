@@ -192,9 +192,7 @@ class TestNepaliDateTime(unittest.TestCase):
         self.assertEqual(
             python_datetime_obj,
             nepalidatetime_obj.to_datetime(),
-            msg="{} and {} are not equal.".format(
-                python_datetime_obj, nepalidatetime_obj.to_datetime()
-            ),
+            msg=f"{python_datetime_obj} and {nepalidatetime_obj.to_datetime()} are not equal.",
         )
 
     def test_nepalidatetime_strftime(self):
