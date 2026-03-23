@@ -3,6 +3,7 @@ To run only this unit test use the command below.
 
     python -m unittest nepali/tests/test_timezone.py -v
 """
+
 import datetime
 import unittest
 from unittest.mock import patch

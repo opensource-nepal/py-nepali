@@ -13,6 +13,7 @@ repos:
     rev: v2.1.1
     hooks:
       - id: darker
+        files: ^(nepali/|tests/)
         args:
           - --isort
           - --flynt

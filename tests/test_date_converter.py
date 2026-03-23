@@ -3,6 +3,7 @@ To run only this unit test use the command below.
 
     python -m unittest nepali/tests/test_date_converter.py -v
 """
+
 import unittest
 
 from nepali.date_converter import converter
@@ -10,6 +11,7 @@ from nepali.date_converter import converter
 
 class TestNepaliDateConverter(unittest.TestCase):
     """tests for date_converter.converter module"""
+
     # test date range
     def test_english_date_range(self):
         self.assertEqual(converter.en_min_year(), 1944)

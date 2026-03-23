@@ -56,7 +56,7 @@ setuptools.setup(
     ],
     url=GITHUB_URL,
     packages=setuptools.find_packages(exclude=["tests*"]),
-    test_suite="nepali.tests",
+    test_suite="tests",
     python_requires=">=3.10",
     install_requires=[],
     classifiers=[

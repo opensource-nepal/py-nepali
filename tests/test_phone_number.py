@@ -2,11 +2,11 @@ import unittest
 from unittest import mock
 
 from nepali.phone_number import (
-    Operator,
     Area,
+    Operator,
+    _get_area,
     _get_area_code,
     _get_operator,
-    _get_area,
     _parse_landline_number,
     _parse_mobile_number,
     get_exact_number,
