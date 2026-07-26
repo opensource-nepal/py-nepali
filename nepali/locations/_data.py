@@ -1805,7 +1805,7 @@ _location_data = [
                         "municipality_type": "Rural Municipality",
                     },
                     {
-                        "name": "Choutara Sangachowkgadhi Municipality",
+                        "name": "Chautara Sangachowkgadhi Municipality",
                         "name_nepali": "चौतारा साँगाचोकगढी नगरपालिका",
                         "municipality_type": "Municipality",
                     },
@@ -3281,8 +3281,8 @@ _location_data = [
                         "municipality_type": "Municipality",
                     },
                     {
-                        "name": "Tribeni Nalagad Municipality",
-                        "name_nepali": "त्रिवेणी नलगाड नगरपालिका",
+                        "name": "Nalgad Municipality",
+                        "name_nepali": "नलगाड नगरपालिका",
                         "municipality_type": "Municipality",
                     },
                     {
