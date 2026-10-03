@@ -9,6 +9,10 @@ import unittest
 from nepali import number
 from nepali.number import NepaliNumber, nepalinumber
 
+# Python 3.14 shortened both messages to "division by zero"
+INT_FLOOR_DIV_ZERO_MESSAGES = ("integer division or modulo by zero", "division by zero")
+FLOAT_FLOOR_DIV_ZERO_MESSAGES = ("float floor division by zero", "division by zero")
+
 
 class TestNumber(unittest.TestCase):
     def test_number_english_to_nepali(self):
@@ -1807,12 +1811,12 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
         with self.assertRaises(ZeroDivisionError) as ze:
             _ = self.nepalinumber_integer_2 // 0
 
-        self.assertEqual(str(ze.exception), "integer division or modulo by zero")
+        self.assertIn(str(ze.exception), INT_FLOOR_DIV_ZERO_MESSAGES)
 
         with self.assertRaises(ZeroDivisionError) as ze:
             _ = self.nepalinumber_float_10_1 // 0
 
-        self.assertEqual(str(ze.exception), "float floor division by zero")
+        self.assertIn(str(ze.exception), FLOAT_FLOOR_DIV_ZERO_MESSAGES)
 
     def test_nepalinumber_throws_error_when_zero_nepalinumber_floor_divides_other_numbers(
         self,
@@ -1820,23 +1824,23 @@ class TestNepaliNumberArithmeticOperations(unittest.TestCase):
         with self.assertRaises(ZeroDivisionError) as ze:
             _ = 12 // self.nepalinumber_zero
 
-        self.assertEqual(str(ze.exception), "integer division or modulo by zero")
+        self.assertIn(str(ze.exception), INT_FLOOR_DIV_ZERO_MESSAGES)
 
         with self.assertRaises(ZeroDivisionError) as ze:
             _ = 12.1 // self.nepalinumber_zero
 
-        self.assertEqual(str(ze.exception), "float floor division by zero")
+        self.assertIn(str(ze.exception), FLOAT_FLOOR_DIV_ZERO_MESSAGES)
 
     def test_nepalinumber_throws_error_when_floor_divided_by_zero_nepalinumber(self):
         with self.assertRaises(ZeroDivisionError) as ze:
             _ = self.nepalinumber_integer_2 // self.nepalinumber_zero
 
-        self.assertEqual(str(ze.exception), "integer division or modulo by zero")
+        self.assertIn(str(ze.exception), INT_FLOOR_DIV_ZERO_MESSAGES)
 
         with self.assertRaises(ZeroDivisionError) as ze:
             _ = self.nepalinumber_float_10_1 // self.nepalinumber_zero
 
-        self.assertEqual(str(ze.exception), "float floor division by zero")
+        self.assertIn(str(ze.exception), FLOAT_FLOOR_DIV_ZERO_MESSAGES)
 
     # mod
     # nepalinumber positive integer modulo tests
