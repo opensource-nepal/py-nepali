@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+- Add support for Python 3.14
+
 ## v1.2.0
 
 - **BREAKING**: Drop support for Python 3.8 and 3.9 (EOL)
